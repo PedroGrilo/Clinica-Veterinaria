@@ -7,24 +7,24 @@
     <title>Clinica Veterinária - Marcações</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
     <script src="scripts/consultas.js"></script>
 </head>
 
 <body>
+    <h2>Clinica Veterinária - Marcar Consultas</h2>
     <form onsubmit="ListaConsulta.acrescentar();" action="index.html" method="POST">
         Dia Da consulta: <input type="date" nome="data" id="data"><br><br>
         Medico: <input type="text" nome="medico" id="medico"><br><br>
         Nome do Animal: <input type="text" name="nomeAnimal" id="nomeAnimal"><br><br>
         Tipo de Consulta: <select name="tipoConsulta" id="tipoConsulta">
-            <option value="rastreio">Rastreio</option>
+            <option value="Rastreio">Rastreio</option>
 
             <option value="Cirugia">Cirugia</option>
 
             <option value="Vacina">Vacina</option>
 
             <option value="Rotina">Rotina</option>
-        </select>
+        </select><br><br>
         <button type="submit" onclick="">Submeter</button>
     </form>
 </body>
