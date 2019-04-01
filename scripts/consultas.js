@@ -17,11 +17,15 @@ function Consulta(diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efetivada
 /**
  * Classe Lista Consultas
  */
-/**
+
+
+ /**
  * 
  * @constructs ListaConsultas
  * 
- */
+*/
+
+
 function ListaConsulta() {
     if (localStorage['ListaConsultas']) {
         var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
@@ -50,20 +54,7 @@ ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
 
 };
 
-
-
 ListaConsulta.prototype.listarConsultas = function () {
-    var data = new Date();
-    var dd = data.getDate();
-    var mm = data.getMonth() + 1;
-    var yyyy = data.getFullYear();
-
-    if (dd < 10)
-        dd = '0' + dd; //adicionar o 0
-    if (mm < 10)
-        mm = '0' + mm; //adicionar o 0
-
-    var data = yyyy + '-' + mm + '-' + dd;
 
     var today = false;
 
@@ -75,7 +66,7 @@ ListaConsulta.prototype.listarConsultas = function () {
         var resultado = `<table><tr><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th></tr>`;
 
         this.consultas.forEach(function (currentValue, index, array) {
-            if (currentValue.diaDaConsulta === data) { // verificar se as consultas é para o dia atual
+            if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas é para o dia atual
                 resultado += "<tr><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" + currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td></tr>";
                 today = true;
             }
