@@ -17,12 +17,12 @@ function Consulta(diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efetivada
 /**
  * Classe Lista Consultas
  */
- 
- /**
+
+/**
  * 
  * @constructs ListaConsultas
  * 
-*/
+ */
 
 
 function ListaConsulta() {
@@ -31,6 +31,66 @@ function ListaConsulta() {
         this.consultas = retrievedObject;
     } else {
         this.consultas = [];
+    }
+
+}
+
+
+function createObjects() {
+    listarTipoConsulta();
+    listarMedicos();
+}
+
+function listarTipoConsulta() {
+
+    var arr = ['Rastreio', 'Cirugia', 'Vacina', 'Rotina'];
+
+    var mainForm = document.getElementById("mainForm");
+
+    createSpans("Tipo de Consulta: ", mainForm);
+    createElement("SELECT", mainForm, "tipoConsulta");
+    createBrs(mainForm);
+    createBrs(mainForm);
+
+    var getSelectTipo = document.getElementById("tipoConsulta");
+
+    for (let i = 0; i < arr.length; i++) {
+        var option = document.createElement("option");
+        option.text = arr[i];
+        getSelectTipo.add(option);
+
+    }
+
+}
+
+function listarMedicos() {
+
+    var mainForm = document.getElementById("mainForm");
+
+    createSpans("Médicos: ", mainForm);
+
+    createElement("SELECT", mainForm, "medicos");
+
+    createBrs(mainForm);
+
+    createBrs(mainForm);
+
+
+    var getSelectMedicos = document.getElementById("medicos");
+
+    if (localStorage['ListaMedicos']) {
+        var arr = JSON.parse(localStorage.getItem('ListaMedicos'));
+        for (let i = 0; i < arr.length; i++) {
+            var option = document.createElement("option");
+            option.text = arr[i].nome;
+            getSelectMedicos.add(option);
+        }
+
+    } else {
+        var option = document.createElement("option");
+        option.text = "Não existem médicos";
+        getSelectMedicos.disabled = true;
+        getSelectMedicos.add(option);
     }
 
 }
@@ -110,6 +170,4 @@ ListaConsulta.acrescentar = function (consulta) {
     } else {
         alert("Obrigatório preencher todos os campos!");
     }
-
-
 };

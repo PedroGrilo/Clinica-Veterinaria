@@ -36,8 +36,10 @@ function ListaMedicos() {
     } else {
         this.medicos = [];
     }
-
 }
+
+
+
 
 ListaMedicos.prototype.saveMedicos = function () { //guardar no localStorage
     localStorage['ListaMedicos'] = JSON.stringify(this.medicos);
@@ -87,12 +89,12 @@ ListaMedicos.apresentar = function (medico) {
     medico = medico || new ListaMedicos().acrescentarMedicos();
     medico.getMedicosLocal();
     document.getElementById("listaMedicos").innerHTML = medico.listarMedicos();
-    medico.saveConsultas();
+    medico.saveMedicos();
 
 };
 
 
-ListaMedicos.acrescentar = function (medico) {
+ListaMedicos.acrescentar = function (medico) { // almeida é so fazer algo para pedir ao utilizador o novo medico...
     var nome = document.getElementById("nome").value;
     var titulo = document.getElementById("titulo").value;
     var genero = document.getElementById("genero").value;

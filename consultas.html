@@ -8,25 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="scripts/createObj.js"></script>
     <script src="scripts/consultas.js"></script>
 </head>
 
-<body>
+<body onload="createObjects();">
     <h2>Clinica Veterinária - Marcar Consultas</h2>
-    <form onsubmit="ListaConsulta.acrescentar();" action="index.html" method="POST">
+    <div id="marcarConsulta" ></div>
+    <form onsubmit="ListaConsulta.acrescentar();" action="index.html" method="POST" id="mainForm">
         Dia Da consulta: <input type="date" nome="data" id="data"><br><br>
-        Medico: <input type="text" nome="medico" id="medico"><br><br>
         Nome do Animal: <input type="text" name="nomeAnimal" id="nomeAnimal"><br><br>
-        Tipo de Consulta: <select name="tipoConsulta" id="tipoConsulta">
-            <option value="Rastreio">Rastreio</option>
-
-            <option value="Cirugia">Cirugia</option>
-
-            <option value="Vacina">Vacina</option>
-
-            <option value="Rotina">Rotina</option>
-        </select><br><br>
-        <button type="submit" onclick="">Submeter</button>
     </form>
 </body>
 
