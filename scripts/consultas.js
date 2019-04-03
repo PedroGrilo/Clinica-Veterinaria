@@ -17,8 +17,7 @@ function Consulta(diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efetivada
 /**
  * Classe Lista Consultas
  */
-
-
+ 
  /**
  * 
  * @constructs ListaConsultas
