@@ -43,7 +43,7 @@ function createObjects() {
 
 function listarTipoConsulta() {
 
-    var arr = ['Rastreio', 'Cirugia', 'Vacina', 'Rotina'];
+    var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
 
     var mainForm = document.getElementById("mainForm");
 
@@ -92,7 +92,7 @@ function listarMedicos() {
         getSelectMedicos.disabled = true;
         getSelectMedicos.add(option);
     }
-
+    createButtons(mainForm,"submit","submit","btn btn-warning","Submeter","");
 }
 
 ListaConsulta.prototype.saveConsultas = function () { //guardar no localStorage
@@ -122,7 +122,7 @@ ListaConsulta.prototype.listarConsultas = function () {
         return "<h4>Não existem consultas na base de dados!</h4>";
 
     } else {
-        var resultado = `<table><tr><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th></tr>`;
+        var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th></tr</thead>`;
 
         this.consultas.forEach(function (currentValue, index, array) {
             if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas é para o dia atual
@@ -159,10 +159,9 @@ ListaConsulta.apresentar = function (consulta) {
 ListaConsulta.acrescentar = function (consulta) {
 
     var data = document.getElementById("data").value;
-    var medico = document.getElementById("medico").value;
     var nAnimal = document.getElementById("nomeAnimal").value;
     var tipoConsulta = document.getElementById("tipoConsulta").value;
-
+    var medico = document.getElementById("medicos").value;
     if (data != "" && medico != "" && nAnimal != "") {
         consulta = new ListaConsulta().acrescentarConsultas();
         consulta.acrescentarConsulta(new Consulta(data, medico, nAnimal, tipoConsulta, 0, 0));

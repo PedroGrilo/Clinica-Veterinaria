@@ -4,12 +4,11 @@ function initializeElements() {
 
     createElement("div", body, "mainDiv");
 
-    createElement("h3", document.getElementById("mainDiv"), "dataAtual");
+    createElement("h5", document.getElementById("nowTime"), "dataAtual");
 
     createElement("div", document.getElementById("mainDiv"), "todayConsultation");
 
 }
-
 
 /**
  * Classe Data
@@ -54,7 +53,7 @@ var data = new Data();
 
 function initialize() {
     initializeElements();
-    document.getElementById("dataAtual").innerText = "Consultas do dia - " + data.getDataAtual();
+    document.getElementById("dataAtual").innerText = data.getDataAtual();
     ListaConsulta.apresentar();
 }
 

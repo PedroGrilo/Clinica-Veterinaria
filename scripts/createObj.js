@@ -3,7 +3,7 @@ function createButtons(where, idName, type, classB, valueB, onclick) {
     elementCreated.setAttribute("id", idName);
     elementCreated.setAttribute("type", type);
     elementCreated.setAttribute("class", classB);
-    elementCreated.setAttribute("value", valueB);
+    elementCreated.textContent =  valueB;
     elementCreated.setAttribute("onclick", onclick);
     where.appendChild(elementCreated);
 }
@@ -13,7 +13,7 @@ function createInputs(element, where, idName, type) {
     elementCreated.setAttribute("type", type);
     elementCreated.setAttribute("id", idName);
     elementCreated.setAttribute("name", idName);
-    elementCreated.setAttribute("name", idName);
+    elementCreated.setAttribute("name", idName);        
     where.appendChild(elementCreated);
 }
 

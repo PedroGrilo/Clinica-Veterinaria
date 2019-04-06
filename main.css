@@ -1,11 +1,38 @@
-th{
-    border: 1px solid black;
+
+.vMenu {
+    width: 500px;
+
 }
-td{
-    border: 1px solid black;
-    border-style: none solid none none;
+
+.vMenu a {
+    background: linear-gradient(120deg, rgb(99, 120, 194), #A1CAFF);
+    color: #efefef;
+    display: block;
+    padding: 12px;
+    text-decoration: none;
 }
-table{
-    border: 1px solid black;
-    border-style: none none solid none;
+
+.vMenu a:hover {
+    background: linear-gradient(120deg, #3A4D8F, #A1CAFF);
+}
+
+.vMenu a.active {
+    background: linear-gradient(120deg, #3A4D8F, #A1CAFF);
+    color: white;
+
+}
+
+.hMenu {
+    background: linear-gradient(120deg, rgb(99, 120, 194), #A1CAFF);
+    color: #efefef;
+    text-align: center;
+}
+
+.hMenu h4,
+h5 {
+    padding-top: 1rem;
+}
+
+.container-fluid {
+    padding-left: 0;
 }
