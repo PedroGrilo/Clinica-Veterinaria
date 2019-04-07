@@ -79,6 +79,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 
 };
 
+
 ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
     if (localStorage['ListaMedicos']) {
         this.medicos = JSON.parse(localStorage['ListaMedicos']);

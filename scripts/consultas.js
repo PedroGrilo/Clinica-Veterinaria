@@ -5,7 +5,7 @@
  * @constructs Consulta
  */
 
-function Consulta(id,diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
+function Consulta(id, diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
     this.id = id;
     this.diaDaConsulta = diaDaConsulta;
     this.medico = medico;
@@ -36,9 +36,14 @@ function ListaConsulta() {
 
 }
 
-ListaConsulta.getNumberOfConsultas = function(){
+ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
-    return retrievedObject.length;
+
+    if (retrievedObject[retrievedObject.length - 1] == null)
+        return 0;
+    else
+        return retrievedObject[retrievedObject.length - 1].id;
+
 }
 
 
@@ -99,7 +104,7 @@ function listarMedicos() {
         getSelectMedicos.disabled = true;
         getSelectMedicos.add(option);
     }
-    createButtons(mainForm,"submit","submit","btn btn-warning","Submeter","");
+    createButtons(mainForm, "submit", "submit", "btn btn-warning", "Submeter", "");
 }
 
 ListaConsulta.prototype.saveConsultas = function () { //guardar no localStorage
@@ -109,6 +114,18 @@ ListaConsulta.prototype.saveConsultas = function () { //guardar no localStorage
 ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
     this.consultas.push(consulta);
     this.saveConsultas();
+}
+
+ListaConsulta.removerConsulta = function (posicao) {
+    consulta = new ListaConsulta();
+    var localStorageObjs = JSON.parse(localStorage.getItem('ListaConsultas'));
+    for (let i = 0; i < localStorageObjs.length; i++) {
+        if (localStorageObjs[i].id == posicao)
+            localStorageObjs.splice(i, 1);
+    }
+    localStorage['ListaConsultas'] = JSON.stringify(localStorageObjs);
+    ListaConsulta.apresentar(consulta);
+
 }
 
 ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
@@ -130,11 +147,11 @@ ListaConsulta.prototype.listarConsultas = function () {
 
     } else {
         var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th></tr></thead>`;
-       
+
         this.consultas.forEach(function (currentValue, index, array) {
             if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas é para o dia atual
-                var remove = `<td><a href="`+currentValue.id+`" class='far fa-times-circle'></a></td>`;
-                resultado += "<tr><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" + currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>"+remove+"</tr>";
+                var remove = `<td><a onclick="ListaConsulta.removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
+                resultado += "<tr><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" + currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>" + remove + "</tr>";
                 today = true;
             }
         });
@@ -171,13 +188,14 @@ ListaConsulta.acrescentar = function (consulta) {
     var tipoConsulta = document.getElementById("tipoConsulta").value;
     var medico = document.getElementById("medicos").value;
     if (medico != "" && nAnimal != "") {
-        if(dataInput >= data.getDataAtual()){
-        consulta = new ListaConsulta().acrescentarConsultas();
-        consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas()+1,dataInput, medico, nAnimal, tipoConsulta, 0, 0));
-        ListaConsulta.apresentar(consulta);
-         }else{
+        if (dataInput >= data.getDataAtual()) {
+            consulta = new ListaConsulta().acrescentarConsultas();
+
+            consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput, medico, nAnimal, tipoConsulta, 0, 0));
+            ListaConsulta.apresentar(consulta);
+        } else {
             alert("Data Inválida");
-         } 
+        }
     } else {
         alert("Obrigatório preencher todos os campos!");
     }
