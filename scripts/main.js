@@ -2,11 +2,10 @@
 function initializeElements() {
     var body = document.getElementById('body');
 
-    createElement("div", body, "mainDiv");
+ 
 
-    createElement("h5", document.getElementById("nowTime"), "dataAtual");
+    createElement("h4", document.getElementById("nowTime"), "dataAtual");
 
-    createElement("div", document.getElementById("mainDiv"), "todayConsultation");
 
 }
 
