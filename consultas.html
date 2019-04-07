@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="scripts/data.js"></script>
     <script src="scripts/createObj.js"></script>
     <script src="scripts/consultas.js"></script>
 </head>
@@ -16,7 +17,7 @@
     <h2>Clinica Veterinária - Marcar Consultas</h2>
     <div id="marcarConsulta" ></div>
     <form onsubmit="ListaConsulta.acrescentar();" action="index.html" method="POST" id="mainForm">
-        Dia Da consulta: <input type="date" nome="data" id="data"><br><br>
+        Dia Da consulta: <input type="date" nome="dataInput" id="dataInput"><br><br>
         Nome do Animal: <input type="text" name="nomeAnimal" id="nomeAnimal"><br><br>
     </form>
 </body>
