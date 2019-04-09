@@ -15,7 +15,7 @@ function listarEspecialidade() {
 
     var getSelectTipo = document.getElementById("tipoEspecialidade" + numsel);
 
-    getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
+   /* getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
         
         if(arr.length != this.value){ // Verifica se o Outro foi Selecionado
         arrused[this.value] = 1; // Diz que a pos X do array ja foi usada, melhor um array encadeado?
@@ -37,7 +37,7 @@ function listarEspecialidade() {
         }else{ // Caso seja selecionado
             // Adicionar codigo para adicionar uma especialização
         }
-    });
+    });*/
     for (let i = -2; i < arr.length + 2; i++) {
 
         if (i == -2) {
@@ -73,6 +73,20 @@ function listarEspecialidade() {
     getSelectTipo.options[0].disabled = true;
 }
 
-function VerificaEspecialidade(sel) {
-    console.log(sel);
+
+function initializeElements() {
+    var body = document.getElementById('body');
+
+ 
+
+    createElement("h4", document.getElementById("nowTime"), "dataAtual");
+
+
 }
+
+function initialize() {
+    initializeElements();
+    document.getElementById("dataAtual").innerText = data.getDataAtual();
+}
+
+window.onload = initialize();
