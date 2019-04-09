@@ -28,9 +28,9 @@ function createBrs(where){
     where.appendChild(elementCreated);
 }
 
-function createElement(element, where, idName) {
+function createElement(element, where, idName, classes) {
     var elementCreated = document.createElement("" + element + "");
     elementCreated.setAttribute("id", idName);
-    console.log(where);
+    elementCreated.className = classes;
     where.appendChild(elementCreated);
 }
