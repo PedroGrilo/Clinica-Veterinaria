@@ -15,29 +15,29 @@ function listarEspecialidade() {
 
     var getSelectTipo = document.getElementById("tipoEspecialidade" + numsel);
 
-   /* getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
-        
-        if(arr.length != this.value){ // Verifica se o Outro foi Selecionado
-        arrused[this.value] = 1; // Diz que a pos X do array ja foi usada, melhor um array encadeado?
-        numsel++; // Incrementa o numero de selects criados
-        let bool = false;
-        for (let i = 0; i < arrused.length; i++) { // ve se ja estao todos desativos caso não esteja abre acesso à criação do selct
-            if (arrused[i] == 0) {
-                bool = true;
-            }
-        }
-        if (bool == true) { // criação do novo select
-            for (let i = 0; i < this.options.length; i++) { //desativa o selct antigo
-                if (i != parseInt(this.value + 2)) { // + 2, porque "Indefinido" e "--------"
-                    this.options[i].disabled = true; // Desativa todas as opções menos a selecionada
-                }
-            }
-            listarEspecialidade();
-        }
-        }else{ // Caso seja selecionado
-            // Adicionar codigo para adicionar uma especialização
-        }
-    });*/
+    /* getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
+         
+         if(arr.length != this.value){ // Verifica se o Outro foi Selecionado
+         arrused[this.value] = 1; // Diz que a pos X do array ja foi usada, melhor um array encadeado?
+         numsel++; // Incrementa o numero de selects criados
+         let bool = false;
+         for (let i = 0; i < arrused.length; i++) { // ve se ja estao todos desativos caso não esteja abre acesso à criação do selct
+             if (arrused[i] == 0) {
+                 bool = true;
+             }
+         }
+         if (bool == true) { // criação do novo select
+             for (let i = 0; i < this.options.length; i++) { //desativa o selct antigo
+                 if (i != parseInt(this.value + 2)) { // + 2, porque "Indefinido" e "--------"
+                     this.options[i].disabled = true; // Desativa todas as opções menos a selecionada
+                 }
+             }
+             listarEspecialidade();
+         }
+         }else{ // Caso seja selecionado
+             // Adicionar codigo para adicionar uma especialização
+         }
+     });*/
     for (let i = -2; i < arr.length + 2; i++) {
 
         if (i == -2) {
@@ -77,7 +77,7 @@ function listarEspecialidade() {
 function initializeElements() {
     var body = document.getElementById('body');
 
- 
+
 
     createElement("h4", document.getElementById("nowTime"), "dataAtual");
 

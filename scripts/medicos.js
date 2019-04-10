@@ -95,18 +95,28 @@ ListaMedicos.apresentar = function (medico) {
 };
 
 
+ListaMedicos.getNumberOfMedicos = function () {
+    var retrievedObject = JSON.parse(localStorage.getItem('ListaMedicos'));
+
+    if (retrievedObject[retrievedObject.length - 1] == null)
+        return 0;
+    else
+        return retrievedObject[retrievedObject.length - 1].id;
+
+}
+
 ListaMedicos.acrescentar = function (medico) { // almeida é so fazer algo para pedir ao utilizador o novo medico...
     var nome = document.getElementById("nome").value;
     var titulo = document.getElementById("titulo").value;
     var genero = document.getElementById("genero").value;
     var email = document.getElementById("email").value;
-    var especialidade = document.getElementById("especialidade").value;
+    var especialidade = document.getElementById("tipoEspecialidade0").value;
     var foto = document.getElementById("foto").value;
-    alert(nome+"\n"+titulo+"\n"+genero+"\n"+email+"\n"+especialidade+"\n"+foto+"\n");
+    alert(nome + "\n" + titulo + "\n" + genero + "\n" + email + "\n" + especialidade + "\n" + foto + "\n");
 
     if (nome != "" && titulo != "" && genero != "" && email != "" && especialidade != "" && foto != "") {
         medico = new ListaMedicos().acrescentarMedicos();
-        medico.acrescentarMedico(new Medico());
+        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos, nome, titulo, genero, email, especialidade, foto));
         ListaMedicos.apresentar(medico);
     } else {
         alert("Obrigatório preencher todos os campos!");

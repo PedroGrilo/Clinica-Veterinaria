@@ -24,14 +24,14 @@
             </div>
 
             <div class="list-group list-group-flush vMenu">
-                <a href="#" class="list-group-item list-group-item-action bg-dark active"><i class="fas fa-home"></i>
+                <a href="index.html" class="list-group-item list-group-item-action bg-light"><i class="fas fa-home"></i>
                     Home</a>
                 <a href="gestao.html" class="list-group-item list-group-item-action bg-light"><i
                         class="fas fa-users"></i>
                     Gestão da clinica</a>
                 <a href="consultas.html" class="list-group-item list-group-item-action bg-light"><i
                         class="fas fa-address-book"></i> Marcação da consulta</a>
-                <a href="medicos.html" class="list-group-item list-group-item-action bg-light"><i
+                <a href="medicos.html" class="list-group-item list-group-item-action bg-dark active"><i
                         class="fas fa-user-md"></i> Médicos Disponiveis</a>
             </div>
         </div>
@@ -59,15 +59,15 @@
                     <form role="form" onsubmit="ListaMedicos.acrescentar();">
                         <div class="form-group float-label-control">
                             <label for="">Nome</label>
-                            <input required type="text" class="form-control" placeholder="Nome">
+                            <input required type="text" class="form-control" id="nome" placeholder="Nome">
                         </div>
                         <div class="form-group float-label-control">
                             <label for="">Titulo</label>
-                            <input type="text" class="form-control" placeholder="Titulo">
+                            <input type="text" class="form-control" id="titulo" placeholder="Titulo">
                         </div>
                         <div class="form-group float-label-control">
                             <label for="">Genero</label>
-                            <select class="form-control">
+                            <select class="form-control" id="genero">
                                 <option disabled selected value="Indf">Indefinido</option>
                                 <option value="M">Masculino</option>
                                 <option value="F">Feminino</option>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group float-label-control">
                             <label for="">Email</label>
-                            <input type="email" required class="form-control" placeholder="Email">
+                            <input type="email" required class="form-control" id="email" placeholder="Email">
                         </div>
                         <div class="form-group float-label-control" id="especialiadediv">
 
