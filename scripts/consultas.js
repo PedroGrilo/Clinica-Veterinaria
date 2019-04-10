@@ -60,7 +60,7 @@ function listarTipoConsulta() {
     var mainForm = document.getElementById("mainForm");
 
     createSpans("Tipo de Consulta: ", mainForm);
-    createElement("SELECT", mainForm, "tipoConsulta","form-group float-label-control");
+    createElement("SELECT", mainForm, "tipoConsulta", "form-group float-label-control");
     createBrs(mainForm);
     createBrs(mainForm);
 

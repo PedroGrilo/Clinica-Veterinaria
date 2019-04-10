@@ -2,18 +2,19 @@ window.onload = function () {
     listarEspecialidade();
 
 }
-var numsel = 0;
+var numSel = 0;
 var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
-var arrused = [0, 0, 0, 0];
+var arrUsed = [0, 0, 0, 0];
+
 function listarEspecialidade() {
 
     var mainForm = document.getElementById("especialiadediv");
 
-    createSpans("Especialidade #" + parseInt(numsel + 1) + " :", mainForm); // Facil controlo
-    createElement("SELECT", mainForm, "tipoEspecialidade" + numsel, "form-control");
+    createSpans("Especialidade:", mainForm); // Facil controlo
+    createElement("SELECT", mainForm, "tipoEspecialidade" + numSel, "form-control");
     createBrs(mainForm);
 
-    var getSelectTipo = document.getElementById("tipoEspecialidade" + numsel);
+    var getSelectTipo = document.getElementById("tipoEspecialidade" + numSel);
 
     /* getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
          
@@ -55,7 +56,7 @@ function listarEspecialidade() {
             getSelectTipo.add(optionsep);
             continue;
         }
-        if (arrused[i] == 0) {
+        if (arrUsed[i] == 0) {
             if (i != arr.length) {
                 var option = document.createElement("option");
                 option.text = arr[i];
