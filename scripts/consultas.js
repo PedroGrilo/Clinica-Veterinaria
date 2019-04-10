@@ -82,7 +82,7 @@ function listarMedicos() {
 
     createLabels("Médicos: ", mainDiv);
 
-    createElement("SELECT", mainDiv, "medicos","custom-select");
+    createElement("SELECT", mainDiv, "medicos", "custom-select");
 
     createBrs(mainDiv);
 
@@ -183,38 +183,38 @@ ListaConsulta.apresentar = function (consulta) {
 };
 
 
-function isNull(campo){
+function isNull(campo) {
     return (campo == "" || campo == null);
 }
 
-function alertAndFocus(campo, msg){
-        alert(msg);
-        campo.focus();
+function alertAndFocus(campo, msg) {
+    alert(msg);
+    campo.focus();
 }
 
-function check(medico,nomeAnimal,tipoConsulta,dataInput){
-    
-    if(isNull(dataInput.value)){
-        alertAndFocus(dataInput,"Data inválida");
+function check(medico, nomeAnimal, tipoConsulta, dataInput) {
+
+    if (isNull(dataInput.value)) {
+        alertAndFocus(dataInput, "Data inválida");
         return false;
-    }else if(dataInput.value < data.getDataAtual()){
-        alertAndFocus(dataInput,"A data têm que ser igual ou superior à do dia de hoje");
+    } else if (dataInput.value < data.getDataAtual()) {
+        alertAndFocus(dataInput, "A data têm que ser igual ou superior à do dia de hoje");
         return false;
-    }else if(isNull(nomeAnimal.value)){
-        alertAndFocus(nomeAnimal,"O campo 'Nome do Animal' é um obrigatório!");
+    } else if (isNull(nomeAnimal.value)) {
+        alertAndFocus(nomeAnimal, "O campo 'Nome do Animal' é um obrigatório!");
         return false;
-    }else if(isNull(tipoConsulta.value)){
-        alertAndFocus(tipoConsulta,"O campo 'Tipo de Consulta' é obrigatório!");
+    } else if (isNull(tipoConsulta.value)) {
+        alertAndFocus(tipoConsulta, "O campo 'Tipo de Consulta' é obrigatório!");
         return false;
-    }else if(isNull(medico.value)){
-        alertAndFocus(medico,"Obrigatório escolher um médico");
+    } else if (isNull(medico.value)) {
+        alertAndFocus(medico, "Obrigatório escolher um médico");
         return false;
-    }else if(medico.value == "Não existem médicos"){
-        alertAndFocus("Não existem médicos para este tipo de consulta");    
+    } else if (medico.value == "Não existem médicos") {
+        alertAndFocus("Não existem médicos para este tipo de consulta");
         return false;
+    }else{
+      return true;
     }
-        return true;
-    
 }
 
 
@@ -224,11 +224,10 @@ ListaConsulta.acrescentar = function (consulta) {
     var nAnimal = document.getElementById("nomeAnimal");
     var tipoConsulta = document.getElementById("tipoConsulta");
     var medico = document.getElementById("medicos");
-    if (check(medico,nAnimal,tipoConsulta,dataInput)) {
-            consulta = new ListaConsulta().acrescentarConsultas();
-            consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
-            
-            alert("Consulta adicionada com sucesso");
-            window.location.href = "index.html";
+    if (check(medico, nAnimal, tipoConsulta, dataInput)) {
+        consulta = new ListaConsulta().acrescentarConsultas();
+        consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
+        alert("Consulta adicionada com sucesso");
+        window.location.href = "index.html";
     }
 };
