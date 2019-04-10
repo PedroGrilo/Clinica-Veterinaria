@@ -27,8 +27,6 @@ function Medico(id, nome, titulo, genero, email, especialidade, foto) {
  */
 
 
-
-
 function ListaMedicos() {
     if (localStorage['ListaMedicos']) {
         var retrievedObject = JSON.parse(localStorage.getItem('ListaMedicos'));

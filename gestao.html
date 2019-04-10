@@ -1,16 +1,71 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Clinica Veterinária - Gestão</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Clinica Veterinária - Página Inicial</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="scripts/medicos.js"></script>
 </head>
-<body onload="ListaMedicos.apresentar()">
-    <div id = "listaMedicos"></div>
-</body>
+
+<div class="d-flex" id="wrapper">
+
+    <div class="hMenu border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading hMenu" style="text-align:center">
+            <img src="https://s3.envato.com/files/117067780/Color%20PNG/Cat%20Funny%20Icon-05.png" width="65rem">
+        </div>
+
+        <div class="list-group list-group-flush vMenu">
+            <a href="#" class="list-group-item list-group-item-action bg-dark active"><i class="fas fa-home"></i>
+                Home</a>
+            <a href="gestao.html" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i>
+                Gestão da clinica</a>
+            <a href="consultas.html" class="list-group-item list-group-item-action bg-light"><i
+                    class="fas fa-address-book"></i> Marcação da consulta</a>
+            <a href="medicos.html" class="list-group-item list-group-item-action bg-light"><i class="fas fa-user-md"></i> Médicos Disponiveis</a>
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
+            <button class="btn btn-light" id="menu-toggle">
+                <i class="navbar-toggler-icon"></i>
+            </button>
+            <h4 class="navbar navbar-expand">Clinica Veterinária - Página Inicial</h4>
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
+                    <li class="nav-item">
+                        <div id="nowTime"></div>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <body onload="ListaMedicos.apresentar()">
+                <div id = "listaMedicos"></div>
+            </body>
+         </div>
+    </div>
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+    <script src="scripts/main.js"></script>
+
 
 </html>
