@@ -95,7 +95,7 @@ ListaMedicos.apresentar = function (medico) {
 };
 
 
-ListaMedicos.acrescentar = function (medico) { // almeida é so fazer algo para pedir ao utilizador o novo medico...
+ListaMedicos.acrescentar = function () { // almeida é so fazer algo para pedir ao utilizador o novo medico...
     var nome = document.getElementById("nome").value;
     var titulo = document.getElementById("titulo").value;
     var genero = document.getElementById("genero").value;
