@@ -103,14 +103,14 @@ ListaMedicos.getNumberOfMedicos = function () {
 
 }
 
-ListaMedicos.acrescentar = function (medico) { // almeida é so fazer algo para pedir ao utilizador o novo medico...
+ListaMedicos.acrescentar = function (medico) { //
     var nome = document.getElementById("nome").value;
     var titulo = document.getElementById("titulo").value;
     var genero = document.getElementById("genero").value;
     var email = document.getElementById("email").value;
     var especialidade = document.getElementById("tipoEspecialidade0").value;
     var foto = document.getElementById("foto").value;
-    alert(nome + "\n" + titulo + "\n" + genero + "\n" + email + "\n" + especialidade + "\n" + foto + "\n");
+    alert("DEBUG : \n" + nome + "\n" + titulo + "\n" + genero + "\n" + email + "\n" + especialidade + "\n" + foto + "\n");
 
     if (nome != "" && titulo != "" && genero != "" && email != "" && especialidade != "" && foto != "") {
         medico = new ListaMedicos().acrescentarMedicos();
