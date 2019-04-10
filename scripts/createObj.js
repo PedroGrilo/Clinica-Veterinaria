@@ -17,8 +17,8 @@ function createInputs(element, where, idName, type) {
     where.appendChild(elementCreated);
 }
 
-function createSpans(text,where){
-    var elementCreated = document.createElement("SPAN");
+function createLabels(text,where){
+    var elementCreated = document.createElement("LABEL");
     elementCreated.textContent = text;
     where.appendChild(elementCreated);
 }

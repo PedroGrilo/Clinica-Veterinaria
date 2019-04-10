@@ -33,7 +33,6 @@ function ListaConsulta() {
     } else {
         this.consultas = [];
     }
-
 }
 
 ListaConsulta.getNumberOfConsultas = function () {
@@ -57,12 +56,11 @@ function listarTipoConsulta() {
 
     var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
 
-    var mainForm = document.getElementById("mainForm");
+    var mainDiv = document.getElementById("mainDiv");
 
-    createSpans("Tipo de Consulta: ", mainForm);
-    createElement("SELECT", mainForm, "tipoConsulta", "form-group float-label-control");
-    createBrs(mainForm);
-    createBrs(mainForm);
+    createLabels("Tipo de Consulta: ", mainDiv);
+    createElement("SELECT", mainDiv, "tipoConsulta", "custom-select");
+    createBrs(mainDiv);
 
     var getSelectTipo = document.getElementById("tipoConsulta");
 
@@ -77,15 +75,19 @@ function listarTipoConsulta() {
 
 function listarMedicos() {
 
-    var mainForm = document.getElementById("mainForm");
+    var mainDiv = document.getElementById("mainDiv");
 
-    createSpans("Médicos: ", mainForm);
+    createBrs(mainDiv);
 
-    createElement("SELECT", mainForm, "medicos");
 
-    createBrs(mainForm);
+    createLabels("Médicos: ", mainDiv);
 
-    createBrs(mainForm);
+    createElement("SELECT", mainDiv, "medicos","custom-select");
+
+    createBrs(mainDiv);
+
+    createBrs(mainDiv);
+
 
 
     var getSelectMedicos = document.getElementById("medicos");
@@ -104,7 +106,7 @@ function listarMedicos() {
         getSelectMedicos.disabled = true;
         getSelectMedicos.add(option);
     }
-    createButtons(mainForm, "submit", "submit", "btn btn-warning", "Submeter", "");
+    createButtons(mainDiv, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
 
 ListaConsulta.prototype.saveConsultas = function () { //guardar no localStorage
@@ -181,22 +183,52 @@ ListaConsulta.apresentar = function (consulta) {
 };
 
 
+function isNull(campo){
+    return (campo == "" || campo == null);
+}
+
+function alertAndFocus(campo, msg){
+        alert(msg);
+        campo.focus();
+}
+
+function check(medico,nomeAnimal,tipoConsulta,dataInput){
+    
+    if(isNull(dataInput.value)){
+        alertAndFocus(dataInput,"Data inválida");
+        return false;
+    }else if(dataInput.value < data.getDataAtual()){
+        alertAndFocus(dataInput,"A data têm que ser igual ou superior à do dia de hoje");
+        return false;
+    }else if(isNull(nomeAnimal.value)){
+        alertAndFocus(nomeAnimal,"O campo 'Nome do Animal' é um obrigatório!");
+        return false;
+    }else if(isNull(tipoConsulta.value)){
+        alertAndFocus(tipoConsulta,"O campo 'Tipo de Consulta' é obrigatório!");
+        return false;
+    }else if(isNull(medico.value)){
+        alertAndFocus(medico,"Obrigatório escolher um médico");
+        return false;
+    }else if(medico.value == "Não existem médicos"){
+        alertAndFocus("Não existem médicos para este tipo de consulta");    
+        return false;
+    }
+        return true;
+    
+}
+
+
 ListaConsulta.acrescentar = function (consulta) {
 
-    var dataInput = document.getElementById("dataInput").value;
-    var nAnimal = document.getElementById("nomeAnimal").value;
-    var tipoConsulta = document.getElementById("tipoConsulta").value;
-    var medico = document.getElementById("medicos").value;
-    if (medico != "" && nAnimal != "") {
-        if (dataInput >= data.getDataAtual()) {
+    var dataInput = document.getElementById("dataInput");
+    var nAnimal = document.getElementById("nomeAnimal");
+    var tipoConsulta = document.getElementById("tipoConsulta");
+    var medico = document.getElementById("medicos");
+    if (check(medico,nAnimal,tipoConsulta,dataInput)) {
             consulta = new ListaConsulta().acrescentarConsultas();
-
-            consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput, medico, nAnimal, tipoConsulta, 0, 0));
-            ListaConsulta.apresentar(consulta);
-        } else {
-            alert("Data Inválida");
-        }
-    } else {
-        alert("Obrigatório preencher todos os campos!");
+            consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
+            
+            alert("Consulta adicionada com sucesso");
+            window.location.href = "index.html";
     }
 };

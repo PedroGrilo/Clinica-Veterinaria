@@ -10,7 +10,7 @@ function listarEspecialidade() {
 
     var mainForm = document.getElementById("especialiadediv");
 
-    createSpans("Especialidade:", mainForm); // Facil controlo
+    createLabels("Especialidade:", mainForm); // Facil controlo
     createElement("SELECT", mainForm, "tipoEspecialidade" + numSel, "form-control");
     createBrs(mainForm);
 
