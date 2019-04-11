@@ -14,7 +14,7 @@
     <script src="scripts/data.js"></script>
     <script src="scripts/createObj.js"></script>
     <script src="scripts/consultas.js"></script>
-    
+
 
 </head>
 
@@ -56,17 +56,19 @@
                 </div>
             </nav>
 
+            <div id="marcarConsulta"></div>
             <div class="container-fluid">
-                <div id="marcarConsulta"></div>
-                <form onsubmit="ListaConsulta.acrescentar();return false;" method="POST" id="mainForm">
-                    <div class="col-7" id="mainDiv">
-                        <label for="">Dia Da consulta:</label>
-                        <input class="form-control" type="date" class="" nome="dataInput" id="dataInput"><br>
-                        <label>Nome do Animal:</label>
-                        <input class="form-control" type="text" name="nomeAnimal" id="nomeAnimal"><br>
+                <div class="row">
+                    <div class="col-sm-8" id="mainDiv">
+                        <form onsubmit="ListaConsulta.acrescentar();return false;" method="POST" id="mainForm">
+                            <label for="">Dia Da consulta:</label>
+                            <input class="form-control" type="date" class="" nome="dataInput" id="dataInput"><br>
+                            <label>Nome do Animal:</label>
+                            <input class="form-control" type="text" name="nomeAnimal" id="nomeAnimal"><br>
+                        </form>
                     </div>
-                </form>
-        </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
