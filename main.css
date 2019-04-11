@@ -71,8 +71,12 @@ body {
       min-width: 0;
       width: 100%;
     }
-  
     #wrapper.toggled #sidebar-wrapper {
       margin-left: -15rem;
     }
   }
+.input-error:focus {   
+  border-color: rgba(255, 0, 0, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255, 0, 0, 0.8);
+  outline: 0 none;
+}
