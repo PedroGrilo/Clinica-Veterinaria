@@ -63,10 +63,28 @@ ListaMedicos.prototype.listarMedicos = function () {
         return "<h4>Não existem consultas na base de dados!</h4>";
 
     } else {
-        var resultado = `<h2>Lista de Medicos</h2><table><tr><th>Medico</th><th>Titulo</th><th>Genero</th><th>Email</th><th>Especialidade</th></tr>`;
+        var resultado = `<h2>Lista de Medicos</h2>
+        <table class=" table medtab">
+            <tr>
+                <th class ='medtab' scope="col" scope="col">Medico</th>
+                <th class ='medtab' scope="col">Titulo</th>
+                <th class ='medtab' scope="col">Genero</th>
+                <th class ='medtab' scope="col">Email</th>
+                <th class ='medtab' scope="col">Especialidade</th>
+                <th class ='medtab' scope="col"></th>
+                <th class ='medtab' scope="col"></th>
+            </tr>`;
 
         this.medicos.forEach(function (currentValue, index, array) {
-            resultado += "<tr><td> " + currentValue.nome + "</td><td> " + currentValue.titulo + "</td><td>" + currentValue.genero + "</td><td>" + currentValue.email + "</td><td>" + currentValue.especialidade + "</td></tr>";
+            resultado += "<tr>"+ 
+                            "<td class ='medtab'> " + currentValue.nome + "</td>"+
+                            "<td class ='medtab'> " + currentValue.titulo + "</td>"+
+                            "<td class ='medtab'>" + currentValue.genero + "</td>"+
+                            "<td class ='medtab'>" + currentValue.email + "</td>"+
+                            "<td class ='medtab'>" + currentValue.especialidade +"</td>"+
+                            "<td class ='medtab'><button class='editmed'><i class='fas fa-user-edit'></i></button></td>"+
+                            "<td class ='medtab'><button class='editmed'><i class='fas fa-user-times'></i></button></td>"+
+                            "</tr>";
             today = true;
 
         });
@@ -95,29 +113,27 @@ ListaMedicos.apresentar = function (medico) {
 
 ListaMedicos.getNumberOfMedicos = function () {
     var retrievedObject = JSON.parse(localStorage.getItem('ListaMedicos'));
-
-    if (retrievedObject[retrievedObject.length - 1] == null)
-        return 0;
-    else
-        return retrievedObject[retrievedObject.length - 1].id;
-
+    return retrievedObject.length;
 }
 
 ListaMedicos.acrescentar = function (medico) { //
+
     var nome = document.getElementById("nome").value;
     var titulo = document.getElementById("titulo").value;
     var genero = document.getElementById("genero").value;
     var email = document.getElementById("email").value;
     var especialidade = document.getElementById("tipoEspecialidade0").value;
     var foto = document.getElementById("foto").value;
-    alert("DEBUG : \n" + nome + "\n" + titulo + "\n" + genero + "\n" + email + "\n" + especialidade + "\n" + foto + "\n");
-
-    if (nome != "" && titulo != "" && genero != "" && email != "" && especialidade != "" && foto != "") {
+    if (nome != "" && titulo != "" && genero != "" && email != "" && especialidade != "" && foto != "" && especialidade!=null) {
         medico = new ListaMedicos().acrescentarMedicos();
-        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos, nome, titulo, genero, email, especialidade, foto));
+        ListaMedicos.getNumberOfMedicos();
+        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos(), nome, titulo, genero, email, especialidade, foto));
         ListaMedicos.apresentar(medico);
     } else {
-        alert("Obrigatório preencher todos os campos!");
+        if(especialidade==null)
+            alert("O medico necessita de ser especializado em algo");
+        else
+            alert("Obrigatório preencher todos os campos!");
     }
 
 
