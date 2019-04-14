@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Clinica Veterinária - Marcações</title>
+    <title>Clinica Veterinária - Marcação de consultas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -28,7 +28,7 @@
                 <a href="index.html" class="list-group-item list-group-item-action bg-light"><i class="fas fa-home"></i>
                     Home</a>
                 <a href="consultas.html" class="list-group-item list-group-item-action bg-light active"><i
-                        class="fas fa-address-book"></i> Marcação da consulta</a>
+                        class="fas fa-address-book"></i> Marcação de consultas</a>
                 <a href="gestao.html" class="list-group-item list-group-item-action bg-light"><i
                         class="fas fa-users"></i> Gerir Médicos
                 </a>
@@ -48,7 +48,7 @@
                 <button class="btn btn-light" id="menu-toggle">
                     <i class="navbar-toggler-icon"></i>
                 </button>
-                <h4 class="navbar navbar-expand">Clinica Veterinária - Marcar Consulta</h4>
+                <h4 class="navbar navbar-expand">Clinica Veterinária - Marcação de consultas</h4>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
@@ -60,10 +60,10 @@
                 </div>
             </nav>
 
-            <div id="marcarConsulta"></div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-8" id="mainDiv">
+                        <h3 style="padding:5px">Adicionar Consulta:</h3><hr>
                         <form onsubmit="ListaConsulta.acrescentar();return false;" method="POST" id="mainForm">
                             <label for="">Dia Da consulta:</label>
                             <input class="form-control" type="date" class="" nome="dataInput" id="dataInput"><br>

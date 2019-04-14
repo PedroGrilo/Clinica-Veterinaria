@@ -63,7 +63,7 @@ ListaMedicos.prototype.listarMedicos = function () {
         return "<h4>Não existem médicos na base de dados!</h4>";
 
     } else {
-        var resultado = `<h2>Lista de Medicos</h2>
+        var resultado = `
         <table class=" table medtab">
             <tr>
                 <th class ='medtab' scope="col" scope="col">Medico</th>

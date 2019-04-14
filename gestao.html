@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Clinica Veterinária - Página Inicial</title>
+    <title>Clinica Veterinária - Gerir Médicos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+
     <script src="scripts/medicos.js"></script>
 </head>
 
@@ -25,7 +26,7 @@
             <a href="index.html" class="list-group-item list-group-item-action bg-light"><i class="fas fa-home"></i>
                 Home</a>
             <a href="consultas.html" class="list-group-item list-group-item-action bg-light"><i
-                    class="fas fa-address-book"></i> Marcação da consulta</a>
+                    class="fas fa-address-book"></i> Marcação de consultas</a>
             <a href="gestao.html" class="list-group-item list-group-item-action bg-light active"><i
                     class="fas fa-users"></i> Gerir Médicos
             </a>
@@ -45,7 +46,7 @@
             <button class="btn btn-light" id="menu-toggle">
                 <i class="navbar-toggler-icon"></i>
             </button>
-            <h4 class="navbar navbar-expand">Clinica Veterinária - Médicos Disponiveis</h4>
+            <h4 class="navbar navbar-expand">Clinica Veterinária - Gerir Médicos</h4>
 
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -58,6 +59,7 @@
             </div>
         </nav>
         <div class="container-fluid">
+            <h3 style="padding:5px">Gerir Médicos:</h3><hr>
             <body onload="ListaMedicos.apresentar()">
                 <div style="overflow-x:auto;" class="col-11" id="listaMedicos"></div>
             </body>
@@ -70,7 +72,5 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
-    <script src="scripts/main.js"></script>
-
 
 </html>
