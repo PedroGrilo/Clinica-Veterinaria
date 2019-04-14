@@ -60,7 +60,7 @@ ListaMedicos.prototype.acrescentarMedicos = function (medico) {
 ListaMedicos.prototype.listarMedicos = function () {
 
     if (this.medicos.length === 0) {
-        return "<h4>Não existem consultas na base de dados!</h4>";
+        return "<h4>Não existem médicos na base de dados!</h4>";
 
     } else {
         var resultado = `<h2>Lista de Medicos</h2>
@@ -83,7 +83,7 @@ ListaMedicos.prototype.listarMedicos = function () {
                             "<td class ='medtab'>" + currentValue.email + "</td>"+
                             "<td class ='medtab'>" + currentValue.especialidade +"</td>"+
                             "<td class ='medtab'><button class='editmed'><i class='fas fa-user-edit'></i></button></td>"+
-                            "<td class ='medtab'><button class='editmed'><i class='fas fa-user-times'></i></button></td>"+
+                            "<td class ='medtab'><button onclick=ListaMedicos.removerMedicos(" + currentValue.id + ") class='editmed'><i class='fas fa-user-times'></i></button></td>"+
                             "</tr>";
             today = true;
 
@@ -94,7 +94,6 @@ ListaMedicos.prototype.listarMedicos = function () {
     }
 
 };
-
 
 ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
     if (localStorage['ListaMedicos']) {
@@ -109,6 +108,17 @@ ListaMedicos.apresentar = function (medico) {
     medico.saveMedicos();
 
 };
+
+ListaMedicos.removerMedicos = function (posicao) {
+    medico = new ListaMedicos();
+    var localStorageObjs = JSON.parse(localStorage.getItem('ListaMedicos'));
+    for (let i = 0; i < localStorageObjs.length; i++) {
+        if (localStorageObjs[i].id == posicao)
+            localStorageObjs.splice(i, 1);
+    }
+    localStorage['ListaMedicos'] = JSON.stringify(localStorageObjs);
+    ListaMedicos.apresentar(medico);
+}
 
 
 ListaMedicos.getNumberOfMedicos = function () {
@@ -127,7 +137,7 @@ ListaMedicos.acrescentar = function (medico) { //
     if (nome != "" && titulo != "" && genero != "" && email != "" && especialidade != "" && foto != "" && especialidade!=null) {
         medico = new ListaMedicos().acrescentarMedicos();
         ListaMedicos.getNumberOfMedicos();
-        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos(), nome, titulo, genero, email, especialidade, foto));
+        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos()+1, nome, titulo, genero, email, especialidade, foto));
         ListaMedicos.apresentar(medico);
     } else {
         if(especialidade==null)

@@ -38,10 +38,10 @@ function ListaConsulta() {
 ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
 
-    if (retrievedObject[retrievedObject.length - 1] == null)
+    if (retrievedObject[retrievedObject.length] == null)
         return 0;
     else
-        return retrievedObject[retrievedObject.length - 1].id;
+        return retrievedObject[retrievedObject.length].id;
 
 }
 
@@ -56,11 +56,11 @@ function listarTipoConsulta() {
 
     var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
 
-    var mainDiv = document.getElementById("mainDiv");
+    var mainForm = document.getElementById("mainForm");
 
-    createLabels("Tipo de Consulta: ", mainDiv);
-    createElement("SELECT", mainDiv, "tipoConsulta", "custom-select");
-    createBrs(mainDiv);
+    createLabels("Tipo de Consulta: ", mainForm);
+    createElement("SELECT", mainForm, "tipoConsulta", "custom-select");
+    createBrs(mainForm);
 
     var getSelectTipo = document.getElementById("tipoConsulta");
 
@@ -68,25 +68,24 @@ function listarTipoConsulta() {
         var option = document.createElement("option");
         option.text = arr[i];
         getSelectTipo.add(option);
-
     }
 
 }
 
 function listarMedicos() {
 
-    var mainDiv = document.getElementById("mainDiv");
+    var mainForm = document.getElementById("mainForm");
 
-    createBrs(mainDiv);
+    createBrs(mainForm);
 
 
-    createLabels("Médicos: ", mainDiv);
+    createLabels("Médicos: ", mainForm);
 
-    createElement("SELECT", mainDiv, "medicos", "custom-select");
+    createElement("SELECT", mainForm, "medicos", "custom-select");
 
-    createBrs(mainDiv);
+    createBrs(mainForm);
 
-    createBrs(mainDiv);
+    createBrs(mainForm);
 
 
 
@@ -106,7 +105,7 @@ function listarMedicos() {
         getSelectMedicos.disabled = true;
         getSelectMedicos.add(option);
     }
-    createButtons(mainDiv, "submit", "submit", "btn btn-primary", "Submeter", "");
+    createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
 
 ListaConsulta.prototype.saveConsultas = function () { //guardar no localStorage
@@ -222,7 +221,7 @@ ListaConsulta.acrescentar = function (consulta) {
     var medico = document.getElementById("medicos");
     if (checkConsulta(medico, nAnimal, tipoConsulta, dataInput)) {
         consulta = new ListaConsulta().acrescentarConsultas();
-        consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
+        consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas(), dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
         alert("Consulta adicionada com sucesso");
         window.location.href = "index.html";
     }
