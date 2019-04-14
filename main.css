@@ -4,27 +4,23 @@
 }
 
 .vMenu a {
-    background: linear-gradient(120deg, rgb(99, 120, 194), #A1CAFF);
-    color: #efefef;
-    display: block;
-    padding: 12px;
+  background-image: linear-gradient(to right, #6190E8,#A7BFE8); padding: 12px;
+  color: #efefef;
 }
 
 .vMenu a:hover {
-    background: linear-gradient(120deg, rgb(42, 63, 139), #A1CAFF);
+  background: linear-gradient(120deg, rgb(50, 83, 201),#A7BFE8);
     color: #efefef;
 }
 
 .vMenu a.active {
-    background: linear-gradient(120deg, rgb(42, 63, 139), #A1CAFF);
-    color: white;
+  background: linear-gradient(120deg, rgb(50, 83, 201),#A7BFE8);
+  color: #efefef;
 }
 
 .hMenu {
-    background: linear-gradient(120deg, rgb(99, 120, 194), #A1CAFF);
-    color: #efefef;
-}
-
+  background-image: linear-gradient(to right,#6190E8,#A7BFE8);
+  }
 
 .container-fluid {
   padding-top:2em;
