@@ -5,8 +5,8 @@
 /**
  * @constructs Medico
  */
-
-
+arr = JSON.parse(localStorage["Especialidade"]);
+arrgen = JSON.parse(localStorage["Genero"]);
 
 function Medico(id, nome, titulo, genero, email, especialidade, foto) {
     this.id = id;
@@ -127,54 +127,54 @@ ListaMedicos.getNumberOfMedicos = function () {
 }
 
 ListaMedicos.acrescentar = function (medico) { //
-    var nome = document.getElementById("nome").value;
-    var titulo = document.getElementById("titulo").value;
-    var genero = document.getElementById("tipoGenero").value;
-    var email = document.getElementById("email").value;
-    var especialidade = document.getElementById("tipoEspecialidade").value;
-    var foto = document.getElementById("foto").value;
-    switch (parseInt(especialidade)) {
+    var nome = document.getElementById("nome");
+    var titulo = document.getElementById("titulo");
+    var genero = document.getElementById("tipoGenero");
+    var email = document.getElementById("email");
+    var especialidade = document.getElementById("tipoEspecialidade");
+    var foto = document.getElementById("foto");
+    switch (parseInt(especialidade.value)) {
         case 0:
-            especialidade = arr[0];
+            espec= arr[0];
             break;
         case 1:
-            especialidade = arr[1];
+            espec = arr[1];
             break;
         case 2:
-            especialidade = arr[2];
+            espec = arr[2];
             break;
         case 3:
-            especialidade = arr[3];
+            espec = arr[3];
             break;
         case 4:
-            especialidade = "Outro";
+            espec = "Outro";
             break;
         default:
-            especialidade = "";
+            espec = "";
             break;
     }
 
-    switch (parseInt(genero)) {
+    switch (parseInt(genero.value)) {
         case 0:
-            genero = "Masculino";
+            gen = "Masculino";
             break;
         case 1:
-            genero = "Feminino";
+            gen = "Feminino";
             break;
         case 2:
-            genero = "Outro";
+            gen = "Outro";
             break;
         default:
-            genero = "";
+            gen = "";
             break;
     }
 
 
-    if (nome != "" && titulo != "" && genero != "" && email != "" && especialidade != "" && foto != "" && especialidade != null) {
+    if (checkMedicos(nome,titulo,email,genero,especialidade,foto)) {
         medico = new ListaMedicos().acrescentarMedicos();
         ListaMedicos.getNumberOfMedicos();
-        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome, titulo, genero, email, especialidade, foto));
-        ListaMedicos.apresentar(medico);
+        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome.value, titulo.value, gen, email.value, espec, foto.value));
+        location.reload();
     } else {
         if (especialidade == null)
             alert("O medico necessita de ser especializado em algo");
@@ -192,7 +192,6 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     let genero = document.getElementById("tipoGenero" + id);
     let email = document.getElementById("emailinp" + id);
     let espec = document.getElementById("tipoEspecialidade" + id);
-    var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
     switch (parseInt(espec.value)) {
         case 0:
             espec = arr[0];
@@ -231,10 +230,11 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
 
     medico = new ListaMedicos();
     var localStorageObjs = JSON.parse(localStorage.getItem('ListaMedicos'));
-
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     for (let i = 0; i < localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == id) {
-            if (nome.value != "" && titulo.value != "" && email.value != "" && genero != "" && espec != "") {
+            if (nome.value != "" && titulo.value != "" && email.value != "" && genero != "" && espec != "" && re.test(String(email.value).toLowerCase()) == true) {
+                
                 localStorageObjs[i].nome = nome.value;
                 localStorageObjs[i].titulo = titulo.value;
                 localStorageObjs[i].email = email.value;
@@ -249,7 +249,6 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
 
     }
     localStorage['ListaMedicos'] = JSON.stringify(localStorageObjs);
-    ListaMedicos.apresentar();
 }
 
 function removeChilds(myNode) {
@@ -338,8 +337,7 @@ function EditarMed(id) {
 
     let nomeinp = document.getElementById("nomeinp" + id);
     let tituloinp = document.getElementById("tituloinp" + id);
-    let emailinp = document.getElementById("emailinp" + id);
-    emailinp.type = "email";
+    let emailinp = document.getElementById("emailinp" + id,"email");
     nomeinp.placeholder = nomevalor;
     tituloinp.placeholder = titulovalor;
     emailinp.placeholder = emailvalor;
@@ -372,7 +370,7 @@ function listarEspecialidade(idform) {
     createElement("SELECT", mainForm, "tipoEspecialidade" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoEspecialidade" + id);
 
-    var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
+    
     for (let i = -2; i < arr.length + 1; i++) {
 
         if (i == -2) {
@@ -415,8 +413,7 @@ function listarGenero(idform) {
     createElement("SELECT", mainForm, "tipoGenero" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoGenero" + id);
 
-    var arr = ['Masculino', 'Feminino'];
-    for (let i = -2; i < arr.length + 1; i++) {
+    for (let i = -2; i <= arrgen.length ; i++) {
 
         if (i == -2) {
             var option = document.createElement("option");
@@ -435,7 +432,7 @@ function listarGenero(idform) {
         }
         if (i != arr.length) {
             var option = document.createElement("option");
-            option.text = arr[i];
+            option.text = arrgen[i];
             option.value = i;
             getSelectTipo.add(option);
         }
@@ -449,6 +446,37 @@ function listarGenero(idform) {
     getSelectTipo.options[0].disabled = true;
 }
 
+
+function isNull(campo) {
+    return (campo == "" || campo == null);
+}
+
+function alertAndFocus(campo, msg) {
+    alert(msg);
+    campo.focus();
+    campo.setAttribute("class", "input-error form-control");
+    return false;
+}
+
+function checkMedicos(nome, titulo, email, genero,especialidade,foto)  {
+    if(isNull(nome.value)){
+        alertAndFocus(nome, "Campo: Nome vazio");
+    }else if(isNull(titulo.value)){
+        alertAndFocus(titulo, "Campo: Titulo vazio");
+    }else if(isNull(email.value)){
+        alertAndFocus(email, "Campo: Email vazio");
+    }else if(isNull(genero.value)){
+        alertAndFocus(genero, "Campo: Genero vazio");
+    }else if(isNull(especialidade.value)){
+        alertAndFocus(especialidade, "Campo: Especialidade vazio");
+    }else if(isNull(foto.value)){
+        alertAndFocus(foto, "Campo: Foto vazio");
+    }else{
+        return true;
+    }
+    
+
+}
 
 function initializeElements() {
     var body = document.getElementById('body');
