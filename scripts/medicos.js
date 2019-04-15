@@ -71,8 +71,8 @@ ListaMedicos.prototype.listarMedicos = function () {
                 <th class ='medtab' scope="col">Genero</th>
                 <th class ='medtab' scope="col">Email</th>
                 <th class ='medtab' scope="col">Especialidade</th>
-                <th class ='medtab' scope="col"></th>
-                <th class ='medtab' scope="col"></th>
+                <th class ='medtab' scope="col">Editar</th>
+                <th class ='medtab' scope="col">Remover</th>
             </tr>`;
 
         this.medicos.forEach(function (currentValue, index, array) {
@@ -297,8 +297,8 @@ function undo(id) {
     btn2.setAttribute("onclick", "undo(" + id + ")");
     icon2.appendChild(btn2);
 
-    createElement("i", document.getElementById("btnicp" + id), "", "fas fa-user-edit");
-    createElement("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
+    createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-edit");
+    createElements("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
 }
 
 function removeChilds(myNode) {
@@ -358,8 +358,8 @@ function EditarMed(id) {
     btn2.setAttribute("onclick", "undo(this.value)");
     icon2.appendChild(btn2);
 
-    createElement("i", document.getElementById("btnicp" + id), "", "fas fa-user-check");
-    createElement("i", document.getElementById("btnics" + id), "", "fas fa-undo");
+    createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-check");
+    createElements("i", document.getElementById("btnics" + id), "", "fas fa-undo");
 }
 
 function listarEspecialidade(idform) {
@@ -367,7 +367,7 @@ function listarEspecialidade(idform) {
     var mainForm = document.getElementById(idform);
     let id = idform.split("especialidade");
     id = id[1];
-    createElement("SELECT", mainForm, "tipoEspecialidade" + id, "form-control");
+    createElements("SELECT", mainForm, "tipoEspecialidade" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoEspecialidade" + id);
 
     
@@ -410,7 +410,7 @@ function listarGenero(idform) {
     var mainForm = document.getElementById(idform);
     let id = idform.split("genero");
     id = id[1];
-    createElement("SELECT", mainForm, "tipoGenero" + id, "form-control");
+    createElements("SELECT", mainForm, "tipoGenero" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoGenero" + id);
 
     for (let i = -2; i <= arrgen.length ; i++) {
@@ -475,12 +475,11 @@ function checkMedicos(nome, titulo, email, genero,especialidade,foto)  {
         return true;
     }
     
-
 }
 
 function initializeElements() {
     var body = document.getElementById('body');
-    createElement("h4", document.getElementById("nowTime"), "dataAtual");
+    createElements("h4", document.getElementById("nowTime"), "dataAtual");
 }
 
 function initialize() {

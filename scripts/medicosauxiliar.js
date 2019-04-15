@@ -12,7 +12,7 @@ function listarEspecialidade(idform) {
     var mainForm = document.getElementById(idform);
 
     createLabels("Especialidade:", mainForm); // Facil controlo
-    createElement("SELECT", mainForm, "tipoEspecialidade" /*+ numSel*/, "form-control");
+    createElements("SELECT", mainForm, "tipoEspecialidade" /*+ numSel*/, "form-control");
     createBrs(mainForm);
 
     var getSelectTipo = document.getElementById("tipoEspecialidade"/*+ numSel*/); // ativar com o codigo debaixo!
@@ -80,7 +80,7 @@ function listarGenero(idform) {
     let id = idform.split("generodiv");
     id=id[1];
     createLabels("Genero:", mainForm); // Facil controlo
-    createElement("SELECT", mainForm, "tipoGenero" + id, "form-control");
+    createElements("SELECT", mainForm, "tipoGenero" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoGenero" + id);
 
     var arr = ['Masculino', 'Feminino'];
@@ -119,7 +119,7 @@ function listarGenero(idform) {
 
 function initializeElements() {
     var body = document.getElementById('body');
-    createElement("h4", document.getElementById("nowTime"), "dataAtual");
+    createElements("h4", document.getElementById("nowTime"), "dataAtual");
 }
 
 function initialize() {

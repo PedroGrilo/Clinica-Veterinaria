@@ -4,7 +4,7 @@ function initializeElements() {
 
  
 
-    createElement("h4", document.getElementById("nowTime"), "dataAtual");
+    createElements("h4", document.getElementById("nowTime"), "dataAtual");
 
 
 }

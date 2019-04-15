@@ -28,11 +28,19 @@ function createBrs(where){
     where.appendChild(elementCreated);
 }
 
-function createElement(element, where, idName, classes) {
+function createElements(element, where, idName, classes) {
     var elementCreated = document.createElement("" + element + "");
     elementCreated.setAttribute("id", idName);
     elementCreated.className = classes;
     where.appendChild(elementCreated);
 }
 
+function createOptions(select,text,attribute,textAttribute){
+    var option = document.createElement("option");
+    option.text = text;
+    select.add(option);
+    if(attribute){
+        select.setAttribute(attribute,textAttribute);
+    }
+}
 
