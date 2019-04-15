@@ -42,14 +42,14 @@ ListaConsulta.getNumberOfConsultas = function () {
         return 0;
     else
         return retrievedObject[retrievedObject.length].id;
-
 }
 
 
 
 function createObjects() {
+    var mainForm = document.getElementById("mainForm");
     listarTipoConsulta();
-    listarMedicos();
+    createElement("DIV", mainForm, "idDiv");
 }
 
 function listarTipoConsulta() {
@@ -63,21 +63,38 @@ function listarTipoConsulta() {
     createBrs(mainForm);
 
     var getSelectTipo = document.getElementById("tipoConsulta");
+    getSelectTipo.setAttribute("onchange", "getSelected(this)");
+
+    var option = document.createElement("option");
+    option.text = "Escolher opção:";
+    getSelectTipo.add(option);
 
     for (let i = 0; i < arr.length; i++) {
         var option = document.createElement("option");
         option.text = arr[i];
         getSelectTipo.add(option);
     }
-
+    getSelectTipo.options[0].disabled = true;
 }
 
-function listarMedicos() {
+function removeChilds(myNode) {
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
 
-    var mainForm = document.getElementById("mainForm");
+function getSelected(selectObject) {
+    var elem = document.getElementById('idDiv');
+    removeChilds(elem);
+    var value = selectObject.value;
+    listarMedicos(value);
+}
+
+function listarMedicos(opcao) {
+
+    var mainForm = document.getElementById("idDiv");
 
     createBrs(mainForm);
-
 
     createLabels("Médicos: ", mainForm);
 
@@ -87,23 +104,30 @@ function listarMedicos() {
 
     createBrs(mainForm);
 
-
-
     var getSelectMedicos = document.getElementById("medicos");
+
+    var founded = false;
 
     if (localStorage['ListaMedicos']) {
         var arr = JSON.parse(localStorage.getItem('ListaMedicos'));
         for (let i = 0; i < arr.length; i++) {
-            var option = document.createElement("option");
-            option.text = arr[i].nome;
-            getSelectMedicos.add(option);
+            if (opcao == arr[i].especialidade) {
+                var option = document.createElement("option");
+                option.text = arr[i].nome;
+                getSelectMedicos.add(option);
+                founded = true;
+            }
         }
 
-    } else {
+    } 
+    
+    if(!founded){
         var option = document.createElement("option");
         option.text = "Não existem médicos";
         getSelectMedicos.disabled = true;
         getSelectMedicos.add(option);
+        var button = document.getElementById('submit');
+        button.parentNode.removeChild(button);
     }
     createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
@@ -126,7 +150,6 @@ ListaConsulta.removerConsulta = function (posicao) {
     }
     localStorage['ListaConsultas'] = JSON.stringify(localStorageObjs);
     ListaConsulta.apresentar(consulta);
-
 }
 
 ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
@@ -214,15 +237,18 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput) {
 
 
 ListaConsulta.acrescentar = function (consulta) {
-
-    var dataInput = document.getElementById("dataInput");
-    var nAnimal = document.getElementById("nomeAnimal");
-    var tipoConsulta = document.getElementById("tipoConsulta");
-    var medico = document.getElementById("medicos");
-    if (checkConsulta(medico, nAnimal, tipoConsulta, dataInput)) {
-        consulta = new ListaConsulta().acrescentarConsultas();
-        consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas(), dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
-        alert("Consulta adicionada com sucesso");
-        window.location.href = "index.html";
+    try {
+        var dataInput = document.getElementById("dataInput");
+        var nAnimal = document.getElementById("nomeAnimal");
+        var tipoConsulta = document.getElementById("tipoConsulta");
+        var medico = document.getElementById("medicos");
+        if (checkConsulta(medico, nAnimal, tipoConsulta, dataInput)) {
+            consulta = new ListaConsulta().acrescentarConsultas();
+            consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 0, 0));
+            alert("Consulta adicionada com sucesso");
+            window.location.href = "index.html";
+        }
+    } catch (e) {
+        throw "ERRO: " + e;
     }
 };

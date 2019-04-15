@@ -252,7 +252,7 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     ListaMedicos.apresentar();
 }
 
-function childremover(myNode) {
+function removeChilds(myNode) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
@@ -273,13 +273,13 @@ function undo(id) {
     let espec = document.getElementById("tipoEspecialidade" + id).parentElement;
     let icon1 = document.getElementById("ico" + id);
     let icon2 = document.getElementById("ico_s" + id);
-    childremover(nome);
-    childremover(titulo);
-    childremover(genero);
-    childremover(email);
-    childremover(espec);
-    childremover(icon1);
-    childremover(icon2);
+    removeChilds(nome);
+    removeChilds(titulo);
+    removeChilds(genero);
+    removeChilds(email);
+    removeChilds(espec);
+    removeChilds(icon1);
+    removeChilds(icon2);
     nome.textContent = nomevalor;
     titulo.textContent = titulovalor;
     email.textContent = emailvalor;
@@ -302,7 +302,7 @@ function undo(id) {
     createElement("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
 }
 
-function childremover(myNode) {
+function removeChilds(myNode) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
@@ -322,13 +322,13 @@ function EditarMed(id) {
     let emailvalor = email.textContent;
     let generovalor = genero.textContent;
     let especvalor = espec.textContent;
-    childremover(nome);
-    childremover(titulo);
-    childremover(genero);
-    childremover(email);
-    childremover(espec);
-    childremover(icon1);
-    childremover(icon2);
+    removeChilds(nome);
+    removeChilds(titulo);
+    removeChilds(genero);
+    removeChilds(email);
+    removeChilds(espec);
+    removeChilds(icon1);
+    removeChilds(icon2);
 
     createInputs("input", nome, "nomeinp" + id);
     createInputs("input", titulo, "tituloinp" + id);
