@@ -86,6 +86,12 @@ td.medtab,th.medtab{
   border: 1px solid #dee2e6;
   border-style: none solid solid none
 }
+th.medtab{
+  background-color: #343a40;
+
+  border: 1px solid #343a40;
+  color:#ffff;
+}
 button.editmed{
   border:none;
   background: none;
