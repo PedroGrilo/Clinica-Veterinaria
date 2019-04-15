@@ -345,6 +345,7 @@ function EditarMed(id){
     let nomeinp =  document.getElementById("nomeinp"+id);
     let tituloinp =  document.getElementById("tituloinp"+id);
     let emailinp =  document.getElementById("emailinp"+id);
+    emailinp.type="email";
     nomeinp.placeholder = nomevalor; 
     tituloinp.placeholder = titulovalor; 
     emailinp.placeholder = emailvalor; 
