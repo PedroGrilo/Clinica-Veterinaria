@@ -34,3 +34,4 @@ function createElement(element, where, idName, classes) {
     elementCreated.className = classes;
     where.appendChild(elementCreated);
 }
+
