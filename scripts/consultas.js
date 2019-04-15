@@ -54,7 +54,7 @@ function createObjects() {
 
 function listarTipoConsulta() {
 
-    var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
+    var arr = JSON.parse(localStorage.getItem('Especialidade'));
 
     var mainForm = document.getElementById("mainForm");
 
