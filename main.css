@@ -78,41 +78,14 @@ body {
 }
 
 /*ta mais vivo agora (n leves a mal eu depois vejo como e que hei de por, e na brincadeira)*/
-.medtab{
-  margin:4px auto;
-}
-.medtab tr td{
-  padding:4px;
-}
-.medtab tr:nth-child(7n-6){
-  background-color:rgb(255,0,0);
-}
-.medtab tr:nth-child(7n-5){
-  background-color:rgb(255,100,0);
-}
-.medtab tr:nth-child(7n-4){
-  background-color:rgb(255,255,0);
-}
-.medtab tr:nth-child(7n-3){
-  background-color:rgb(0,255,0);
-}
-.medtab tr:nth-child(7n-2){
-  background-color:rgb(0,0,255);
-}
-.medtab tr:nth-child(7n-1){
-  background-color:rgb(150,50,255);
-}
-.medtab tr:nth-child(7n){
-  /*This is what all the nth-child are based on, number of tr elements you are going down and offset by those numbers*/
-  background-color:rgb(200,0,200);
-}
-/*table.medtab{
+
+table.medtab{
   border: 1px solid #dee2e6
 }
 td.medtab,th.medtab{
   border: 1px solid #dee2e6;
   border-style: none solid solid none
-}*/
+}
 button.editmed{
   border:none;
   background: none;
