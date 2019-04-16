@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    
+
     <script src="scripts/data.js"></script>
     <script src="scripts/createObj.js"></script>
     <script src="scripts/consultas.js"></script>
@@ -35,8 +35,7 @@
                 </a>
                 <a href="creditos.html" class="list-group-item list-group-item-action bg-light"><i
                         class="fas fa-info-circle"></i> Créditos</a>
-
-                    </div>
+            </div>
         </div>
         <!-- /#sidebar-wrapper -->
 
@@ -62,21 +61,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-8" id="mainDiv">
-                        <h3 style="padding:5px">Adicionar Consulta:</h3><hr>
+                        <h3 style="padding:5px">Adicionar Consulta:</h3>
+                        <hr>
                         <form onsubmit="ListaConsulta.acrescentar();return false;" method="POST" id="mainForm">
                             <label for="">Dia Da consulta:</label>
                             <input class="form-control" type="date" class="" nome="dataInput" id="dataInput"><br>
                             <label>Nome do Animal:</label>
                             <input class="form-control" type="text" name="nomeAnimal" id="nomeAnimal"><br>
                         </form>
-                        
-                      
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body> 
+</body>
 <!-- Menu Toggle Script -->
 <script>
     $("#menu-toggle").click(function (e) {

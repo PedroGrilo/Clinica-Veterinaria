@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
 
     <script src="scripts/data.js"></script>
     <script src="scripts/createObj.js"></script>
@@ -19,84 +21,87 @@
 </head>
 
 <body>
-<div class="d-flex" id="wrapper">
-    <div class="hMenu border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading hMenu" style="text-align:center">
-            <img src="https://s3.envato.com/files/117067780/Color%20PNG/Cat%20Funny%20Icon-05.png" width="65rem">
-        </div>
-
-        <div class="list-group list-group-flush vMenu">
-            <a href="index.html" class="list-group-item list-group-item-action bg-light active"><i class="fas fa-home"></i>
-                Home</a>
-            <a href="consultas.html" class="list-group-item list-group-item-action bg-light"><i
-                    class="fas fa-address-book"></i> Marcação de consultas</a>
-            <a href="gestao.html" class="list-group-item list-group-item-action bg-light"><i
-                    class="fas fa-users"></i> Gerir Médicos
-            </a>
-            <a href="creditos.html" class="list-group-item list-group-item-action bg-light"><i
-                    class="fas fa-info-circle"></i> Créditos</a>
-</div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
-            <button class="btn btn-light" id="menu-toggle">
-                <i class="navbar-toggler-icon"></i>
-            </button>
-            <h4 class="navbar navbar-expand">Clinica Veterinária - Página Inicial</h4>
-
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
-                    <li class="nav-item">
-                        <div id="nowTime"></div>
-                    </li>
-
-                </ul>
+    <div class="d-flex" id="wrapper">
+        <div class="hMenu border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading hMenu" style="text-align:center">
+                <img src="https://s3.envato.com/files/117067780/Color%20PNG/Cat%20Funny%20Icon-05.png" width="65rem">
             </div>
-        </nav>
-        <div class="container-fluid">
-            
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body" id="modal-body"></div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-info" id="saveButton" data-dismiss="modal">Guardar</button>
-            <button type="button" id="paymentButton" disabled="true"  class="btn btn-danger">Pagamento</button>
+
+            <div class="list-group list-group-flush vMenu">
+                <a href="index.html" class="list-group-item list-group-item-action bg-light active"><i
+                        class="fas fa-home"></i>
+                    Home</a>
+                <a href="consultas.html" class="list-group-item list-group-item-action bg-light"><i
+                        class="fas fa-address-book"></i> Marcação de consultas</a>
+                <a href="gestao.html" class="list-group-item list-group-item-action bg-light"><i
+                        class="fas fa-users"></i> Gerir Médicos
+                </a>
+                <a href="creditos.html" class="list-group-item list-group-item-action bg-light"><i
+                        class="fas fa-info-circle"></i> Créditos</a>
             </div>
         </div>
-        </div>
-    </div>
-    
+        <!-- /#sidebar-wrapper -->
 
-            <h3 style="padding:5px">Consultas do dia:</h3><hr>
-            <div style="overflow-x:auto;" class="col-11" id="todayConsultation"></div>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom ">
+                <button class="btn btn-light" id="menu-toggle">
+                    <i class="navbar-toggler-icon"></i>
+                </button>
+                <h4 class="navbar navbar-expand">Clinica Veterinária - Página Inicial</h4>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-3 mt-lg-0">
+                        <li class="nav-item">
+                            <div id="nowTime"></div>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+            <div class="container-fluid">
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" id="saveButton"
+                                    data-dismiss="modal">Guardar</button>
+                                <button type="button" id="paymentButton" disabled="true"
+                                    class="btn btn-danger">Pagamento</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h3 style="padding:5px">Consultas do dia:</h3>
+                <hr>
+                <div style="overflow-x:auto;" class="col-11" id="todayConsultation"></div>
+            </div>
         </div>
     </div>
-</div>
 
 
 
 </body>
-    <!-- Menu Toggle Script -->
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-    <script src="scripts/main.js"></script>
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+<script src="scripts/main.js"></script>
 
 
 </html>

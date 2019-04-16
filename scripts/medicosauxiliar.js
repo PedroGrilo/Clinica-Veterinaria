@@ -78,7 +78,7 @@ function listarGenero(idform) {
 
     var mainForm = document.getElementById(idform);
     let id = idform.split("generodiv");
-    id=id[1];
+    id = id[1];
     createLabels("Genero:", mainForm); // Facil controlo
     createElements("SELECT", mainForm, "tipoGenero" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoGenero" + id);
@@ -101,12 +101,12 @@ function listarGenero(idform) {
             getSelectTipo.add(optionsep);
             continue;
         }
-            if (i != arr.length) {
-                var option = document.createElement("option");
-                option.text = arr[i];
-                option.value = i;
-                getSelectTipo.add(option);
-            }
+        if (i != arr.length) {
+            var option = document.createElement("option");
+            option.text = arr[i];
+            option.value = i;
+            getSelectTipo.add(option);
+        }
         if (i == arr.length) {
             var option = document.createElement("option");
             option.text = "Outro";
@@ -118,7 +118,6 @@ function listarGenero(idform) {
 }
 
 function initializeElements() {
-    var body = document.getElementById('body');
     createElements("h4", document.getElementById("nowTime"), "dataAtual");
 }
 
