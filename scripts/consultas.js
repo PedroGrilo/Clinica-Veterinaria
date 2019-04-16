@@ -37,10 +37,7 @@ function ListaConsulta() {
 
 ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
-    if (retrievedObject[retrievedObject.length] == null)
-        return 0;
-    else
-        return retrievedObject[retrievedObject.length].id;
+    return retrievedObject.length;
 }
 
 
