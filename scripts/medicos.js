@@ -7,7 +7,20 @@
  */
 arr = JSON.parse(localStorage["Especialidade"]);
 arrgen = JSON.parse(localStorage["Genero"]);
-
+function initialize2(){
+    var arrespec = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
+    var arrgenero = ['Masculino', 'Feminino'];
+    if(!localStorage['Especialidade']){
+        localStorage['Especialidade'] = JSON.stringify(arrespec);
+    }
+    if(!localStorage['Genero']){
+        localStorage['Genero'] = JSON.stringify(arrgenero);
+    }
+};
+window.onload = function(){
+    initialize2();
+    ListaMedicos.apresentar();
+}
 function Medico(id, nome, titulo, genero, email, especialidade, foto) {
     this.id = id;
     this.nome = nome;
@@ -132,47 +145,15 @@ ListaMedicos.acrescentar = function (medico) { //
     var email = document.getElementById("email");
     var especialidade = document.getElementById("tipoEspecialidade");
     var foto = document.getElementById("foto");
-    switch (parseInt(especialidade.value)) {
-        case 0:
-            espec = arr[0];
-            break;
-        case 1:
-            espec = arr[1];
-            break;
-        case 2:
-            espec = arr[2];
-            break;
-        case 3:
-            espec = arr[3];
-            break;
-        case 4:
-            espec = "Outro";
-            break;
-        default:
-            espec = "";
-            break;
+    if(!arr.includes(especialidade.value)){
+        arr.push(especialidade.value);
+        localStorage["Especialidade"]=JSON.stringify(arr);
     }
-
-    switch (parseInt(genero.value)) {
-        case 0:
-            gen = "Masculino";
-            break;
-        case 1:
-            gen = "Feminino";
-            break;
-        case 2:
-            gen = "Outro";
-            break;
-        default:
-            gen = "";
-            break;
-    }
-
 
     if (checkMedicos(nome, titulo, email, genero, especialidade, foto)) {
         medico = new ListaMedicos().acrescentarMedicos();
         ListaMedicos.getNumberOfMedicos();
-        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome.value, titulo.value, gen, email.value, espec, foto.value));
+        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome.value, titulo.value, genero.value, email.value, especialidade.value, foto.value));
         alert("Médico adicionado com sucesso!!");
         location.href = "gestao.html";
     } else {
@@ -325,10 +306,10 @@ function EditarMed(id) {
     removeChilds(icon1);
     removeChilds(icon2);
 
-    createInputs("input", nome, "nomeinp" + id, "", "form-control");
-    createInputs("input", titulo, "tituloinp" + id, "", "form-control");
+    createInputs(nome, "nomeinp" + id, "", "form-control");
+    createInputs(titulo, "tituloinp" + id, "", "form-control");
     listarGenero(genero.id);
-    createInputs("input", email, "emailinp" + id, "", "form-control");
+    createInputs(email, "emailinp" + id, "", "form-control");
     listarEspecialidade(espec.id);
 
     let nomeinp = document.getElementById("nomeinp" + id);
@@ -387,7 +368,7 @@ function listarEspecialidade(idform) {
         if (i != arr.length) {
             var option = document.createElement("option");
             option.text = arr[i];
-            option.value = i;
+            option.value = arr[i];
             getSelectTipo.add(option);
         }
         if (i == arr.length) {
@@ -429,7 +410,7 @@ function listarGenero(idform) {
         if (i != arr.length) {
             var option = document.createElement("option");
             option.text = arrgen[i];
-            option.value = i;
+            option.value = arr[i];
             getSelectTipo.add(option);
         }
         if (i == arr.length) {

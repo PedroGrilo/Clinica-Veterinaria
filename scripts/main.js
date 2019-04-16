@@ -8,11 +8,18 @@ function initialize() {
     initializeElements();
     document.getElementById("dataAtual").innerText = data.getDataAtual();
     ListaConsulta.apresentar();
-    var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
-    var arrgen = ['Masculino', 'Feminino'];
-    localStorage['Especialidade'] = JSON.stringify(arr);
-    localStorage['Genero'] = JSON.stringify(arrgen);
-
 }
-
-window.onload = initialize();
+function initialize2(){
+    var arrespec = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
+    var arrgenero = ['Masculino', 'Feminino'];
+    if(!localStorage['Especialidade']){
+        localStorage['Especialidade'] = JSON.stringify(arrespec);
+    }
+    if(!localStorage['Genero']){
+        localStorage['Genero'] = JSON.stringify(arrgenero);
+    }
+};
+window.onload = function(){
+    initialize();
+    initialize2();
+}

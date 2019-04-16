@@ -1,24 +1,19 @@
-window.onload = function () {
-    listarEspecialidade("especialiadediv");
-    listarGenero("generodiv");
 
-}
-var numSel = 0;
-var arr = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
-var arrUsed = [0, 0, 0, 0];
+// var numSel = 0; // ativar com o codigo debaixo!
+// var arrUsed = [0, 0, 0, 0]; // ativar com o codigo debaixo!
 
 function listarEspecialidade(idform) {
 
     var mainForm = document.getElementById(idform);
 
     createLabels("Especialidade:", mainForm); // Facil controlo
-    createElements("SELECT", mainForm, "tipoEspecialidade" /*+ numSel*/, "form-control");
+    createElements("SELECT", mainForm, "tipoEspecialidade" /*+ numSel*/, "form-control"); // ativar com o codigo debaixo!
     createBrs(mainForm);
 
     var getSelectTipo = document.getElementById("tipoEspecialidade"/*+ numSel*/); // ativar com o codigo debaixo!
 
-    /* getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
-         
+     getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
+         /*
          if(arr.length != this.value){ // Verifica se o Outro foi Selecionado
          arrused[this.value] = 1; // Diz que a pos X do array ja foi usada, melhor um array encadeado?
          numsel++; // Incrementa o numero de selects criados
@@ -39,8 +34,25 @@ function listarEspecialidade(idform) {
          }else{ // Caso seja selecionado
              // Adicionar codigo para adicionar uma especialização
          }
-     });*/
-    for (let i = -2; i < arr.length + 2; i++) {
+     */
+         if(arr.length==this.value){
+             id=this.id;
+             if(!document.getElementById("otherespec"))
+             createInputs(this.parentElement,"otherespec","text","form-control");
+             other=document.getElementById("otherespec");
+             other.placeholder="Outro";
+             other.focus=true;
+             other.id=this.id;
+             this.id="filler";
+         }else{
+             if(other=document.getElementById(id)){
+                this.id=other.id;
+                other.parentElement.removeChild(other);
+            }
+         }
+         
+    });
+    for (let i = -2; i < arr.length + 1; i++) {
 
         if (i == -2) {
             var option = document.createElement("option");
@@ -57,14 +69,20 @@ function listarEspecialidade(idform) {
             getSelectTipo.add(optionsep);
             continue;
         }
-        if (arrUsed[i] == 0) {
+        /*if (arrUsed[i] == 0) {
             if (i != arr.length) {
                 var option = document.createElement("option");
                 option.text = arr[i];
-                option.value = i;
+                option.value = arr[i];
                 getSelectTipo.add(option);
             }
-        }
+        }*/
+            if (i != arr.length) {
+                var option = document.createElement("option");
+                option.text = arr[i];
+                option.value = arr[i];
+                getSelectTipo.add(option);
+            }
         if (i == arr.length) {
             var option = document.createElement("option");
             option.text = "Outro";
@@ -104,7 +122,7 @@ function listarGenero(idform) {
         if (i != arr.length) {
             var option = document.createElement("option");
             option.text = arr[i];
-            option.value = i;
+            option.value = arr[i];
             getSelectTipo.add(option);
         }
         if (i == arr.length) {
@@ -117,13 +135,18 @@ function listarGenero(idform) {
     getSelectTipo.options[0].disabled = true;
 }
 
-function initializeElements() {
-    createElements("h4", document.getElementById("nowTime"), "dataAtual");
+function initialize2(){
+    var arrespec = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
+    var arrgenero = ['Masculino', 'Feminino'];
+    if(!localStorage['Especialidade']){
+        localStorage['Especialidade'] = JSON.stringify(arrespec);
+    }
+    if(!localStorage['Genero']){
+        localStorage['Genero'] = JSON.stringify(arrgenero);
+    }
+};
+window.onload = function(){
+    listarEspecialidade("especialiadediv");
+    listarGenero("generodiv");
+    initialize2();
 }
-
-function initialize() {
-    initializeElements();
-    document.getElementById("dataAtual").innerText = data.getDataAtual();
-}
-
-window.onload = initialize();
