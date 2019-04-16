@@ -37,7 +37,6 @@ function ListaConsulta() {
 
 ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
-
     if (retrievedObject[retrievedObject.length] == null)
         return 0;
     else
@@ -48,8 +47,62 @@ ListaConsulta.getNumberOfConsultas = function () {
 
 function createObjects() {
     var mainForm = document.getElementById("mainForm");
+    var marcacoes = document.getElementById("marcacoes");
     listarTipoConsulta();
     createElements("DIV", mainForm, "idDiv");
+}
+
+
+function createMarcacoes(medicoSelected){
+
+    var medico = medicoSelected.value;
+
+    document.getElementById("theadMarc").hidden = false;
+
+    var tBody = document.getElementById("tbodySemana");
+
+    removeChilds(tBody);
+
+    var idHeader = document.getElementById("idHeader");
+
+    idHeader.textContent="Marcaçoes dos proximos 7 dias -> Medico:  "+medico;
+
+
+    for(var i = 0 ; i < 7; i++){
+        var tr = document.createElement("TR");
+        var date = new Date();
+        var td = document.createElement("TD");
+        var text = document.createTextNode(date.addDays(i));
+
+        tr.setAttribute("id", "myTr" +i);
+        tBody.appendChild(tr);
+        td.appendChild(text);
+        document.getElementById("myTr"+i).appendChild(td);
+
+        var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
+
+        for(var h = 0 ;h<listaConsultasLocal.length;h++){
+            if((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == text.textContent)){
+                tr.setAttribute("class","checked");
+                break;
+            }   
+        }
+
+    }
+
+}
+
+function removeChilds(myNode) {
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
+
+function getSelected(selectObject) {
+    var elem = document.getElementById('idDiv');
+    removeChilds(elem);
+    var value = selectObject.value;
+    listarMedicos(value);
 }
 
 function listarTipoConsulta() {
@@ -77,18 +130,6 @@ function listarTipoConsulta() {
     getSelectTipo.options[0].disabled = true;
 }
 
-function removeChilds(myNode) {
-    while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-    }
-}
-
-function getSelected(selectObject) {
-    var elem = document.getElementById('idDiv');
-    removeChilds(elem);
-    var value = selectObject.value;
-    listarMedicos(value);
-}
 
 function listarMedicos(opcao) {
 
@@ -105,7 +146,7 @@ function listarMedicos(opcao) {
     createBrs(mainForm);
 
     var getSelectMedicos = document.getElementById("medicos");
-
+    getSelectMedicos.setAttribute("onClick", "createMarcacoes(this)");
     var founded = false;
 
     if (localStorage['ListaMedicos']) {
@@ -129,6 +170,11 @@ function listarMedicos(opcao) {
         var button = document.getElementById('submit');
         button.parentNode.removeChild(button);
     }
+
+    createLabels("Dia da consulta:",mainForm);
+    createInputs(mainForm,"dataInput","date","form-control");
+    createBrs(mainForm);
+
     createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
 
@@ -164,7 +210,6 @@ ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
 function saveModal(id) {
 
     var localStorageObjs = JSON.parse(localStorage.getItem('ListaConsultas'));
-
     var selectModal = document.getElementById("idSelect");
 
     for (let i = 0; i < localStorageObjs.length; i++) {

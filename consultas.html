@@ -53,29 +53,34 @@
                         <li class="nav-item">
                             <div id="nowTime"></div>
                         </li>
-
                     </ul>
                 </div>
             </nav>
 
             <div class="container-fluid">
+
+                <h3 style="padding:5px">Adicionar Consulta:</h3>
+                <hr>
                 <div class="row">
-                    <div class="col-sm-8" id="mainDiv">
-                        <h3 style="padding:5px">Adicionar Consulta:</h3>
-                        <hr>
+                    <div class="col-sm-5" id="mainDiv">
                         <form onsubmit="ListaConsulta.acrescentar();return false;" method="POST" id="mainForm">
-                            <label for="">Dia Da consulta:</label>
-                            <input class="form-control" type="date" class="" nome="dataInput" id="dataInput"><br>
                             <label>Nome do Animal:</label>
                             <input class="form-control" type="text" name="nomeAnimal" id="nomeAnimal"><br>
                         </form>
-
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-5" id="marcacoes">
+                        <table class="table" id="marcacoesTable">
+                            <thead hidden id="theadMarc" class="thead-dark">
+                                <tr><th id="idHeader"></th></tr>
+                            </thead>
+                            <tbody id="tbodySemana"></tbody>
+                        </table>
 
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 <!-- Menu Toggle Script -->
 <script>
