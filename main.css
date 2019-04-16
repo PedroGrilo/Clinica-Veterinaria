@@ -77,21 +77,16 @@ body {
   outline: 0 none;
 }
 
-/*ta mais vivo agora (n leves a mal eu depois vejo como e que hei de por, e na brincadeira)*/
-
 table.medtab{
   border: 1px solid #dee2e6
 }
-td.medtab,th.medtab{
-  border: 1px solid #dee2e6;
-  border-style: none solid solid none
-}
-th.medtab{
-  background-color: #343a40;
 
-  border: 1px solid #343a40;
-  color:#ffff;
+table,td{
+  border: 1px solid #dee2e6;
+  border-style: solid solid solid solid
+
 }
+
 button.editmed{
   border:none;
   background: none;

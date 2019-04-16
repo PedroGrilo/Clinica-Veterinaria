@@ -8,13 +8,16 @@ function createButtons(where, idName, type, classB, valueB, onclick) {
     where.appendChild(elementCreated);
 }
 
-function createInputs(element, where, idName, type) {
+function createInputs(element, where, idName, type, classe) {
     var elementCreated = document.createElement("" + element + "");
     elementCreated.setAttribute("type", type);
     elementCreated.setAttribute("id", idName);
     elementCreated.setAttribute("name", idName);
     elementCreated.setAttribute("name", idName);        
     where.appendChild(elementCreated);
+    if(classe){
+        elementCreated.setAttribute("class",classe);
+    }
 }
 
 function createLabels(text,where){

@@ -177,10 +177,11 @@ function saveModal(id) {
     ListaConsulta.apresentar();
 }
 
-function openModal(id,option) {
+function openModal(id, option) {
 
     var modal = document.getElementById('modal-body');
     var saveButton = document.getElementById('saveButton');
+    var paymentButton = document.getElementById('paymentButton');
     
     removeChilds(modal);
 
@@ -190,22 +191,28 @@ function openModal(id,option) {
 
     createElements("SELECT", modal, "idSelect", "custom-select");
 
-
     var selectModal = document.getElementById("idSelect");
-
-    selectModal.setAttribute("onchange", "getValues(this)");
+    
+    selectModal.setAttribute("onchange", "checkOption(this.value)");
 
     createOptions(selectModal, "Escolher Opção");
     createOptions(selectModal, "Sim");
     createOptions(selectModal, "Não");
 
     selectModal.options[0].disabled = true;
+    
+    if(option == "Sim")
+        paymentButton.disabled = false;
+    else
+        paymentButton.disabled = true;
+    
+    checkOption(option);
+
     selectModal.value = option;
 }
 
-function getValues(getSelected) {
-    var paymentButton = document.getElementById('paymentButton');
-    if (getSelected.value == "Sim")
+function checkOption(getSelected) {
+    if (getSelected == "Sim")
         paymentButton.disabled = false;
     else
         paymentButton.disabled = true;
@@ -228,7 +235,7 @@ ListaConsulta.prototype.listarConsultas = function () {
                 var remove = `<td><a onclick="ListaConsulta.removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
                 resultado += "<tr><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                     currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>"
-                    + remove + "<td><a onclick='openModal(" + currentValue.id + ",`"+currentValue.efetivada+"`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
+                    + remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + currentValue.efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
 
                 today = true;
             }

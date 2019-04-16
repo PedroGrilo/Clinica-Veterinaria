@@ -36,9 +36,6 @@ function ListaMedicos() {
     }
 }
 
-
-
-
 ListaMedicos.prototype.saveMedicos = function () { //guardar no localStorage
     localStorage['ListaMedicos'] = JSON.stringify(this.medicos);
 }
@@ -64,26 +61,28 @@ ListaMedicos.prototype.listarMedicos = function () {
 
     } else {
         var resultado = `
-        <table class=" table medtab">
+        <table class="table medtab">
+            <thead class="thead-dark">
             <tr>
-                <th class ='medtab' scope="col" scope="col">Medico</th>
-                <th class ='medtab' scope="col">Titulo</th>
-                <th class ='medtab' scope="col">Genero</th>
-                <th class ='medtab' scope="col">Email</th>
-                <th class ='medtab' scope="col">Especialidade</th>
-                <th class ='medtab' scope="col">Editar</th>
-                <th class ='medtab' scope="col">Remover</th>
-            </tr>`;
+                <th>Medico</th>
+                <th>Titulo</th>
+                <th>Genero</th>
+                <th>Email</th>
+                <th>Especialidade</th>
+                <th>Editar</th>
+                <th>Remover</th>
+            </tr>
+        </thead>`;
 
         this.medicos.forEach(function (currentValue, index, array) {
             resultado += "<tr>" +
-                "<td class ='medtab'><div id ='nome" + currentValue.id + "'>" + currentValue.nome + "</div></td>" +
-                "<td class ='medtab'><div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "</div></td>" +
-                "<td class ='medtab'><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
-                "<td class ='medtab'><div id ='email" + currentValue.id + "'>" + currentValue.email + "</div></td>" +
-                "<td class ='medtab'><div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "</div></td>" +
-                "<td class ='medtab'><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
-                "<td class ='medtab'><div id='ico_s" + currentValue.id + "'><button onclick=ListaMedicos.removerMedicos(" + currentValue.id + ") class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
+                "<td><div id ='nome" + currentValue.id + "'>" + currentValue.nome + "</div></td>" +
+                "<td><div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "</div></td>" +
+                "<td><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
+                "<td><div id ='email" + currentValue.id + "'>" + currentValue.email + "</div></td>" +
+                "<td><div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "</div></td>" +
+                "<td><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
+                "<td><div id='ico_s" + currentValue.id + "'><button onclick=ListaMedicos.removerMedicos(" + currentValue.id + ") class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
                 "</tr>";
             today = true;
 
@@ -234,7 +233,6 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     for (let i = 0; i < localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == id) {
             if (nome.value != "" && titulo.value != "" && email.value != "" && genero != "" && espec != "" && re.test(String(email.value).toLowerCase()) == true) {
-                
                 localStorageObjs[i].nome = nome.value;
                 localStorageObjs[i].titulo = titulo.value;
                 localStorageObjs[i].email = email.value;
@@ -300,13 +298,6 @@ function undo(id) {
     createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-edit");
     createElements("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
 }
-
-function removeChilds(myNode) {
-    while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-    }
-}
-
 function EditarMed(id) {
 
     let nome = document.getElementById("nome" + id);
@@ -329,18 +320,18 @@ function EditarMed(id) {
     removeChilds(icon1);
     removeChilds(icon2);
 
-    createInputs("input", nome, "nomeinp" + id);
-    createInputs("input", titulo, "tituloinp" + id);
+    createInputs("input", nome, "nomeinp" + id,"","form-control");
+    createInputs("input", titulo, "tituloinp" + id,"","form-control");
     listarGenero(genero.id);
-    createInputs("input", email, "emailinp" + id);
+    createInputs("input", email, "emailinp" + id,"","form-control");
     listarEspecialidade(espec.id);
 
     let nomeinp = document.getElementById("nomeinp" + id);
     let tituloinp = document.getElementById("tituloinp" + id);
     let emailinp = document.getElementById("emailinp" + id,"email");
-    nomeinp.placeholder = nomevalor;
-    tituloinp.placeholder = titulovalor;
-    emailinp.placeholder = emailvalor;
+    nomeinp.value = nomevalor;
+    tituloinp.value = titulovalor;
+    emailinp.value = emailvalor;
 
     let btn1 = document.createElement("button");
     btn1.setAttribute("id", "btnicp" + id);
