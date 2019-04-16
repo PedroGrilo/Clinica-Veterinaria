@@ -24,8 +24,6 @@ function Consulta(id, diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efeti
  * @constructs ListaConsultas
  * 
  */
-
-
 function ListaConsulta() {
     if (localStorage['ListaConsultas']) {
         var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
@@ -35,13 +33,17 @@ function ListaConsulta() {
     }
 }
 
+/**
+ * Para obter o numero de consultas
+*/
 ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
     return retrievedObject.length;
 }
 
-
-
+/**
+ * Cria os objetos, após se clicar em tipo de consulta
+ */
 function createObjects() {
     var mainForm = document.getElementById("mainForm");
     var marcacoes = document.getElementById("marcacoes");
@@ -49,8 +51,10 @@ function createObjects() {
     createElements("DIV", mainForm, "idDiv");
 }
 
-
-function createMarcacoes(medicoSelected){
+/**
+ * Criar o mapa da semana com as marcações
+ */
+function createMarcacoes(medicoSelected) {
 
     var medico = medicoSelected.value;
 
@@ -62,39 +66,45 @@ function createMarcacoes(medicoSelected){
 
     var idHeader = document.getElementById("idHeader");
 
-    idHeader.textContent="Marcaçoes dos proximos 7 dias -> Medico:  "+medico;
+    idHeader.textContent = "Marcaçoes dos proximos 7 dias -> Medico:  " + medico;
 
 
-    for(var i = 0 ; i < 7; i++){
+    for (var i = 0; i < 7; i++) {
         var tr = document.createElement("TR");
         var date = new Date();
         var td = document.createElement("TD");
         var text = document.createTextNode(date.addDays(i));
 
-        tr.setAttribute("id", "myTr" +i);
+        tr.setAttribute("id", "myTr" + i);
         tBody.appendChild(tr);
         td.appendChild(text);
-        document.getElementById("myTr"+i).appendChild(td);
+        document.getElementById("myTr" + i).appendChild(td);
 
         var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
 
-        for(var h = 0 ;h<listaConsultasLocal.length;h++){
-            if((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == text.textContent)){
-                tr.setAttribute("class","checked");
+        for (var h = 0; h < listaConsultasLocal.length; h++) {
+            if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == text.textContent)) {
+                tr.setAttribute("class", "checked");
                 break;
-            }   
+            }
         }
 
     }
 
 }
 
+/**
+ * Remover os filhos de um 'Pai'
+ */
 function removeChilds(myNode) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
 }
 
+/**
+ * Obter a opção selecionada
+ */
 function getSelected(selectObject) {
     var elem = document.getElementById('idDiv');
     removeChilds(elem);
@@ -102,6 +112,9 @@ function getSelected(selectObject) {
     listarMedicos(value);
 }
 
+/**
+ * Criar o select com o tipo de Consulta
+ */
 function listarTipoConsulta() {
 
     var arr = JSON.parse(localStorage.getItem('Especialidade'));
@@ -127,7 +140,9 @@ function listarTipoConsulta() {
     getSelectTipo.options[0].disabled = true;
 }
 
-
+/**
+ * Criar o select com os médicos relacionados com o tipo de consulta
+ */
 function listarMedicos(opcao) {
 
     var mainForm = document.getElementById("idDiv");
@@ -168,22 +183,31 @@ function listarMedicos(opcao) {
         button.parentNode.removeChild(button);
     }
 
-    createLabels("Dia da consulta:",mainForm);
-    createInputs(mainForm,"dataInput","date","form-control");
+    createLabels("Dia da consulta:", mainForm);
+    createInputs(mainForm, "dataInput", "date", "form-control");
     createBrs(mainForm);
 
     createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
 
-ListaConsulta.prototype.saveConsultas = function () { //guardar no localStorage
+/**
+ * Quardar as consultas no localStoraage
+ */
+ListaConsulta.prototype.saveConsultas = function () {
     localStorage['ListaConsultas'] = JSON.stringify(this.consultas);
 }
 
+/**
+ * Adicionar consulta
+ */
 ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
     this.consultas.push(consulta);
     this.saveConsultas();
 }
 
+/**
+ * Remover consultas
+ */
 ListaConsulta.removerConsulta = function (posicao) {
     consulta = new ListaConsulta();
     var localStorageObjs = JSON.parse(localStorage.getItem('ListaConsultas'));
@@ -195,6 +219,9 @@ ListaConsulta.removerConsulta = function (posicao) {
     ListaConsulta.apresentar(consulta);
 }
 
+/**
+ * Adicioanr consultas
+ */
 ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
     consulta = Array.prototype.slice.call(arguments); //Transformar o "arguments" num array par poder usar o forEach
     consulta.forEach(function (currentValue, index, array) {
@@ -204,8 +231,10 @@ ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
 
 };
 
+/**
+ * Modal Save do efetivar/Pagar
+ */
 function saveModal(id) {
-
     var localStorageObjs = JSON.parse(localStorage.getItem('ListaConsultas'));
     var selectModal = document.getElementById("idSelect");
 
@@ -214,13 +243,14 @@ function saveModal(id) {
             localStorageObjs[i].efetivada = selectModal.options[selectModal.selectedIndex].text;
         }
     }
-
     localStorage['ListaConsultas'] = JSON.stringify(localStorageObjs);
     ListaConsulta.apresentar();
 }
 
+/**
+ * Modal Open do efetivar/Pagar
+ */
 function openModal(id, option) {
-
     var modal = document.getElementById('modal-body');
     var saveButton = document.getElementById('saveButton');
     var paymentButton = document.getElementById('paymentButton');
@@ -253,6 +283,9 @@ function openModal(id, option) {
     selectModal.value = option;
 }
 
+/**
+ * Verificar opção - Modal
+ */
 function checkOption(getSelected) {
     if (getSelected == "Sim")
         paymentButton.disabled = false;
@@ -260,11 +293,11 @@ function checkOption(getSelected) {
         paymentButton.disabled = true;
 }
 
-
+/**
+ * Listar consultas - Tabela
+ */
 ListaConsulta.prototype.listarConsultas = function () {
-
     var today = false;
-
     console.log(this.consultas);
     if (this.consultas.length === 0) {
         return "<h4>Não existem consultas na base de dados!</h4>";
@@ -289,16 +322,20 @@ ListaConsulta.prototype.listarConsultas = function () {
 
         return resultado;
     }
-
 };
 
-ListaConsulta.prototype.getConsultasLocal = function () { //guardar as consultas no array de consultas
+/**
+ * Guardar as consultas num array de consultas
+ */
+ListaConsulta.prototype.getConsultasLocal = function () {
     if (localStorage['ListaConsultas']) {
         this.consultas = JSON.parse(localStorage['ListaConsultas']);
     }
 }
 
-
+/**
+ * Apresentar consulta
+ */
 ListaConsulta.apresentar = function (consulta) {
     consulta = consulta || new ListaConsulta().acrescentarConsultas();
     consulta.getConsultasLocal();
@@ -307,11 +344,16 @@ ListaConsulta.apresentar = function (consulta) {
 
 };
 
-
+/**
+ * Verificar se um campo é null ou nao está preenchido
+ */
 function isNull(campo) {
     return (campo == "" || campo == null);
 }
 
+/**
+ * Mnada um alert e dá focus ao campo, quando dá erro
+ */
 function alertAndFocus(campo, msg) {
     alert(msg);
     campo.focus();
@@ -319,8 +361,10 @@ function alertAndFocus(campo, msg) {
     return false;
 }
 
+/**
+ * Verificações ao adicionar consulta
+ */
 function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput) {
-
     if (isNull(dataInput.value))
         alertAndFocus(dataInput, "Data inválida");
     else if (dataInput.value < data.getDataAtual())
@@ -338,7 +382,9 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput) {
 
 }
 
-
+/**
+ * Acrescentar Consulta
+ */
 ListaConsulta.acrescentar = function (consulta) {
     try {
         var dataInput = document.getElementById("dataInput");

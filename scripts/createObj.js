@@ -1,3 +1,6 @@
+/**
+ * Função para criar botões
+ */
 function createButtons(where, idName, type, classB, valueB, onclick) {
     var elementCreated = document.createElement("button");
     elementCreated.setAttribute("id", idName);
@@ -8,6 +11,9 @@ function createButtons(where, idName, type, classB, valueB, onclick) {
     where.appendChild(elementCreated);
 }
 
+/**
+ * Função para criar inputs
+ */
 function createInputs(where, idName, type, classe) {
     var elementCreated = document.createElement("INPUT");
     elementCreated.setAttribute("type", type);
@@ -19,17 +25,26 @@ function createInputs(where, idName, type, classe) {
     }
 }
 
+/**
+ * Função para criar labels
+ */
 function createLabels(text, where) {
     var elementCreated = document.createElement("LABEL");
     elementCreated.textContent = text;
     where.appendChild(elementCreated);
 }
 
+/**
+ * Função para criar brs
+ */
 function createBrs(where) {
     var elementCreated = document.createElement("BR");
     where.appendChild(elementCreated);
 }
 
+/**
+ * Função para criar qualquer elemento
+ */
 function createElements(element, where, idName, classes) {
     var elementCreated = document.createElement("" + element + "");
     elementCreated.setAttribute("id", idName);
@@ -37,6 +52,9 @@ function createElements(element, where, idName, classes) {
     where.appendChild(elementCreated);
 }
 
+/**
+ * Função para criar options - select
+ */
 function createOptions(select, text, attribute, textAttribute) {
     var option = document.createElement("option");
     option.text = text;
