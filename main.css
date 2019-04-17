@@ -89,9 +89,14 @@ td {
   border-style: solid solid solid solid
 }
 
-.checked{
-background-color:#FFC300
+.notAvailable{
+background-color: rgb(255, 81, 0)
 }
+
+.checked{
+  background-color:#FFC300;
+}
+
 
 button.editmed {
   border: none;

@@ -5,9 +5,10 @@
  * @constructs Consulta
  */
 
-function Consulta(id, diaDaConsulta, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
+function Consulta(id, diaDaConsulta,hora,medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
     this.id = id;
     this.diaDaConsulta = diaDaConsulta;
+    this.hora = hora;
     this.medico = medico;
     this.nomeDoAnimal = nomeDoAnimal;
     this.tipoDeConsulta = tipoDeConsulta;
@@ -56,7 +57,11 @@ function createObjects() {
  */
 function createMarcacoes(medicoSelected) {
 
+
     var medico = medicoSelected.value;
+
+    var dataInput = document.getElementById("dataInput");
+    dataInput.setAttribute("onChange","listHours(this,'"+medico+"')");
 
     document.getElementById("theadMarc").hidden = false;
 
@@ -90,7 +95,54 @@ function createMarcacoes(medicoSelected) {
         }
 
     }
+}
 
+
+
+function listHours(data,medico){
+
+    document.getElementById("theadMarc").hidden = false;
+
+    var tBody = document.getElementById("tbodySemana");
+
+    removeChilds(tBody);
+
+    var idHeader = document.getElementById("idHeader");
+
+    idHeader.textContent = "Marcações para o dia : " + data.value;
+
+
+    for (var i = 9; i <= 18; i++) {
+        var tr = document.createElement("TR");
+        var date = new Date();
+        var td = document.createElement("TD");
+        var text;
+        tr.setAttribute("id", "myTr" + i);
+        tBody.appendChild(tr);
+        document.getElementById("myTr" + i).appendChild(td);
+
+        var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
+
+         for (var h = 0; h < listaConsultasLocal.length; h++) {
+             if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == data.value) && (listaConsultasLocal[h].hora == i)) {
+                    tr.setAttribute("class", "notAvailable");   
+                    text = document.createTextNode(i+":00");
+             }else{
+                   text = document.createTextNode(i+":00 - Clique para adicionar");
+                    tr.setAttribute("onclick","checkHour(this)");
+                }
+         }
+        td.appendChild(text);
+    }
+}
+
+function checkHour(tr){
+    if(tr.getAttribute("checked")){
+        tr.setAttribute("class","");
+    }else{
+        tr.setAttribute("class","checked");
+
+    }
 }
 
 /**
@@ -185,9 +237,9 @@ function listarMedicos(opcao) {
     createLabels("Dia da consulta:", mainForm);
     createInputs(mainForm, "dataInput", "date", "form-control");
     createBrs(mainForm);
-
     createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
+
 
 /**
  * Quardar as consultas no localStoraage
@@ -219,7 +271,7 @@ ListaConsulta.removerConsulta = function (posicao) {
 }
 
 /**
- * Adicioanr consultas
+ * Adicionar consultas
  */
 ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
     consulta = Array.prototype.slice.call(arguments); //Transformar o "arguments" num array par poder usar o forEach
@@ -390,9 +442,10 @@ ListaConsulta.acrescentar = function (consulta) {
         var nAnimal = document.getElementById("nomeAnimal");
         var tipoConsulta = document.getElementById("tipoConsulta");
         var medico = document.getElementById("medicos");
+        var hora = 10;
         if (checkConsulta(medico, nAnimal, tipoConsulta, dataInput)) {
             consulta = new ListaConsulta().acrescentarConsultas();
-            consulta.acrescentarConsulta(new Consulta(ListaConsulta.getNumberOfConsultas() + 1, dataInput.value, medico.value, nAnimal.value, tipoConsulta.value, 'Não', 'Não'));
+            consulta.acrescentarConsulta(new Consulta((ListaConsulta.getNumberOfConsultas() + 1), dataInput.value,hora,medico.value, nAnimal.value, tipoConsulta.value, 'Não', 'Não'));
             alert("Consulta adicionada com sucesso");
             window.location.href = "index.html";
         }
