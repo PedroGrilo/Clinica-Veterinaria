@@ -42,7 +42,7 @@ function Medico(id, nome, titulo, genero, email, especialidade, foto) {
 
 function ListaMedicos() {
     if (localStorage['ListaMedicos']) {
-        var retrievedObject = JSON.parse(localStorage.getItem('ListaMedicos'));
+        var retrievedObject = JSON.parse(localStorage["ListaMedicos"]);
         this.medicos = retrievedObject;
     } else {
         this.medicos = [];
@@ -123,7 +123,7 @@ ListaMedicos.apresentar = function (medico) {
 
 ListaMedicos.removerMedicos = function (posicao) {
     medico = new ListaMedicos();
-    var localStorageObjs = JSON.parse(localStorage.getItem('ListaMedicos'));
+    var localStorageObjs = JSON.parse(localStorage["ListaMedicos"]);
     for (let i = 0; i < localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == posicao)
             localStorageObjs.splice(i, 1);
@@ -134,7 +134,7 @@ ListaMedicos.removerMedicos = function (posicao) {
 
 
 ListaMedicos.getNumberOfMedicos = function () {
-    var retrievedObject = JSON.parse(localStorage.getItem('ListaMedicos'));
+    var retrievedObject = JSON.parse(localStorage["ListaMedicos"]);
     return retrievedObject.length;
 }
 
@@ -174,7 +174,7 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     let email = document.getElementById("emailinp" + id);
     let espec = document.getElementById("tipoEspecialidade" + id);
     medico = new ListaMedicos();
-    var localStorageObjs = JSON.parse(localStorage.getItem('ListaMedicos'));
+    var localStorageObjs = JSON.parse(localStorage["ListaMedicos"]);
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     for (let i = 0; i < localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == id) {

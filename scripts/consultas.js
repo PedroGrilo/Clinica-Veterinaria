@@ -27,7 +27,7 @@ function Consulta(id, diaDaConsulta, hora, medico, nomeDoAnimal, tipoDeConsulta,
  */
 function ListaConsulta() {
     if (localStorage['ListaConsultas']) {
-        var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
+        var retrievedObject = JSON.parse(localStorage['ListaConsultas']);
         this.consultas = retrievedObject;
     } else {
         this.consultas = [];
@@ -38,7 +38,7 @@ function ListaConsulta() {
  * Para obter o numero de consultas
 */
 ListaConsulta.getNumberOfConsultas = function () {
-    var retrievedObject = JSON.parse(localStorage.getItem('ListaConsultas'));
+    var retrievedObject = JSON.parse(localStorage['ListaConsultas']);
     return retrievedObject.length;
 }
 
@@ -90,7 +90,7 @@ function createMarcacoes(medicoSelected) {
         td.appendChild(text);
         document.getElementById("myTR"+i).appendChild(td);
 
-        var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
+        var listaConsultasLocal = JSON.parse(localStorage['ListaConsultas']);
 
         for (var h = 0; h < listaConsultasLocal.length; h++) {
             if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == text.textContent)) {
@@ -108,7 +108,7 @@ function createMarcacoes(medicoSelected) {
  */
 function listHours(data, medico) {
 
-    var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
+    var listaConsultasLocal = JSON.parse(localStorage['ListaConsultas']);
     
     document.getElementById("theadMarc").hidden = false;
 
@@ -287,7 +287,7 @@ ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
  */
 ListaConsulta.removerConsulta = function (posicao) {
     consulta = new ListaConsulta();
-    var localStorageObjs = JSON.parse(localStorage.getItem('ListaConsultas'));
+    var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
     for (let i = 0; i < localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == posicao)
             localStorageObjs.splice(i, 1);
@@ -312,7 +312,7 @@ ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
  * Modal Save do efetivar/Pagar
  */
 function saveModal(id) {
-    var localStorageObjs = JSON.parse(localStorage.getItem('ListaConsultas'));
+    var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
     var selectModal = document.getElementById("idSelect");
 
     for (let i = 0; i < localStorageObjs.length; i++) {
