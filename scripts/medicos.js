@@ -7,17 +7,17 @@
  */
 arr = JSON.parse(localStorage["Especialidade"]);
 arrgen = JSON.parse(localStorage["Genero"]);
-function initialize2(){
+function initialize2() {
     var arrespec = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
     var arrgenero = ['Masculino', 'Feminino'];
-    if(!localStorage['Especialidade']){
+    if (!localStorage['Especialidade']) {
         localStorage['Especialidade'] = JSON.stringify(arrespec);
     }
-    if(!localStorage['Genero']){
+    if (!localStorage['Genero']) {
         localStorage['Genero'] = JSON.stringify(arrgenero);
     }
 };
-window.onload = function(){
+window.onload = function () {
     initialize2();
     ListaMedicos.apresentar();
 }
@@ -145,9 +145,9 @@ ListaMedicos.acrescentar = function (medico) { //
     var email = document.getElementById("email");
     var especialidade = document.getElementById("tipoEspecialidade");
     var foto = document.getElementById("foto");
-    if(!arr.includes(especialidade.value)){
+    if (!arr.includes(especialidade.value)) {
         arr.push(especialidade.value);
-        localStorage["Especialidade"]=JSON.stringify(arr);
+        localStorage["Especialidade"] = JSON.stringify(arr);
     }
 
     if (checkMedicos(nome, titulo, email, genero, especialidade, foto)) {
@@ -157,7 +157,7 @@ ListaMedicos.acrescentar = function (medico) { //
         alert("Médico adicionado com sucesso!!");
         location.href = "gestao.html";
     } else {
-        if (especialidade == null)
+        if (especialidade == "")
             alert("O medico necessita de ser especializado em algo");
         else
             alert("Obrigatório preencher todos os campos!");
@@ -173,55 +173,23 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     let genero = document.getElementById("tipoGenero" + id);
     let email = document.getElementById("emailinp" + id);
     let espec = document.getElementById("tipoEspecialidade" + id);
-    switch (parseInt(espec.value)) {
-        case 0:
-            espec = arr[0];
-            break;
-        case 1:
-            espec = arr[1];
-            break;
-        case 2:
-            espec = arr[2];
-            break;
-        case 3:
-            espec = arr[3];
-            break;
-        case 4:
-            espec = "Outro";
-            break;
-        default:
-            espec = "";
-            break;
-    }
-
-    switch (parseInt(genero.value)) {
-        case 0:
-            genero = "Masculino";
-            break;
-        case 1:
-            genero = "Feminino";
-            break;
-        case 2:
-            genero = "Outro";
-            break;
-        default:
-            genero = "";
-            break;
-    }
-
     medico = new ListaMedicos();
     var localStorageObjs = JSON.parse(localStorage.getItem('ListaMedicos'));
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     for (let i = 0; i < localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == id) {
-            if (nome.value != "" && titulo.value != "" && email.value != "" && genero != "" && espec != "") {
+            if (nome.value != "" && titulo.value != "" && email.value != "" && genero.value != "" && espec.value != "") {
                 if (re.test(String(email.value).toLowerCase()) == true) {
+                    if (!arr.includes(espec.value)) {
+                        arr.push(espec.value);
+                        localStorage["Especialidade"] = JSON.stringify(arr);
+                    }
                     localStorageObjs[i].nome = nome.value;
                     localStorageObjs[i].titulo = titulo.value;
                     localStorageObjs[i].email = email.value;
-                    localStorageObjs[i].especialidade = espec;
-                    localStorageObjs[i].genero = genero;
-                    let newdata = JSON.stringify([id, nome.value, titulo.value, email.value, genero, espec])
+                    localStorageObjs[i].especialidade = espec.value;
+                    localStorageObjs[i].genero = genero.value;
+                    let newdata = JSON.stringify([id, nome.value, titulo.value, email.value, genero.value, espec.value])
                     undo(newdata);
                 } else {
                     alert("Campo 'email' não está correto")
@@ -346,21 +314,38 @@ function listarEspecialidade(idform) {
     id = id[1];
     createElements("SELECT", mainForm, "tipoEspecialidade" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoEspecialidade" + id);
+    getSelectTipo.addEventListener("change", function () {
+        if (arr.length == this.value) {
+            id = this.id;
+            if (!document.getElementById("otherespec"))
+                createInputs(this.parentElement, "otherespec", "text", "form-control");
+            other = document.getElementById("otherespec");
+            other.placeholder = "Outro";
+            other.focus = true;
+            other.id = this.id;
+            this.id = "filler";
+        } else {
+            if (other = document.getElementById(id)) {
+                this.id = other.id;
+                other.parentElement.removeChild(other);
+            }
+        }
 
+    });
 
     for (let i = -2; i < arr.length + 1; i++) {
 
         if (i == -2) {
             var option = document.createElement("option");
             option.text = "Indefinido";
-            option.value = null;
+            option.value = "";
             getSelectTipo.add(option);
             continue;
         }
         if (i == -1) {
             var optionsep = document.createElement("option");
             optionsep.text = "------------";
-            optionsep.value = null;
+            optionsep.value = "";
             optionsep.disabled = true;
             getSelectTipo.add(optionsep);
             continue;
@@ -395,25 +380,25 @@ function listarGenero(idform) {
         if (i == -2) {
             var option = document.createElement("option");
             option.text = "Indefinido";
-            option.value = null;
+            option.value = "";
             getSelectTipo.add(option);
             continue;
         }
         if (i == -1) {
             var optionsep = document.createElement("option");
             optionsep.text = "------------";
-            optionsep.value = null;
+            optionsep.value = "";
             optionsep.disabled = true;
             getSelectTipo.add(optionsep);
             continue;
         }
-        if (i != arr.length) {
+        if (i != arrgen.length) {
             var option = document.createElement("option");
             option.text = arrgen[i];
             option.value = arr[i];
             getSelectTipo.add(option);
         }
-        if (i == arr.length) {
+        if (i == arrgen.length) {
             var option = document.createElement("option");
             option.text = "Outro";
             option.value = i;

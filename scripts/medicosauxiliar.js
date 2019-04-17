@@ -57,14 +57,14 @@ function listarEspecialidade(idform) {
         if (i == -2) {
             var option = document.createElement("option");
             option.text = "Indefinido";
-            option.value = null;
+            option.value = "";
             getSelectTipo.add(option);
             continue;
         }
         if (i == -1) {
             var optionsep = document.createElement("option");
             optionsep.text = "------------";
-            optionsep.value = null;
+            optionsep.value = "";
             optionsep.disabled = true;
             getSelectTipo.add(optionsep);
             continue;
@@ -107,14 +107,14 @@ function listarGenero(idform) {
         if (i == -2) {
             var option = document.createElement("option");
             option.text = "Indefinido";
-            option.value = null;
+            option.value = "";
             getSelectTipo.add(option);
             continue;
         }
         if (i == -1) {
             var optionsep = document.createElement("option");
             optionsep.text = "------------";
-            optionsep.value = null;
+            optionsep.value = "";
             optionsep.disabled = true;
             getSelectTipo.add(optionsep);
             continue;
