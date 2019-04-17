@@ -5,7 +5,7 @@
  * @constructs Consulta
  */
 
-function Consulta(id, diaDaConsulta,hora,medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
+function Consulta(id, diaDaConsulta, hora, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
     this.id = id;
     this.diaDaConsulta = diaDaConsulta;
     this.hora = hora;
@@ -58,10 +58,15 @@ function createObjects() {
 function createMarcacoes(medicoSelected) {
 
 
+    var getSelectMedicos = document.getElementById("medicos");
+    getSelectMedicos.removeAttribute("onmousemove");
+
+    getSelectMedicos.setAttribute("onclick", "createMarcacoes(this)");
+
     var medico = medicoSelected.value;
 
     var dataInput = document.getElementById("dataInput");
-    dataInput.setAttribute("onChange","listHours(this,'"+medico+"')");
+    dataInput.setAttribute("onChange", "listHours(this,'" + medico + "')");
 
     document.getElementById("theadMarc").hidden = false;
 
@@ -71,7 +76,7 @@ function createMarcacoes(medicoSelected) {
 
     var idHeader = document.getElementById("idHeader");
 
-    idHeader.textContent = "Marcaçoes dos proximos 7 dias -> Medico:  " + medico;
+    idHeader.textContent = "Consultas do médico " + medico + " nos próximos 7 dias";
 
 
     for (var i = 0; i < 7; i++) {
@@ -80,10 +85,10 @@ function createMarcacoes(medicoSelected) {
         var td = document.createElement("TD");
         var text = document.createTextNode(date.addDays(i));
 
-        tr.setAttribute("id", "myTr" + i);
+        tr.setAttribute("id","myTR"+i);
         tBody.appendChild(tr);
         td.appendChild(text);
-        document.getElementById("myTr" + i).appendChild(td);
+        document.getElementById("myTR"+i).appendChild(td);
 
         var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
 
@@ -98,9 +103,13 @@ function createMarcacoes(medicoSelected) {
 }
 
 
+/**
+ * Listar as horas do mapa da semana
+ */
+function listHours(data, medico) {
 
-function listHours(data,medico){
-
+    var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
+    
     document.getElementById("theadMarc").hidden = false;
 
     var tBody = document.getElementById("tbodySemana");
@@ -109,39 +118,57 @@ function listHours(data,medico){
 
     var idHeader = document.getElementById("idHeader");
 
-    idHeader.textContent = "Marcações para o dia : " + data.value;
+    idHeader.textContent = "Hora | Marcações para o dia: " + data.value;
 
-
-    for (var i = 9; i <= 18; i++) {
+    for (var i = 10; i <= 18; i++) {
         var tr = document.createElement("TR");
-        var date = new Date();
         var td = document.createElement("TD");
         var text;
-        tr.setAttribute("id", "myTr" + i);
+
+        tr.setAttribute("id",i);
         tBody.appendChild(tr);
-        document.getElementById("myTr" + i).appendChild(td);
+        document.getElementById(i).appendChild(td);
+        
+        for (var h = 0; h < listaConsultasLocal.length; h++) {
+            if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == data.value) && (listaConsultasLocal[h].hora == i)) {
+                tr.setAttribute("class", "notAvailable");
+                createSpans(i + ":00", td, "notAvailable");
+                text = document.createTextNode(" - Indisponível - " + listaConsultasLocal[h].nomeDoAnimal);
+            } 
+        }
 
-        var listaConsultasLocal = JSON.parse(localStorage.getItem('ListaConsultas'));
+        if (i == 14) { //hora de almoco
+            tr.setAttribute("class", "notAvailable");
+            createSpans(i + ":00", td, "notAvailable");
+            text = document.createTextNode(" - Hora de almoço");
+        } else if(!tr.getAttribute("class")){
+            createSpans(i + ":00", td, "hours" + i);
+            text = document.createTextNode(" - Clique para adicionar");
+            tr.setAttribute("onclick", "checkHour(this)");
+        }
 
-         for (var h = 0; h < listaConsultasLocal.length; h++) {
-             if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == data.value) && (listaConsultasLocal[h].hora == i)) {
-                    tr.setAttribute("class", "notAvailable");   
-                    text = document.createTextNode(i+":00");
-             }else{
-                   text = document.createTextNode(i+":00 - Clique para adicionar");
-                    tr.setAttribute("onclick","checkHour(this)");
-                }
-         }
         td.appendChild(text);
     }
 }
 
-function checkHour(tr){
-    if(tr.getAttribute("checked")){
-        tr.setAttribute("class","");
-    }else{
-        tr.setAttribute("class","checked");
 
+/**
+ * Verificar hora selecionada
+ */
+function checkHour(tr) {
+    if (tr.getAttribute("class")) {
+        tr.removeAttribute("class");
+    } else {
+        var table = document.getElementById('marcacoesTable');
+        var numberChilds = table.rows.length;
+
+        for (var i = 1; i < numberChilds; i++) {
+            if (table.rows[i].getAttribute("class") == "checked")
+                table.rows[i].removeAttribute("class");
+        }
+
+        tr.setAttribute("class", "checked");
+        tr.text = "teste";
     }
 }
 
@@ -210,7 +237,7 @@ function listarMedicos(opcao) {
     createBrs(mainForm);
 
     var getSelectMedicos = document.getElementById("medicos");
-    getSelectMedicos.setAttribute("onClick", "createMarcacoes(this)");
+    getSelectMedicos.setAttribute("onmousemove", "createMarcacoes(this)");
     var founded = false;
 
     if (localStorage['ListaMedicos']) {
@@ -223,7 +250,7 @@ function listarMedicos(opcao) {
                 founded = true;
             }
         }
-    }  
+    }
 
     if (!founded) {
         var option = document.createElement("option");
@@ -239,7 +266,6 @@ function listarMedicos(opcao) {
     createBrs(mainForm);
     createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
 }
-
 
 /**
  * Quardar as consultas no localStoraage
@@ -354,12 +380,12 @@ ListaConsulta.prototype.listarConsultas = function () {
         return "<h4>Não existem consultas na base de dados!</h4>";
 
     } else {
-        var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+        var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
 
         this.consultas.forEach(function (currentValue, index, array) {
             if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas é para o dia atual
                 var remove = `<td><a onclick="ListaConsulta.removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
-                resultado += "<tr><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+                resultado += "<tr><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                     currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>" +
                     remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + currentValue.efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
 
@@ -399,35 +425,40 @@ ListaConsulta.apresentar = function (consulta) {
  * Verificar se um campo é null ou nao está preenchido
  */
 function isNull(campo) {
-    return (campo == "" || campo == null);
+    return (campo == "" || campo == null || campo == undefined);
 }
 
 /**
  * Mnada um alert e dá focus ao campo, quando dá erro
  */
-function alertAndFocus(campo, msg) {
+function alertAndFocus(campo,msg,classError) {
     alert(msg);
     campo.focus();
-    campo.setAttribute("class", "input-error form-control");
+    campo.setAttribute("class", classError);
     return false;
 }
 
 /**
  * Verificações ao adicionar consulta
  */
-function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput) {
+function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput,hora) {
+
     if (isNull(dataInput.value))
-        alertAndFocus(dataInput, "Data inválida");
+        alertAndFocus(dataInput, "Data inválida","input-error form-control");
     else if (dataInput.value < data.getDataAtual())
-        alertAndFocus(dataInput, "A data têm que ser igual ou superior à do dia de hoje");
+        alertAndFocus(dataInput, "A data têm que ser igual ou superior à do dia de hoje","input-error form-control");
+    else if(isNull(hora))
+        alert("Hora inválida");
+    else if(hora.id < data.getHoras() && dataInput.value == data.getDataAtual())  //comentar para testes
+        alertAndFocus(hora,"A Hora de consulta têm de ser maior que a hora atual!");
     else if (isNull(nomeAnimal.value))
-        alertAndFocus(nomeAnimal, "O campo 'Nome do Animal' é um obrigatório!");
+        alertAndFocus(nomeAnimal, "O campo 'Nome do Animal' é um obrigatório!","input-error form-control");
     else if (isNull(tipoConsulta.value))
-        alertAndFocus(tipoConsulta, "O campo 'Tipo de Consulta' é obrigatório!");
+        alertAndFocus(tipoConsulta, "O campo 'Tipo de Consulta' é obrigatório!","input-error form-control");
     else if (isNull(medico.value))
-        alertAndFocus(medico, "Obrigatório escolher um médico");
+        alertAndFocus(medico, "Obrigatório escolher um médico","input-error form-control");
     else if (medico.value == "Não existem médicos")
-        alertAndFocus("Não existem médicos para este tipo de consulta");
+        alertAndFocus("Não existem médicos para este tipo de consulta","input-error form-control");
     else
         return true;
 
@@ -438,18 +469,30 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput) {
  */
 ListaConsulta.acrescentar = function (consulta) {
     try {
+        
+        var table = document.getElementById('marcacoesTable');
+        var numberChilds = table.rows.length;
+        var hora;
+
+        for (var i = 1; i < numberChilds; i++) {
+            if (table.rows[i].getAttribute("class") == "checked"){
+                 hora = table.rows[i];
+                 break;
+            }
+        }
+
         var dataInput = document.getElementById("dataInput");
         var nAnimal = document.getElementById("nomeAnimal");
         var tipoConsulta = document.getElementById("tipoConsulta");
         var medico = document.getElementById("medicos");
-        var hora = 10;
-        if (checkConsulta(medico, nAnimal, tipoConsulta, dataInput)) {
+  
+        if (checkConsulta(medico, nAnimal, tipoConsulta, dataInput,hora)) {
             consulta = new ListaConsulta().acrescentarConsultas();
-            consulta.acrescentarConsulta(new Consulta((ListaConsulta.getNumberOfConsultas() + 1), dataInput.value,hora,medico.value, nAnimal.value, tipoConsulta.value, 'Não', 'Não'));
+            consulta.acrescentarConsulta(new Consulta((ListaConsulta.getNumberOfConsultas() + 1), dataInput.value, hora.id, medico.value, nAnimal.value, tipoConsulta.value, 'Não', 'Não'));
             alert("Consulta adicionada com sucesso");
             window.location.href = "index.html";
         }
     } catch (e) {
-        throw "ERRO: " + e;
+        console.log("ERRO: " + e);
     }
 };

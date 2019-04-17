@@ -25,6 +25,14 @@ function createInputs(where, idName, type, classe) {
     }
 }
 
+
+function createSpans(text, where,id) {
+    var elementCreated = document.createElement("SPAN");
+    elementCreated.textContent = text;
+    elementCreated.id = id;
+    where.appendChild(elementCreated);
+}
+
 /**
  * Função para criar labels
  */

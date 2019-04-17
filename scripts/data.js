@@ -21,12 +21,16 @@ function Data() {
     this.ano = data.getFullYear();
     this.mes = mm;
     this.dia = dd;
+    this.hora = data.getHours();
 }
 
 function addDays(days) {
     return new Date().setDate(new Date().getDate() + days);
 }
 
+Data.prototype.getHoras = function (){
+    return this.hora;
+}
 
 Data.prototype.getDataAtual = function () {
     return this.ano + '-' + this.mes + '-' + this.dia;
