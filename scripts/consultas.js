@@ -171,8 +171,7 @@ function listarMedicos(opcao) {
                 founded = true;
             }
         }
-
-    }
+    }  
 
     if (!founded) {
         var option = document.createElement("option");
