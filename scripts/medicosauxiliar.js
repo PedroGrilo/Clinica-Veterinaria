@@ -81,12 +81,14 @@ function listarEspecialidade(idform) {
                 var option = document.createElement("option");
                 option.text = arr[i];
                 option.value = arr[i];
+                option.id = arr[i];
                 getSelectTipo.add(option);
             }
         if (i == arr.length) {
             var option = document.createElement("option");
             option.text = "Outro";
             option.value = i;
+            option.id = "Outro";
             getSelectTipo.add(option);
         }
     }
@@ -121,14 +123,16 @@ function listarGenero(idform) {
         }
         if (i != arr.length) {
             var option = document.createElement("option");
-            option.text = arr[i];
-            option.value = arr[i];
+            option.text = arrgen[i];
+            option.value = arrgen[i];
+            option.id = arrgen[i];
             getSelectTipo.add(option);
         }
         if (i == arr.length) {
             var option = document.createElement("option");
             option.text = "Outro";
             option.value = i;
+            option.id = "Outro";
             getSelectTipo.add(option);
         }
     }

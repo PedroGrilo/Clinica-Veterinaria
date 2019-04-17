@@ -83,7 +83,7 @@ ListaMedicos.prototype.listarMedicos = function () {
                 <th>Email</th>
                 <th>Especialidade</th>
                 <th>Editar</th>
-                <th>Remover</th>
+                <th>Apagar/Undo</th>
             </tr>
         </thead>`;
 
@@ -287,6 +287,11 @@ function EditarMed(id) {
     tituloinp.value = titulovalor;
     emailinp.value = emailvalor;
 
+    especopt=document.getElementById(especvalor);
+    genopt=document.getElementById(generovalor);
+    especopt.selected=true;genopt.selected=true;
+
+
     let btn1 = document.createElement("button");
     btn1.setAttribute("id", "btnicp" + id);
     btn1.className = "editmed";
@@ -354,12 +359,14 @@ function listarEspecialidade(idform) {
             var option = document.createElement("option");
             option.text = arr[i];
             option.value = arr[i];
+            option.id = arr[i];
             getSelectTipo.add(option);
         }
         if (i == arr.length) {
             var option = document.createElement("option");
             option.text = "Outro";
             option.value = i;
+            option.id = "Outro";
             getSelectTipo.add(option);
         }
     }
@@ -395,13 +402,15 @@ function listarGenero(idform) {
         if (i != arrgen.length) {
             var option = document.createElement("option");
             option.text = arrgen[i];
-            option.value = arr[i];
+            option.value = arrgen[i];
+            option.id = arrgen[i];
             getSelectTipo.add(option);
         }
         if (i == arrgen.length) {
             var option = document.createElement("option");
             option.text = "Outro";
             option.value = i;
+            option.id = "Outro";
             getSelectTipo.add(option);
         }
     }
