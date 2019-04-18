@@ -93,6 +93,10 @@ td {
 background-color: #FF831D
 }
 
+.notAvailableDate{
+  background-color: rgb(255, 63, 29)
+  }
+
 .checked{
   background-color:#6492E8;
 }
