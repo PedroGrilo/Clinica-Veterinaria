@@ -114,7 +114,7 @@ ListaMedicos.prototype.listarMedicos = function () {
  * Retorna os medico da localStorage
  * @method getMedicosLocal
  */
- ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
+ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
     if (localStorage['ListaMedicos']) {
         this.medicos = JSON.parse(localStorage['ListaMedicos']);
     }
@@ -177,13 +177,13 @@ ListaMedicos.acrescentar = function (medico) { //
         localStorage["Especialidade"] = JSON.stringify(arr);
     }
     if (checkMedicos(nome, titulo, email, genero, especialidade, foto)) {
-        if(foto.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
+        if (foto.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
             medico = new ListaMedicos().acrescentarMedicos();
             ListaMedicos.getNumberOfMedicos();
             medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome.value, titulo.value, genero.value, email.value, especialidade.value, foto.value));
             alert("Médico adicionado com sucesso!!");
             location.href = "gestao.html";
-        }else{
+        } else {
             alert("A extenção do ficheiro da foto necessita de ser .jpg/.jpeg/.png/.gif");
         }
     } else {
@@ -337,9 +337,9 @@ function EditarMed(id) {
     tituloinp.value = titulovalor;
     emailinp.value = emailvalor;
 
-    especopt=document.getElementById(especvalor);
-    genopt=document.getElementById(generovalor);
-    especopt.selected=true;genopt.selected=true;
+    especopt = document.getElementById(especvalor);
+    genopt = document.getElementById(generovalor);
+    especopt.selected = true; genopt.selected = true;
 
 
     let btn1 = document.createElement("button");
@@ -527,9 +527,9 @@ function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
         alertAndFocus(especialidade, "Campo: Especialidade vazio");
     } else if (isNull(foto.value)) {
         alertAndFocus(foto, "Campo: Foto vazio");
-    }else if(re.test(String(email.value).toLowerCase()) == false){
-        alertAndFocus(email,"O email introduzido não é valido");
-    }else{
+    } else if (re.test(String(email.value).toLowerCase()) == false) {
+        alertAndFocus(email, "O email introduzido não é valido");
+    } else {
         return true;
     }
 

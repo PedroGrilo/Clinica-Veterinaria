@@ -9,17 +9,17 @@ function initialize() {
     document.getElementById("dataAtual").innerText = data.getDataAtual();
     ListaConsulta.apresentar();
 }
-function initialize2(){
+function initialize2() {
     var arrespec = ['Rastreio', 'Cirurgia', 'Vacina', 'Rotina'];
     var arrgenero = ['Masculino', 'Feminino'];
-    if(!localStorage['Especialidade']){
+    if (!localStorage['Especialidade']) {
         localStorage['Especialidade'] = JSON.stringify(arrespec);
     }
-    if(!localStorage['Genero']){
+    if (!localStorage['Genero']) {
         localStorage['Genero'] = JSON.stringify(arrgenero);
     }
 };
-window.onload = function(){
+window.onload = function () {
     initialize();
     initialize2();
 }

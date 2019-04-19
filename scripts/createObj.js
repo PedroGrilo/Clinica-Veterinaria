@@ -1,5 +1,13 @@
 /**
  * Função para criar botões
+ * @method createButtons
+ * @param {HTMLObjectElement} where
+ * @param {string} idName
+ * @param {string} type
+ * @param {string} classB
+ * @param {string} valueB
+ * @param {string} onclick
+ * @return 
  */
 function createButtons(where, idName, type, classB, valueB, onclick) {
     var elementCreated = document.createElement("button");
@@ -13,6 +21,12 @@ function createButtons(where, idName, type, classB, valueB, onclick) {
 
 /**
  * Função para criar inputs
+ * @method createInputs
+ * @param {HTMLObjectElement} where
+ * @param {string} idName
+ * @param {string} type
+ * @param {string} classe
+ * @return 
  */
 function createInputs(where, idName, type, classe) {
     var elementCreated = document.createElement("INPUT");
@@ -26,7 +40,15 @@ function createInputs(where, idName, type, classe) {
 }
 
 
-function createSpans(text, where,id) {
+/**
+ * Description
+ * @method createSpans
+ * @param {string} text
+ * @param {HTMLObjectElement} where
+ * @param {string} id
+ * @return 
+ */
+function createSpans(text, where, id) {
     var elementCreated = document.createElement("SPAN");
     elementCreated.textContent = text;
     elementCreated.id = id;
@@ -35,6 +57,10 @@ function createSpans(text, where,id) {
 
 /**
  * Função para criar labels
+ * @method createLabels
+ * @param {string} text
+ * @param {HTMLObjectElement} where
+ * @return 
  */
 function createLabels(text, where) {
     var elementCreated = document.createElement("LABEL");
@@ -44,6 +70,9 @@ function createLabels(text, where) {
 
 /**
  * Função para criar brs
+ * @method createBrs
+ * @param {HTMLObjectElement} where
+ * @return 
  */
 function createBrs(where) {
     var elementCreated = document.createElement("BR");
@@ -52,6 +81,12 @@ function createBrs(where) {
 
 /**
  * Função para criar qualquer elemento
+ * @method createElements
+ * @param {string} element
+ * @param {HTMLObjectElement} where
+ * @param {string} idName
+ * @param {string} classes
+ * @return 
  */
 function createElements(element, where, idName, classes) {
     var elementCreated = document.createElement("" + element + "");
@@ -62,6 +97,12 @@ function createElements(element, where, idName, classes) {
 
 /**
  * Função para criar options - select
+ * @method createOptions
+ * @param {HTMLObjectElement} select
+ * @param {string} text
+ * @param {string} attribute
+ * @param {string} textAttribute
+ * @return 
  */
 function createOptions(select, text, attribute, textAttribute) {
     var option = document.createElement("option");
