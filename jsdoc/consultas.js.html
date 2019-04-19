@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: consultas.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: consultas.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Classe Consulta
 
  * @constructs Consulta
@@ -88,7 +116,7 @@ function createMarcacoes(medicoSelected) {
     idHeader.textContent = "Consultas do médico " + medico + " nos próximos 7 dias";
 
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i &lt; 7; i++) {
         let tr = document.createElement("TR");
         let date = new Date();
         let td = document.createElement("TD");
@@ -103,12 +131,12 @@ function createMarcacoes(medicoSelected) {
 
         let counter = 0, hoje = 0, horasRestantes = 0;
 
-        if (data.getHoras() < 14) // verificar quantos espaços existem conforme a hora atual
+        if (data.getHoras() &lt; 14) // verificar quantos espaços existem conforme a hora atual
             horasRestantes = 18 - data.getHoras() - 1; // o menos 1, é por causa da hora de almoço
         else
             horasRestantes = 18 - data.getHoras();
 
-        for (let h = 0; h < listaConsultasLocal.length; h++) {
+        for (let h = 0; h &lt; listaConsultasLocal.length; h++) {
             if (listaConsultasLocal[h].diaDaConsulta == data.getDataAtual())
                 hoje++;//counter para as consultas com o dia igual ao dia de hoje
             if (listaConsultasLocal[h].diaDaConsulta == text.textContent) {
@@ -119,7 +147,7 @@ function createMarcacoes(medicoSelected) {
         }
 
         /* Verificar se o dia está cheio de consultas OU se o dia de hoje tem a marcação cheia conforme as horas que são */
-        if ((counter >= 8) || (text.textContent == data.getDataAtual() && hoje >= horasRestantes))
+        if ((counter >= 8) || (text.textContent == data.getDataAtual() &amp;&amp; hoje >= horasRestantes))
             tr.setAttribute("class", "notAvailableDate");
 
     }
@@ -147,7 +175,7 @@ function listHours(data, medico) {
 
     idHeader.textContent = "Hora | Marcações para o dia: " + data.value;
 
-    for (var i = 10; i <= 18; i++) {
+    for (var i = 10; i &lt;= 18; i++) {
         var tr = document.createElement("TR");
         var td = document.createElement("TD");
         var text;
@@ -156,8 +184,8 @@ function listHours(data, medico) {
         tBody.appendChild(tr);
         document.getElementById(i).appendChild(td);
 
-        for (var h = 0; h < listaConsultasLocal.length; h++) {
-            if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == data.value) && (listaConsultasLocal[h].hora == i)) { //verificar disponibilidade da consulta
+        for (var h = 0; h &lt; listaConsultasLocal.length; h++) {
+            if ((listaConsultasLocal[h].medico == medico) &amp;&amp; (listaConsultasLocal[h].diaDaConsulta == data.value) &amp;&amp; (listaConsultasLocal[h].hora == i)) { //verificar disponibilidade da consulta
                 tr.setAttribute("class", "notAvailable");
                 createSpans(i + ":00", td, "notAvailable");
                 text = document.createTextNode(" - Indisponível - " + listaConsultasLocal[h].nomeDoAnimal);
@@ -191,7 +219,7 @@ function checkHour(tr) {
         var table = document.getElementById('marcacoesTable');
         var numberChilds = table.rows.length;
 
-        for (var i = 1; i < numberChilds; i++) {// se algum ja tiver selecionado, tirar a classe checked a todos 
+        for (var i = 1; i &lt; numberChilds; i++) {// se algum ja tiver selecionado, tirar a classe checked a todos 
             if (table.rows[i].getAttribute("class") == "checked")
                 table.rows[i].removeAttribute("class");
         }
@@ -245,7 +273,7 @@ function listarTipoConsulta() {
     option.text = "Escolher opção:";
     getSelectTipo.add(option);
 
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i &lt; arr.length; i++) {
         var option = document.createElement("option");
         option.text = arr[i];
         getSelectTipo.add(option);
@@ -278,7 +306,7 @@ function listarMedicos(opcao) {
 
     if (localStorage['ListaMedicos']) {
         var arr = JSON.parse(localStorage.getItem('ListaMedicos'));
-        for (let i = 0; i < arr.length; i++) {
+        for (let i = 0; i &lt; arr.length; i++) {
             if (opcao == arr[i].especialidade) {
                 var option = document.createElement("option");
                 option.text = arr[i].nome;
@@ -329,7 +357,7 @@ ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
 ListaConsulta.removerConsulta = function (posicao) {
     consulta = new ListaConsulta();
     var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
-    for (let i = 0; i < localStorageObjs.length; i++) {
+    for (let i = 0; i &lt; localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == posicao)
             localStorageObjs.splice(i, 1);
     }
@@ -360,7 +388,7 @@ function saveModal(id) {
     var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
     var selectModal = document.getElementById("idSelect");
 
-    for (let i = 0; i < localStorageObjs.length; i++) {
+    for (let i = 0; i &lt; localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == id) {
             localStorageObjs[i].efetivada = selectModal.options[selectModal.selectedIndex].text;
         }
@@ -428,25 +456,25 @@ function checkOption(getSelected) {
 ListaConsulta.prototype.listarConsultas = function () {
     var today = false;
     if (this.consultas.length === 0) { //quando nao ha dados na localStorage
-        return "<h4>Não existem consultas na base de dados!</h4>";
+        return "&lt;h4>Não existem consultas na base de dados!&lt;/h4>";
 
     } else {
-        var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+        var resultado = `&lt;table class='table'>&lt;thead class="thead-dark">&lt;tr>&lt;th>Hora&lt;/th>&lt;th>Medico&lt;/th>&lt;th>Nome do Animal&lt;/th>&lt;th>Tipo de Consulta&lt;/th>&lt;th>Efetivada&lt;/th>&lt;th>Paga&lt;/th>&lt;th>Remover&lt;/th>&lt;th>Efetivar/Pagar&lt;/th>&lt;/tr>&lt;/thead>`;
 
         this.consultas.forEach(function (currentValue, index, array) { //percorrer o array para criar a tabela
             if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas são para o dia atual
-                var remove = `<td><a onclick="ListaConsulta.removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
-                resultado += "<tr><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
-                    currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>" +
-                    remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + currentValue.efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
+                var remove = `&lt;td>&lt;a onclick="ListaConsulta.removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'>&lt;/a>&lt;/td>`;
+                resultado += "&lt;tr>&lt;td> " + currentValue.hora + ":00&lt;/td>&lt;td> " + currentValue.medico + "&lt;/td>&lt;td> " + currentValue.nomeDoAnimal + "&lt;/td>&lt;td>" +
+                    currentValue.tipoDeConsulta + "&lt;/td>&lt;td>" + currentValue.efetivada + "&lt;/td>&lt;td>" + currentValue.paga + "&lt;/td>" +
+                    remove + "&lt;td>&lt;a onclick='openModal(" + currentValue.id + ",`" + currentValue.efetivada + "`)' data-toggle='modal' data-target='#exampleModal'>&lt;i class='far fa-edit'>&lt;/i>&lt;/a>&lt;/td>&lt;/tr>";
 
                 today = true;
             }
         });
         if (today)
-            resultado += "</table>";
+            resultado += "&lt;/table>";
         else
-            resultado = "<h4>Não existem consultas para hoje! :(</h4>"; //Quando nao ha consultas para o dia de hoje na localStorage
+            resultado = "&lt;h4>Não existem consultas para hoje! :(&lt;/h4>"; //Quando nao ha consultas para o dia de hoje na localStorage
 
         return resultado;
     }
@@ -512,11 +540,11 @@ function alertAndFocus(campo, msg, classError) {
 function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
     if (isNull(dataInput.value))
         alertAndFocus(dataInput, "Data inválida", "input-error form-control");
-    else if (dataInput.value < data.getDataAtual())
+    else if (dataInput.value &lt; data.getDataAtual())
         alertAndFocus(dataInput, "Data Indisponível", "input-error form-control");
     else if (isNull(hora))
         alert("Hora inválida");
-    else if (hora.id <= data.getHoras() && dataInput.value == data.getDataAtual())  //comentar para testes
+    else if (hora.id &lt;= data.getHoras() &amp;&amp; dataInput.value == data.getDataAtual())  //comentar para testes
         alertAndFocus(hora, "Hora indisponível!");
     else if (isNull(nomeAnimal.value))
         alertAndFocus(nomeAnimal, "O campo 'Nome do Animal' é um obrigatório!", "input-error form-control");
@@ -544,7 +572,7 @@ ListaConsulta.acrescentar = function (consulta) {
         var numberChilds = table.rows.length;
         var hora;
 
-        for (var i = 1; i < numberChilds; i++) {
+        for (var i = 1; i &lt; numberChilds; i++) {
             if (table.rows[i].getAttribute("class") == "checked") {
                 hora = table.rows[i]; // ir buscar a hora selecionada ao mapa da semana
                 break;
@@ -565,4 +593,26 @@ ListaConsulta.acrescentar = function (consulta) {
     } catch (e) {
         console.log("ERRO: " + e);
     }
-};
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Consulta.html">Consulta</a></li><li><a href="Data.html">Data</a></li><li><a href="ListaConsultas.html">ListaConsultas</a></li><li><a href="ListaMedicos.html">ListaMedicos</a></li><li><a href="Medico.html">Medico</a></li></ul><h3>Global</h3><ul><li><a href="global.html#acrescentar">acrescentar</a></li><li><a href="global.html#acrescentarConsulta">acrescentarConsulta</a></li><li><a href="global.html#acrescentarConsultas">acrescentarConsultas</a></li><li><a href="global.html#alertAndFocus">alertAndFocus</a></li><li><a href="global.html#apresentar">apresentar</a></li><li><a href="global.html#checkConsulta">checkConsulta</a></li><li><a href="global.html#checkHour">checkHour</a></li><li><a href="global.html#checkMedicos">checkMedicos</a></li><li><a href="global.html#checkOption">checkOption</a></li><li><a href="global.html#createBrs">createBrs</a></li><li><a href="global.html#createButtons">createButtons</a></li><li><a href="global.html#createElements">createElements</a></li><li><a href="global.html#createInputs">createInputs</a></li><li><a href="global.html#createLabels">createLabels</a></li><li><a href="global.html#createMarcacoes">createMarcacoes</a></li><li><a href="global.html#createObjects">createObjects</a></li><li><a href="global.html#createOptions">createOptions</a></li><li><a href="global.html#createSpans">createSpans</a></li><li><a href="global.html#EditarMed">EditarMed</a></li><li><a href="global.html#getConsultasLocal">getConsultasLocal</a></li><li><a href="global.html#getMedicosLocal">getMedicosLocal</a></li><li><a href="global.html#getNumberOfConsultas">getNumberOfConsultas</a></li><li><a href="global.html#getNumberOfMedicos">getNumberOfMedicos</a></li><li><a href="global.html#getSelected">getSelected</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#initializeElements">initializeElements</a></li><li><a href="global.html#isNull">isNull</a></li><li><a href="global.html#listarConsultas">listarConsultas</a></li><li><a href="global.html#listarEspecialidade">listarEspecialidade</a></li><li><a href="global.html#listarGenero">listarGenero</a></li><li><a href="global.html#listarMedicos">listarMedicos</a></li><li><a href="global.html#listarTipoConsulta">listarTipoConsulta</a></li><li><a href="global.html#listHours">listHours</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#removeChilds">removeChilds</a></li><li><a href="global.html#removerConsulta">removerConsulta</a></li><li><a href="global.html#removerMedicos">removerMedicos</a></li><li><a href="global.html#saveConsultas">saveConsultas</a></li><li><a href="global.html#saveEditMedicos">saveEditMedicos</a></li><li><a href="global.html#saveModal">saveModal</a></li><li><a href="global.html#undo">undo</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Apr 19 2019 16:56:31 GMT+0100 (GMT+01:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

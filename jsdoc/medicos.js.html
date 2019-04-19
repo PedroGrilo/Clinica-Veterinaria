@@ -1,4 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: medicos.js</title>
 
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: medicos.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
 arr = JSON.parse(localStorage["Especialidade"]);
 arrgen = JSON.parse(localStorage["Genero"]);
 function initialize2() {
@@ -73,37 +101,37 @@ ListaMedicos.prototype.acrescentarMedicos = function (medico) {
 ListaMedicos.prototype.listarMedicos = function () {
 
     if (this.medicos.length === 0) {
-        return "<h4>Não existem médicos na base de dados!</h4>";
+        return "&lt;h4>Não existem médicos na base de dados!&lt;/h4>";
 
     } else {
         var resultado = `
-        <table class="table medtab">
-            <thead class="thead-dark">
-            <tr>
-                <th>Medico</th>
-                <th>Titulo</th>
-                <th>Genero</th>
-                <th>Email</th>
-                <th>Especialidade</th>
-                <th>Editar</th>
-                <th>Apagar/Undo</th>
-            </tr>
-        </thead>`;
+        &lt;table class="table medtab">
+            &lt;thead class="thead-dark">
+            &lt;tr>
+                &lt;th>Medico&lt;/th>
+                &lt;th>Titulo&lt;/th>
+                &lt;th>Genero&lt;/th>
+                &lt;th>Email&lt;/th>
+                &lt;th>Especialidade&lt;/th>
+                &lt;th>Editar&lt;/th>
+                &lt;th>Apagar/Undo&lt;/th>
+            &lt;/tr>
+        &lt;/thead>`;
 
         this.medicos.forEach(function (currentValue, index, array) {
-            resultado += "<tr>" +
-                "<td><div id ='nome" + currentValue.id + "'>" + currentValue.nome + "</div></td>" +
-                "<td><div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "</div></td>" +
-                "<td><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
-                "<td><div id ='email" + currentValue.id + "'>" + currentValue.email + "</div></td>" +
-                "<td><div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "</div></td>" +
-                "<td><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
-                "<td><div id='ico_s" + currentValue.id + "'><button onclick=ListaMedicos.removerMedicos(" + currentValue.id + ") class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
-                "</tr>";
+            resultado += "&lt;tr>" +
+                "&lt;td>&lt;div id ='nome" + currentValue.id + "'>" + currentValue.nome + "&lt;/div>&lt;/td>" +
+                "&lt;td>&lt;div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "&lt;/div>&lt;/td>" +
+                "&lt;td>&lt;div id ='genero" + currentValue.id + "'>" + currentValue.genero + "&lt;/div>&lt;/td>" +
+                "&lt;td>&lt;div id ='email" + currentValue.id + "'>" + currentValue.email + "&lt;/div>&lt;/td>" +
+                "&lt;td>&lt;div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "&lt;/div>&lt;/td>" +
+                "&lt;td>&lt;div id='ico" + currentValue.id + "'>&lt;button onclick=EditarMed(" + currentValue.id + ") class='editmed'>&lt;i' class='fas fa-user-edit'>&lt;/i>&lt;/button>&lt;/div>&lt;/td>" +
+                "&lt;td>&lt;div id='ico_s" + currentValue.id + "'>&lt;button onclick=ListaMedicos.removerMedicos(" + currentValue.id + ") class='editmed'>&lt;i class='fas fa-user-times'>&lt;/i>&lt;/button>&lt;/div>&lt;/td>" +
+                "&lt;/tr>";
             today = true;
 
         });
-        resultado += "</table>";
+        resultado += "&lt;/table>";
 
         return resultado;
     }
@@ -141,7 +169,7 @@ ListaMedicos.apresentar = function (medico) {
 ListaMedicos.removerMedicos = function (posicao) {
     medico = new ListaMedicos();
     var localStorageObjs = JSON.parse(localStorage["ListaMedicos"]);
-    for (let i = 0; i < localStorageObjs.length; i++) {
+    for (let i = 0; i &lt; localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == posicao)
             localStorageObjs.splice(i, 1);
     }
@@ -210,10 +238,10 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     let espec = document.getElementById("tipoEspecialidade" + id);
     medico = new ListaMedicos();
     var localStorageObjs = JSON.parse(localStorage["ListaMedicos"]);
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    for (let i = 0; i < localStorageObjs.length; i++) {
+    var re = /^(([^&lt;>()\[\]\\.,;:\s@"]+(\.[^&lt;>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    for (let i = 0; i &lt; localStorageObjs.length; i++) {
         if (localStorageObjs[i].id == id) {
-            if (nome.value != "" && titulo.value != "" && email.value != "" && genero.value != "" && espec.value != "") {
+            if (nome.value != "" &amp;&amp; titulo.value != "" &amp;&amp; email.value != "" &amp;&amp; genero.value != "" &amp;&amp; espec.value != "") {
                 if (re.test(String(email.value).toLowerCase()) == true) {
                     if (!arr.includes(espec.value)) {
                         arr.push(espec.value);
@@ -393,7 +421,7 @@ function listarEspecialidade(idform) {
 
     });
 
-    for (let i = -2; i < arr.length + 1; i++) {
+    for (let i = -2; i &lt; arr.length + 1; i++) {
 
         if (i == -2) {
             var option = document.createElement("option");
@@ -442,7 +470,7 @@ function listarGenero(idform) {
     createElements("SELECT", mainForm, "tipoGenero" + id, "form-control");
     var getSelectTipo = document.getElementById("tipoGenero" + id);
 
-    for (let i = -2; i <= arrgen.length; i++) {
+    for (let i = -2; i &lt;= arrgen.length; i++) {
 
         if (i == -2) {
             var option = document.createElement("option");
@@ -514,7 +542,7 @@ function alertAndFocus(campo, msg) {
  * @return true quando a validação é feita com sucesso
  */
 function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /^(([^&lt;>()\[\]\\.,;:\s@"]+(\.[^&lt;>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (isNull(nome.value)) {
         alertAndFocus(nome, "Campo: Nome vazio");
     } else if (isNull(titulo.value)) {
@@ -552,3 +580,26 @@ function initialize() {
     initializeElements();
     document.getElementById("dataAtual").innerText = data.getDataAtual();
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Consulta.html">Consulta</a></li><li><a href="Data.html">Data</a></li><li><a href="ListaConsultas.html">ListaConsultas</a></li><li><a href="ListaMedicos.html">ListaMedicos</a></li><li><a href="Medico.html">Medico</a></li></ul><h3>Global</h3><ul><li><a href="global.html#acrescentar">acrescentar</a></li><li><a href="global.html#acrescentarConsulta">acrescentarConsulta</a></li><li><a href="global.html#acrescentarConsultas">acrescentarConsultas</a></li><li><a href="global.html#alertAndFocus">alertAndFocus</a></li><li><a href="global.html#apresentar">apresentar</a></li><li><a href="global.html#checkConsulta">checkConsulta</a></li><li><a href="global.html#checkHour">checkHour</a></li><li><a href="global.html#checkMedicos">checkMedicos</a></li><li><a href="global.html#checkOption">checkOption</a></li><li><a href="global.html#createBrs">createBrs</a></li><li><a href="global.html#createButtons">createButtons</a></li><li><a href="global.html#createElements">createElements</a></li><li><a href="global.html#createInputs">createInputs</a></li><li><a href="global.html#createLabels">createLabels</a></li><li><a href="global.html#createMarcacoes">createMarcacoes</a></li><li><a href="global.html#createObjects">createObjects</a></li><li><a href="global.html#createOptions">createOptions</a></li><li><a href="global.html#createSpans">createSpans</a></li><li><a href="global.html#EditarMed">EditarMed</a></li><li><a href="global.html#getConsultasLocal">getConsultasLocal</a></li><li><a href="global.html#getMedicosLocal">getMedicosLocal</a></li><li><a href="global.html#getNumberOfConsultas">getNumberOfConsultas</a></li><li><a href="global.html#getNumberOfMedicos">getNumberOfMedicos</a></li><li><a href="global.html#getSelected">getSelected</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#initializeElements">initializeElements</a></li><li><a href="global.html#isNull">isNull</a></li><li><a href="global.html#listarConsultas">listarConsultas</a></li><li><a href="global.html#listarEspecialidade">listarEspecialidade</a></li><li><a href="global.html#listarGenero">listarGenero</a></li><li><a href="global.html#listarMedicos">listarMedicos</a></li><li><a href="global.html#listarTipoConsulta">listarTipoConsulta</a></li><li><a href="global.html#listHours">listHours</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#removeChilds">removeChilds</a></li><li><a href="global.html#removerConsulta">removerConsulta</a></li><li><a href="global.html#removerMedicos">removerMedicos</a></li><li><a href="global.html#saveConsultas">saveConsultas</a></li><li><a href="global.html#saveEditMedicos">saveEditMedicos</a></li><li><a href="global.html#saveModal">saveModal</a></li><li><a href="global.html#undo">undo</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Apr 19 2019 16:56:31 GMT+0100 (GMT+01:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

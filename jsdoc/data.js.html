@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: data.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: data.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * Classe Data
+ */
+
+
+/**
+ * @constructs Data
+ */
+
+function Data() {
+    var data = new Date();
+    var mm = data.getMonth() + 1;
+    var dd = data.getDate();
+
+    if (dd &lt; 10)
+        dd = '0' + dd; //adicionar o 0
+    if (mm &lt; 10)
+        mm = '0' + mm; //adicionar o 0
+
+    this.ano = data.getFullYear();
+    this.mes = mm;
+    this.dia = dd;
+    this.hora = data.getHours();
+}
+
+function addDays(days) {
+    return new Date().setDate(new Date().getDate() + days);
+}
+
+Data.prototype.getHoras = function () {
+    return this.hora;
+}
+
+Data.prototype.getDataAtual = function () {
+    return this.ano + '-' + this.mes + '-' + this.dia;
+}
+Data.prototype.getAno = function () {
+    return this.ano;
+}
+
+Data.prototype.getMes = function () {
+    return this.mes;
+}
+
+Data.prototype.getDia = function () {
+    return this.dia;
+}
+
+Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+
+    var mm = date.getMonth() + 1;
+    var dd = date.getDate();
+
+    if (dd &lt; 10)
+        dd = '0' + dd; //adicionar o 0
+    if (mm &lt; 10)
+        mm = '0' + mm; //adicionar o 0
+
+    return date.getFullYear() + "-" + mm + "-" + dd;
+}
+
+var data = new Data();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Consulta.html">Consulta</a></li><li><a href="Data.html">Data</a></li><li><a href="ListaConsultas.html">ListaConsultas</a></li><li><a href="ListaMedicos.html">ListaMedicos</a></li><li><a href="Medico.html">Medico</a></li></ul><h3>Global</h3><ul><li><a href="global.html#acrescentar">acrescentar</a></li><li><a href="global.html#acrescentarConsulta">acrescentarConsulta</a></li><li><a href="global.html#acrescentarConsultas">acrescentarConsultas</a></li><li><a href="global.html#alertAndFocus">alertAndFocus</a></li><li><a href="global.html#apresentar">apresentar</a></li><li><a href="global.html#checkConsulta">checkConsulta</a></li><li><a href="global.html#checkHour">checkHour</a></li><li><a href="global.html#checkMedicos">checkMedicos</a></li><li><a href="global.html#checkOption">checkOption</a></li><li><a href="global.html#createBrs">createBrs</a></li><li><a href="global.html#createButtons">createButtons</a></li><li><a href="global.html#createElements">createElements</a></li><li><a href="global.html#createInputs">createInputs</a></li><li><a href="global.html#createLabels">createLabels</a></li><li><a href="global.html#createMarcacoes">createMarcacoes</a></li><li><a href="global.html#createObjects">createObjects</a></li><li><a href="global.html#createOptions">createOptions</a></li><li><a href="global.html#createSpans">createSpans</a></li><li><a href="global.html#EditarMed">EditarMed</a></li><li><a href="global.html#getConsultasLocal">getConsultasLocal</a></li><li><a href="global.html#getMedicosLocal">getMedicosLocal</a></li><li><a href="global.html#getNumberOfConsultas">getNumberOfConsultas</a></li><li><a href="global.html#getNumberOfMedicos">getNumberOfMedicos</a></li><li><a href="global.html#getSelected">getSelected</a></li><li><a href="global.html#initialize">initialize</a></li><li><a href="global.html#initializeElements">initializeElements</a></li><li><a href="global.html#isNull">isNull</a></li><li><a href="global.html#listarConsultas">listarConsultas</a></li><li><a href="global.html#listarEspecialidade">listarEspecialidade</a></li><li><a href="global.html#listarGenero">listarGenero</a></li><li><a href="global.html#listarMedicos">listarMedicos</a></li><li><a href="global.html#listarTipoConsulta">listarTipoConsulta</a></li><li><a href="global.html#listHours">listHours</a></li><li><a href="global.html#openModal">openModal</a></li><li><a href="global.html#removeChilds">removeChilds</a></li><li><a href="global.html#removerConsulta">removerConsulta</a></li><li><a href="global.html#removerMedicos">removerMedicos</a></li><li><a href="global.html#saveConsultas">saveConsultas</a></li><li><a href="global.html#saveEditMedicos">saveEditMedicos</a></li><li><a href="global.html#saveModal">saveModal</a></li><li><a href="global.html#undo">undo</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Apr 19 2019 16:56:31 GMT+0100 (GMT+01:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -7,7 +7,6 @@
  * @param {string} classB
  * @param {string} valueB
  * @param {string} onclick
- * @return 
  */
 function createButtons(where, idName, type, classB, valueB, onclick) {
     var elementCreated = document.createElement("button");
@@ -26,7 +25,6 @@ function createButtons(where, idName, type, classB, valueB, onclick) {
  * @param {string} idName
  * @param {string} type
  * @param {string} classe
- * @return 
  */
 function createInputs(where, idName, type, classe) {
     var elementCreated = document.createElement("INPUT");
@@ -46,7 +44,6 @@ function createInputs(where, idName, type, classe) {
  * @param {string} text
  * @param {HTMLObjectElement} where
  * @param {string} id
- * @return 
  */
 function createSpans(text, where, id) {
     var elementCreated = document.createElement("SPAN");
@@ -60,7 +57,6 @@ function createSpans(text, where, id) {
  * @method createLabels
  * @param {string} text
  * @param {HTMLObjectElement} where
- * @return 
  */
 function createLabels(text, where) {
     var elementCreated = document.createElement("LABEL");
@@ -72,7 +68,6 @@ function createLabels(text, where) {
  * Função para criar brs
  * @method createBrs
  * @param {HTMLObjectElement} where
- * @return 
  */
 function createBrs(where) {
     var elementCreated = document.createElement("BR");
@@ -86,7 +81,6 @@ function createBrs(where) {
  * @param {HTMLObjectElement} where
  * @param {string} idName
  * @param {string} classes
- * @return 
  */
 function createElements(element, where, idName, classes) {
     var elementCreated = document.createElement("" + element + "");
@@ -102,7 +96,6 @@ function createElements(element, where, idName, classes) {
  * @param {string} text
  * @param {string} attribute
  * @param {string} textAttribute
- * @return 
  */
 function createOptions(select, text, attribute, textAttribute) {
     var option = document.createElement("option");
