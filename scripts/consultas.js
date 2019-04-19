@@ -1,8 +1,16 @@
 /**
  * Classe Consulta
- */
-/**
+
  * @constructs Consulta
+ * 
+ * @param {number} id - id
+ * @param {date} diaDaConsulta - dia da consulta
+ * @param {number} hora  - hora da consulta
+ * @param {Medico} medico - nome do medico
+ * @param {string} nomeDoAnimal - nome do animal
+ * @param {string} tipoDeConsulta - tipo de consulta
+ * @param {string} efetivada  - se a consulta foi efeitvada ou nao, por omissao está nao.
+ * @param {string} paga - se a consulta foi paga ou nao, por omissao está nao.
  */
 
 function Consulta(id, diaDaConsulta, hora, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
@@ -18,9 +26,6 @@ function Consulta(id, diaDaConsulta, hora, medico, nomeDoAnimal, tipoDeConsulta,
 
 /**
  * Classe Lista Consultas
- */
-
-/**
  * 
  * @constructs ListaConsultas
  * 
@@ -35,8 +40,10 @@ function ListaConsulta() {
 }
 
 /**
- * Para obter o numero de consultas
-*/
+ * Obtem o numero de consultas
+ * @method getNumberOfConsultas
+ * @return O tamanho do localStorage, ou seja, o numero total de consultas
+ */
 ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage['ListaConsultas']);
     return retrievedObject.length;
@@ -44,6 +51,7 @@ ListaConsulta.getNumberOfConsultas = function () {
 
 /**
  * Cria os objetos, após se clicar em tipo de consulta
+ * @method createObjects
  */
 function createObjects() {
     var mainForm = document.getElementById("mainForm");
@@ -53,9 +61,11 @@ function createObjects() {
 
 /**
  * Criar o mapa da semana com as marcações
+ * @method createMarcacoes
+ * @param {ObjectHTML} medicoSelected
+ * @return mapa da semana por medico
  */
 function createMarcacoes(medicoSelected) {
-
 
     var getSelectMedicos = document.getElementById("medicos");
     getSelectMedicos.removeAttribute("onmousemove");
@@ -98,26 +108,30 @@ function createMarcacoes(medicoSelected) {
         else
             horasRestantes = 18 - data.getHoras();
 
-        for (let h = 0; h < listaConsultasLocal.length; h++) {  
+        for (let h = 0; h < listaConsultasLocal.length; h++) {
             if (listaConsultasLocal[h].diaDaConsulta == data.getDataAtual())
                 hoje++;//counter para as consultas com o dia igual ao dia de hoje
             if (listaConsultasLocal[h].diaDaConsulta == text.textContent) {
                 counter++;
-                if ((listaConsultasLocal[h].medico == medico)) 
+                if ((listaConsultasLocal[h].medico == medico))
                     tr.setAttribute("class", "notAvailable");
             }
         }
-    
-       /* Verificar se o dia está cheio de consultas OU se o dia de hoje tem a marcação cheia conforme as horas que são */
-        if ((counter >= 8 ) || (text.textContent== data.getDataAtual() && hoje>=horasRestantes))
+
+        /* Verificar se o dia está cheio de consultas OU se o dia de hoje tem a marcação cheia conforme as horas que são */
+        if ((counter >= 8) || (text.textContent == data.getDataAtual() && hoje >= horasRestantes))
             tr.setAttribute("class", "notAvailableDate");
-        
+
     }
 }
 
 
 /**
  * Listar as horas do mapa da semana
+ * @method listHours
+ * @param {date} data
+ * @param {string} medico - nome do medico
+ * @return horas do mapa da semana 
  */
 function listHours(data, medico) {
 
@@ -167,6 +181,8 @@ function listHours(data, medico) {
 
 /**
  * Verificar hora selecionada
+ * @method checkHour
+ * @param {objectHTML} tr 
  */
 function checkHour(tr) {
     if (tr.getAttribute("class")) {
@@ -186,7 +202,9 @@ function checkHour(tr) {
 }
 
 /**
- * Remover os filhos de um 'Pai'
+ * Elimina os filhos de um "Pai"
+ * @method removeChilds
+ * @param {objectHTML} myNode - elementos HTML
  */
 function removeChilds(myNode) {
     while (myNode.firstChild) {
@@ -196,6 +214,8 @@ function removeChilds(myNode) {
 
 /**
  * Obter a opção selecionada
+ * @method getSelected
+ * @param {objectHTML} selectObject - valor do select
  */
 function getSelected(selectObject) {
     var elem = document.getElementById('idDiv');
@@ -206,6 +226,7 @@ function getSelected(selectObject) {
 
 /**
  * Criar o select com o tipo de Consulta
+ * @method listarTipoConsulta
  */
 function listarTipoConsulta() {
 
@@ -234,6 +255,8 @@ function listarTipoConsulta() {
 
 /**
  * Criar o select com os médicos relacionados com o tipo de consulta
+ * @method listarMedicos
+ * @param {objectHTML} opcao - opão do select
  */
 function listarMedicos(opcao) {
 
@@ -282,6 +305,7 @@ function listarMedicos(opcao) {
 
 /**
  * Quardar as consultas no localStorage
+ * @method saveConsultas
  */
 ListaConsulta.prototype.saveConsultas = function () {
     localStorage['ListaConsultas'] = JSON.stringify(this.consultas);
@@ -289,6 +313,8 @@ ListaConsulta.prototype.saveConsultas = function () {
 
 /**
  * Adicionar consulta
+ * @method acrescentarConsulta
+ * @param {Consulta} consulta - objeto consulta
  */
 ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
     this.consultas.push(consulta);
@@ -297,6 +323,8 @@ ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
 
 /**
  * Remover consultas
+ * @method removerConsulta
+ * @param {number} posicao
  */
 ListaConsulta.removerConsulta = function (posicao) {
     consulta = new ListaConsulta();
@@ -311,6 +339,9 @@ ListaConsulta.removerConsulta = function (posicao) {
 
 /**
  * Adicionar consultas
+ * @method acrescentarConsultas
+ * @param {consulta} consulta - objeto consulta
+ * @return ThisExpression
  */
 ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
     consulta = Array.prototype.slice.call(arguments); //Transformar o "arguments" num array par poder usar o forEach
@@ -323,6 +354,9 @@ ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
 
 /**
  * Modal Save do efetivar/Pagar
+ * @method saveModal
+ * @param {} id
+ * @return 
  */
 function saveModal(id) {
     var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
@@ -339,6 +373,9 @@ function saveModal(id) {
 
 /**
  * Modal Open do efetivar/Pagar
+ * @method openModal
+ * @param {number} id - id
+ * @param {string} option - efetivada
  */
 function openModal(id, option) {
     var modal = document.getElementById('modal-body');
@@ -373,8 +410,11 @@ function openModal(id, option) {
     selectModal.value = option;
 }
 
+
 /**
  * Verificar opção - Modal
+ * @method checkOption
+ * @param {objectHTML} getSelected - objeto select
  */
 function checkOption(getSelected) {
     if (getSelected == "Sim")
@@ -385,10 +425,10 @@ function checkOption(getSelected) {
 
 /**
  * Listar consultas - Tabela
+* @method listarConsultas
  */
 ListaConsulta.prototype.listarConsultas = function () {
     var today = false;
-    console.log(this.consultas);
     if (this.consultas.length === 0) { //quando nao ha dados na localStorage
         return "<h4>Não existem consultas na base de dados!</h4>";
 
@@ -416,6 +456,7 @@ ListaConsulta.prototype.listarConsultas = function () {
 
 /**
  * Guardar as consultas num array de consultas
+ * @method getConsultasLocal
  */
 ListaConsulta.prototype.getConsultasLocal = function () {
     if (localStorage['ListaConsultas']) {
@@ -425,6 +466,8 @@ ListaConsulta.prototype.getConsultasLocal = function () {
 
 /**
  * Apresentar consulta
+ * @method apresentar
+ * @param {Consulta} consulta - objeto do tipo consulta
  */
 ListaConsulta.apresentar = function (consulta) {
     consulta = consulta || new ListaConsulta().acrescentarConsultas();
@@ -436,13 +479,21 @@ ListaConsulta.apresentar = function (consulta) {
 
 /**
  * Verificar se um campo é null ou nao está preenchido
+ * @method isNull
+ * @param {objectHTML} campo - um objeto html
+ * @return retorna true se o campo for inválido
  */
 function isNull(campo) {
     return (campo == "" || campo == null || campo == undefined);
 }
 
 /**
- * Mnada um alert e dá focus ao campo, quando dá erro
+ * Manda um alert e dá focus ao campo, quando dá erro
+ * @method alertAndFocus
+ * @param {} campo
+ * @param {} msg
+ * @param {} classError
+ * @return quando o campo é ivalido retorna false
  */
 function alertAndFocus(campo, msg, classError) {
     alert(msg);
@@ -453,6 +504,13 @@ function alertAndFocus(campo, msg, classError) {
 
 /**
  * Verificações ao adicionar consulta
+ * @method checkConsulta
+ * @param {Medico} medico - objeto do tipo médico
+ * @param {string} nomeAnimal
+ * @param {string} tipoConsulta
+ * @param {date} dataInput
+ * @param {number} hora
+ * @return 
  */
 function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
     if (isNull(dataInput.value))
@@ -478,6 +536,9 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
 
 /**
  * Acrescentar Consulta
+ * @method acrescentar
+ * @param {Consulta} consulta - objeto do tipo consulta
+
  */
 ListaConsulta.acrescentar = function (consulta) {
     try {
