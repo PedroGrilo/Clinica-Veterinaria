@@ -1,10 +1,4 @@
-/**
- * Classe Medico
- */
 
-/**
- * @constructs Medico
- */
 arr = JSON.parse(localStorage["Especialidade"]);
 arrgen = JSON.parse(localStorage["Genero"]);
 function initialize2() {
@@ -22,6 +16,14 @@ window.onload = function () {
     initialize2();
     ListaMedicos.apresentar();
 }
+
+/**
+ * Classe Medico
+ */
+
+/**
+ * @constructs Medico
+ */
 function Medico(id, nome, titulo, genero, email, especialidade, foto) {
     this.id = id;
     this.nome = nome;
@@ -109,7 +111,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 };
 
 /**
- * Description
+ * Retorna os medico da localStorage
  * @method getMedicosLocal
  */
  ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
@@ -121,7 +123,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 /**
  * Lista os medicos
  * @method apresentar
- * @param {Object} medico
+ * @param {Medico} medico
  */
 ListaMedicos.apresentar = function (medico) {
     medico = medico || new ListaMedicos().acrescentarMedicos();

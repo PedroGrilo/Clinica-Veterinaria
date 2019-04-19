@@ -62,7 +62,7 @@ function createObjects() {
 /**
  * Criar o mapa da semana com as marcações
  * @method createMarcacoes
- * @param {ObjectHTML} medicoSelected
+ * @param {HTMLObjectElement} medicoSelected
  * @return mapa da semana por medico
  */
 function createMarcacoes(medicoSelected) {
@@ -182,7 +182,7 @@ function listHours(data, medico) {
 /**
  * Verificar hora selecionada
  * @method checkHour
- * @param {objectHTML} tr 
+ * @param {HTMLObjectElement} tr 
  */
 function checkHour(tr) {
     if (tr.getAttribute("class")) {
@@ -204,7 +204,7 @@ function checkHour(tr) {
 /**
  * Elimina os filhos de um "Pai"
  * @method removeChilds
- * @param {objectHTML} myNode - elementos HTML
+ * @param {HTMLObjectElement} myNode - elementos HTML
  */
 function removeChilds(myNode) {
     while (myNode.firstChild) {
@@ -215,7 +215,7 @@ function removeChilds(myNode) {
 /**
  * Obter a opção selecionada
  * @method getSelected
- * @param {objectHTML} selectObject - valor do select
+ * @param {HTMLObjectElement} selectObject - valor do select
  */
 function getSelected(selectObject) {
     var elem = document.getElementById('idDiv');
@@ -256,7 +256,7 @@ function listarTipoConsulta() {
 /**
  * Criar o select com os médicos relacionados com o tipo de consulta
  * @method listarMedicos
- * @param {objectHTML} opcao - opão do select
+ * @param {HTMLObjectElement} opcao - opão do select
  */
 function listarMedicos(opcao) {
 
@@ -414,7 +414,7 @@ function openModal(id, option) {
 /**
  * Verificar opção - Modal
  * @method checkOption
- * @param {objectHTML} getSelected - objeto select
+ * @param {HTMLObjectElement} getSelected - objeto select
  */
 function checkOption(getSelected) {
     if (getSelected == "Sim")
@@ -480,7 +480,7 @@ ListaConsulta.apresentar = function (consulta) {
 /**
  * Verificar se um campo é null ou nao está preenchido
  * @method isNull
- * @param {objectHTML} campo - um objeto html
+ * @param {HTMLObjectElement} campo - um objeto html
  * @return retorna true se o campo for inválido
  */
 function isNull(campo) {
