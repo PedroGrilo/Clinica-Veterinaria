@@ -107,12 +107,21 @@ ListaMedicos.prototype.listarMedicos = function () {
 
 };
 
-ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
+/**
+ * Description
+ * @method getMedicosLocal
+ */
+ ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
     if (localStorage['ListaMedicos']) {
         this.medicos = JSON.parse(localStorage['ListaMedicos']);
     }
 }
 
+/**
+ * Description
+ * @method apresentar
+ * @param {} medico
+ */
 ListaMedicos.apresentar = function (medico) {
     medico = medico || new ListaMedicos().acrescentarMedicos();
     medico.getMedicosLocal();
@@ -121,6 +130,11 @@ ListaMedicos.apresentar = function (medico) {
 
 };
 
+/**
+ * Description
+ * @method removerMedicos
+ * @param {} posicao
+ */
 ListaMedicos.removerMedicos = function (posicao) {
     medico = new ListaMedicos();
     var localStorageObjs = JSON.parse(localStorage["ListaMedicos"]);
@@ -133,11 +147,21 @@ ListaMedicos.removerMedicos = function (posicao) {
 }
 
 
+/**
+ * Description
+ * @method getNumberOfMedicos
+ * @return MemberExpression
+ */
 ListaMedicos.getNumberOfMedicos = function () {
     var retrievedObject = JSON.parse(localStorage["ListaMedicos"]);
     return retrievedObject.length;
 }
 
+/**
+ * Description
+ * @method acrescentar
+ * @param {} medico
+ */
 ListaMedicos.acrescentar = function (medico) { //
     var nome = document.getElementById("nome");
     var titulo = document.getElementById("titulo");
@@ -168,6 +192,11 @@ ListaMedicos.acrescentar = function (medico) { //
 
 
 };
+/**
+ * Description
+ * @method saveEditMedicos
+ * @param {} id
+ */
 ListaMedicos.prototype.saveEditMedicos = function (id) {
     id = JSON.parse(id);
     id = id[0];
@@ -206,12 +235,22 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     localStorage['ListaMedicos'] = JSON.stringify(localStorageObjs);
 }
 
+/**
+ * Description
+ * @method removeChilds
+ * @param {} myNode
+ */
 function removeChilds(myNode) {
     while (myNode.firstChild) {
         myNode.removeChild(myNode.firstChild);
     }
 }
 
+/**
+ * Description
+ * @method undo
+ * @param {} id
+ */
 function undo(id) {
     id = JSON.parse(id);
     let nomevalor = id[1];
@@ -255,6 +294,11 @@ function undo(id) {
     createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-edit");
     createElements("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
 }
+/**
+ * Description
+ * @method EditarMed
+ * @param {} id
+ */
 function EditarMed(id) {
 
     let nome = document.getElementById("nome" + id);
@@ -315,6 +359,11 @@ function EditarMed(id) {
     createElements("i", document.getElementById("btnics" + id), "", "fas fa-undo");
 }
 
+/**
+ * Description
+ * @method listarEspecialidade
+ * @param {} idform
+ */
 function listarEspecialidade(idform) {
 
     var mainForm = document.getElementById(idform);
@@ -377,6 +426,11 @@ function listarEspecialidade(idform) {
 }
 
 
+/**
+ * Description
+ * @method listarGenero
+ * @param {} idform
+ */
 function listarGenero(idform) {
 
     var mainForm = document.getElementById(idform);
@@ -421,10 +475,23 @@ function listarGenero(idform) {
 }
 
 
+/**
+ * Description
+ * @method isNull
+ * @param {} campo
+ * @return Se o campo é nulo ou sem aspas
+ */
 function isNull(campo) {
     return (campo == "" || campo == null);
 }
 
+/**
+ * Description
+ * @method alertAndFocus
+ * @param {} campo
+ * @param {} msg
+ * @return falso
+ */
 function alertAndFocus(campo, msg) {
     alert(msg);
     campo.focus();
@@ -432,6 +499,17 @@ function alertAndFocus(campo, msg) {
     return false;
 }
 
+/**
+ * Description
+ * @method checkMedicos
+ * @param {} nome
+ * @param {} titulo
+ * @param {} email
+ * @param {} genero
+ * @param {} especialidade
+ * @param {} foto
+ * @return true quando a validação é feita com sucesso
+ */
 function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (isNull(nome.value)) {
@@ -454,11 +532,19 @@ function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
 
 }
 
+/**
+ * Description
+ * @method initializeElements
+ */
 function initializeElements() {
     var body = document.getElementById('body');
     createElements("h4", document.getElementById("nowTime"), "dataAtual");
 }
 
+/**
+ * Description
+ * @method initialize
+ */
 function initialize() {
     initializeElements();
     document.getElementById("dataAtual").innerText = data.getDataAtual();
