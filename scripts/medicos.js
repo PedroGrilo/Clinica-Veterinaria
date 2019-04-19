@@ -18,6 +18,7 @@ function initialize2() {
     }
 };
 window.onload = function () {
+    initialize();
     initialize2();
     ListaMedicos.apresentar();
 }
@@ -118,9 +119,9 @@ ListaMedicos.prototype.listarMedicos = function () {
 }
 
 /**
- * Description
+ * Lista os medicos
  * @method apresentar
- * @param {} medico
+ * @param {Object} medico
  */
 ListaMedicos.apresentar = function (medico) {
     medico = medico || new ListaMedicos().acrescentarMedicos();
@@ -131,9 +132,9 @@ ListaMedicos.apresentar = function (medico) {
 };
 
 /**
- * Description
+ * Remove os medicos
  * @method removerMedicos
- * @param {} posicao
+ * @param {number} posicao
  */
 ListaMedicos.removerMedicos = function (posicao) {
     medico = new ListaMedicos();
@@ -148,7 +149,7 @@ ListaMedicos.removerMedicos = function (posicao) {
 
 
 /**
- * Description
+ * Retorna o número total de médicos
  * @method getNumberOfMedicos
  * @return MemberExpression
  */
@@ -158,9 +159,9 @@ ListaMedicos.getNumberOfMedicos = function () {
 }
 
 /**
- * Description
+ * Acrescenta um médico aos médicos
  * @method acrescentar
- * @param {} medico
+ * @param {Object} medico
  */
 ListaMedicos.acrescentar = function (medico) { //
     var nome = document.getElementById("nome");
@@ -193,9 +194,9 @@ ListaMedicos.acrescentar = function (medico) { //
 
 };
 /**
- * Description
+ * Edita um médico já existente
  * @method saveEditMedicos
- * @param {} id
+ * @param {number} id
  */
 ListaMedicos.prototype.saveEditMedicos = function (id) {
     id = JSON.parse(id);
@@ -236,9 +237,9 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
 }
 
 /**
- * Description
+ * Remove os child elements do pai fornecido
  * @method removeChilds
- * @param {} myNode
+ * @param {HTMLObjectElement} myNode
  */
 function removeChilds(myNode) {
     while (myNode.firstChild) {
@@ -247,9 +248,9 @@ function removeChilds(myNode) {
 }
 
 /**
- * Description
+ * Reverte a form criada da edição de médicos sem alterar qualquer valor 
  * @method undo
- * @param {} id
+ * @param {number} id
  */
 function undo(id) {
     id = JSON.parse(id);
@@ -295,9 +296,9 @@ function undo(id) {
     createElements("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
 }
 /**
- * Description
+ * Cria a form para editar o medico
  * @method EditarMed
- * @param {} id
+ * @param {number} id
  */
 function EditarMed(id) {
 
@@ -360,9 +361,9 @@ function EditarMed(id) {
 }
 
 /**
- * Description
+ * Lista todas as especialidades
  * @method listarEspecialidade
- * @param {} idform
+ * @param {number} idform
  */
 function listarEspecialidade(idform) {
 
@@ -427,9 +428,9 @@ function listarEspecialidade(idform) {
 
 
 /**
- * Description
+ * Lista todos os generos
  * @method listarGenero
- * @param {} idform
+ * @param {number} idform
  */
 function listarGenero(idform) {
 
@@ -476,9 +477,9 @@ function listarGenero(idform) {
 
 
 /**
- * Description
+ * Verifica se o campo é nulo ou vazio
  * @method isNull
- * @param {} campo
+ * @param {String} campo
  * @return Se o campo é nulo ou sem aspas
  */
 function isNull(campo) {
@@ -486,10 +487,10 @@ function isNull(campo) {
 }
 
 /**
- * Description
+ * Envia um alert e foca no elemento html fornecido
  * @method alertAndFocus
- * @param {} campo
- * @param {} msg
+ * @param {HTMLObjectElement} campo
+ * @param {String} msg
  * @return falso
  */
 function alertAndFocus(campo, msg) {
@@ -500,14 +501,14 @@ function alertAndFocus(campo, msg) {
 }
 
 /**
- * Description
+ * Confirma se todos os valores são aceitaveis.
  * @method checkMedicos
- * @param {} nome
- * @param {} titulo
- * @param {} email
- * @param {} genero
- * @param {} especialidade
- * @param {} foto
+ * @param {HTMLObjectElement} nome
+ * @param {HTMLObjectElement} titulo
+ * @param {HTMLObjectElement} email
+ * @param {HTMLObjectElement} genero
+ * @param {HTMLObjectElement} especialidade
+ * @param {HTMLObjectElement} foto
  * @return true quando a validação é feita com sucesso
  */
 function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
@@ -533,7 +534,7 @@ function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
 }
 
 /**
- * Description
+ * Cria a o lugar onde a data irá mostrar
  * @method initializeElements
  */
 function initializeElements() {
@@ -542,7 +543,7 @@ function initializeElements() {
 }
 
 /**
- * Description
+ * Cria a data
  * @method initialize
  */
 function initialize() {
