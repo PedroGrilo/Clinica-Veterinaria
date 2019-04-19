@@ -104,7 +104,7 @@ function createMarcacoes(medicoSelected) {
             if (listaConsultasLocal[h].diaDaConsulta == text.textContent) {
                 counter++;
                 if ((listaConsultasLocal[h].medico == medico)) 
-                    tr.setAttribute("class", "checked");
+                    tr.setAttribute("class", "notAvailable");
             }
         }
     
