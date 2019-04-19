@@ -89,16 +89,16 @@ td {
   border-style: solid solid solid solid
 }
 
-.notAvailable{
-background-color: #FF831D
+.notAvailable {
+  background-color: #FF831D
 }
 
-.notAvailableDate{
+.notAvailableDate {
   background-color: rgb(255, 63, 29)
-  }
+}
 
-.checked{
-  background-color:#6492E8;
+.checked {
+  background-color: #6492E8;
 }
 
 
