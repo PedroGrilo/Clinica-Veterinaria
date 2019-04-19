@@ -149,13 +149,16 @@ ListaMedicos.acrescentar = function (medico) { //
         arr.push(especialidade.value);
         localStorage["Especialidade"] = JSON.stringify(arr);
     }
-
     if (checkMedicos(nome, titulo, email, genero, especialidade, foto)) {
-        medico = new ListaMedicos().acrescentarMedicos();
-        ListaMedicos.getNumberOfMedicos();
-        medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome.value, titulo.value, genero.value, email.value, especialidade.value, foto.value));
-        alert("Médico adicionado com sucesso!!");
-        location.href = "gestao.html";
+        if(foto.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)){
+            medico = new ListaMedicos().acrescentarMedicos();
+            ListaMedicos.getNumberOfMedicos();
+            medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos() + 1, nome.value, titulo.value, genero.value, email.value, especialidade.value, foto.value));
+            alert("Médico adicionado com sucesso!!");
+            location.href = "gestao.html";
+        }else{
+            alert("A extenção do ficheiro da foto necessita de ser .jpg/.jpeg/.png/.gif");
+        }
     } else {
         if (especialidade == "")
             alert("O medico necessita de ser especializado em algo");
@@ -430,6 +433,7 @@ function alertAndFocus(campo, msg) {
 }
 
 function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (isNull(nome.value)) {
         alertAndFocus(nome, "Campo: Nome vazio");
     } else if (isNull(titulo.value)) {
@@ -442,7 +446,9 @@ function checkMedicos(nome, titulo, email, genero, especialidade, foto) {
         alertAndFocus(especialidade, "Campo: Especialidade vazio");
     } else if (isNull(foto.value)) {
         alertAndFocus(foto, "Campo: Foto vazio");
-    } else {
+    }else if(re.test(String(email.value).toLowerCase()) == false){
+        alertAndFocus(email,"O email introduzido não é valido");
+    }else{
         return true;
     }
 
