@@ -545,10 +545,9 @@ function initializeElements() {
 }
 
 /**
- * Cria a data
+ * Inicializaçao da pagina
  * @method initialize
  */
 function initialize() {
     initializeElements();
-    document.getElementById("dataAtual").innerText = data.getDataAtual();
 }

@@ -65,7 +65,7 @@ function createObjects() {
  * @param {HTMLObjectElement} medicoSelected
  * @returns mapa da semana por medico
  */
-function createMarcacoes(medicoSelected) {
+ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
     var getSelectMedicos = document.getElementById("medicos");
     getSelectMedicos.removeAttribute("onmousemove");
@@ -75,7 +75,7 @@ function createMarcacoes(medicoSelected) {
     var medico = medicoSelected.value;
 
     var dataInput = document.getElementById("dataInput");
-    dataInput.setAttribute("onChange", "listHours(this,'" + medico + "')");
+    dataInput.setAttribute("onChange", "new ListaConsulta().listHours(this,'" + medico + "')");
 
     document.getElementById("theadMarc").hidden = false;
 
@@ -93,33 +93,32 @@ function createMarcacoes(medicoSelected) {
         let date = new Date();
         let td = document.createElement("TD");
         let text = document.createTextNode(date.addDays(i));
+        let counter = 0, hoje = 0, horasRestantes = 0;
 
         tr.setAttribute("id", "myTR" + i);
         tBody.appendChild(tr);
         td.appendChild(text);
         document.getElementById("myTR" + i).appendChild(td);
 
-        let listaConsultasLocal = JSON.parse(localStorage['ListaConsultas']);
-
-        let counter = 0, hoje = 0, horasRestantes = 0;
 
         if (data.getHoras() < 14) // verificar quantos espaços existem conforme a hora atual
             horasRestantes = 18 - data.getHoras() - 1; // o menos 1, é por causa da hora de almoço
         else
             horasRestantes = 18 - data.getHoras();
 
-        for (let h = 0; h < listaConsultasLocal.length; h++) {
-            if (listaConsultasLocal[h].diaDaConsulta == data.getDataAtual())
-                hoje++;//counter para as consultas com o dia igual ao dia de hoje
-            if (listaConsultasLocal[h].diaDaConsulta == text.textContent) {
-                counter++;
-                if ((listaConsultasLocal[h].medico == medico))
+        this.consultas.forEach(function (consultasForEach) {
+            if ((consultasForEach.medico == medico)) {
+                if (consultasForEach.diaDaConsulta == text.textContent) {
                     tr.setAttribute("class", "notAvailable");
+                    counter++;
+                    if (consultasForEach.diaDaConsulta == data.getDataAtual())
+                        hoje++; //counter para as consultas com o dia igual ao dia de hoje
+                }
             }
-        }
+        });
 
         /* Verificar se o dia está cheio de consultas OU se o dia de hoje tem a marcação cheia conforme as horas que são */
-        if ((counter >= 8) || (text.textContent == data.getDataAtual() && hoje >= horasRestantes))
+        if ((counter >= 8) || (hoje >= horasRestantes))
             tr.setAttribute("class", "notAvailableDate");
 
     }
@@ -133,9 +132,7 @@ function createMarcacoes(medicoSelected) {
  * @param {string} medico - nome do medico
  * @returns horas do mapa da semana 
  */
-function listHours(data, medico) {
-
-    var listaConsultasLocal = JSON.parse(localStorage['ListaConsultas']);
+ListaConsulta.prototype.listHours = function (data, medico) {
 
     document.getElementById("theadMarc").hidden = false;
 
@@ -156,13 +153,13 @@ function listHours(data, medico) {
         tBody.appendChild(tr);
         document.getElementById(i).appendChild(td);
 
-        for (var h = 0; h < listaConsultasLocal.length; h++) {
-            if ((listaConsultasLocal[h].medico == medico) && (listaConsultasLocal[h].diaDaConsulta == data.value) && (listaConsultasLocal[h].hora == i)) { //verificar disponibilidade da consulta
+        this.consultas.forEach(function (currentValue, index, array) {
+            if ((currentValue.medico == medico) && (currentValue.diaDaConsulta == data.value) && (currentValue.hora == i)) { //verificar disponibilidade da consulta
                 tr.setAttribute("class", "notAvailable");
                 createSpans(i + ":00", td, "notAvailable");
-                text = document.createTextNode(" - Indisponível - " + listaConsultasLocal[h].nomeDoAnimal);
+                text = document.createTextNode(" - Indisponível - " + currentValue.nomeDoAnimal);
             }
-        }
+        });
 
         if (i == 14) { //hora de almoco
             tr.setAttribute("class", "notAvailable");
@@ -230,7 +227,7 @@ function getSelected(selectObject) {
  */
 function listarTipoConsulta() {
 
-    var arr = JSON.parse(localStorage.getItem('Especialidade'));
+    var arr = JSON.parse(localStorage['Especialidade']);
 
     var mainForm = document.getElementById("mainForm");
 
@@ -273,11 +270,12 @@ function listarMedicos(opcao) {
     createBrs(mainForm);
 
     var getSelectMedicos = document.getElementById("medicos");
-    getSelectMedicos.setAttribute("onmousemove", "createMarcacoes(this)");
+
+    getSelectMedicos.setAttribute("onmousemove", " new ListaConsulta().createMarcacoes(this)");
     var founded = false;
 
     if (localStorage['ListaMedicos']) {
-        var arr = JSON.parse(localStorage.getItem('ListaMedicos'));
+        var arr = JSON.parse(localStorage['ListaMedicos']);
         for (let i = 0; i < arr.length; i++) {
             if (opcao == arr[i].especialidade) {
                 var option = document.createElement("option");
@@ -342,7 +340,7 @@ ListaConsulta.removerConsulta = function (posicao) {
  * @method acrescentarConsultas
  * @param {consulta} consulta - objeto consulta
  */
-ListaConsulta.prototype.acrescentarConsultas = function (consulta) {
+ListaConsulta.prototype.acrescentarConsultas = function () {
     consulta = Array.prototype.slice.call(arguments); //Transformar o "arguments" num array par poder usar o forEach
     consulta.forEach(function (currentValue, index, array) {
         this.acrescentarConsulta(currentValue);
