@@ -47,7 +47,6 @@ ListaConsulta.getNumberOfConsultas = function () {
  */
 function createObjects() {
     var mainForm = document.getElementById("mainForm");
-    var marcacoes = document.getElementById("marcacoes");
     listarTipoConsulta();
     createElements("DIV", mainForm, "idDiv");
 }
@@ -99,16 +98,18 @@ function createMarcacoes(medicoSelected) {
         else
             horasRestantes = 18 - data.getHoras();
 
-        for (let h = 0; h < listaConsultasLocal.length; h++) {
+        for (let h = 0; h < listaConsultasLocal.length; h++) {  
             if (listaConsultasLocal[h].diaDaConsulta == data.getDataAtual())
-                hoje++;
+                hoje++;//counter para as consultas com o dia igual ao dia de hoje
             if (listaConsultasLocal[h].diaDaConsulta == text.textContent) {
                 counter++;
                 if ((listaConsultasLocal[h].medico == medico)) 
                     tr.setAttribute("class", "checked");
             }
         }
-        if (counter >= 8 || hoje > horasRestantes) 
+    
+       /* Verificar se o dia está cheio de consultas OU se o dia de hoje tem a marcação cheia conforme as horas que são */
+        if ((counter >= 8 ) || (text.textContent== data.getDataAtual() && hoje>=horasRestantes))
             tr.setAttribute("class", "notAvailableDate");
         
     }
