@@ -16,10 +16,10 @@
 function Consulta(id, diaDaConsulta, hora, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
     this.id = id;
     this.diaDaConsulta = diaDaConsulta;
-    if(hora == 14)
+    if (hora == 14)
         throw Error("Não é possivel adicionar consultas na hora de almoco.");
     else
-    this.hora = hora;
+        this.hora = hora;
     this.medico = medico;
     this.nomeDoAnimal = nomeDoAnimal;
     this.tipoDeConsulta = tipoDeConsulta;
@@ -50,7 +50,7 @@ function ListaConsulta() {
 ListaConsulta.getNumberOfConsultas = function () {
     var retrievedObject = JSON.parse(localStorage['ListaConsultas']);
     return retrievedObject.length;
-}
+};
 
 /**
  * Cria os objetos, após se clicar em tipo de consulta
@@ -103,12 +103,12 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
         td.appendChild(text);
         document.getElementById("myTR" + i).appendChild(td);
 
-    if(data.getDataAtual()>=10 && data.getDataAtual<=18){
-        if (data.getHoras() < 14) // verificar quantos espaços existem conforme a hora atual
-            horasRestantes = 18 - data.getHoras() - 1; // o menos 1, é por causa da hora de almoço
-        else
-            horasRestantes = 18 - data.getHoras();
-        }else{
+        if (data.getDataAtual() >= 10 && data.getDataAtual <= 18) {
+            if (data.getHoras() < 14) // verificar quantos espaços existem conforme a hora atual
+                horasRestantes = 18 - data.getHoras() - 1; // o menos 1, é por causa da hora de almoço
+            else
+                horasRestantes = 18 - data.getHoras();
+        } else {
             horasRestantes = 18;
         }
 
@@ -325,14 +325,35 @@ ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
     this.saveConsultas();
 }
 
-ListaConsulta.prototype.removerConsultasByMedico = function(medico){
-    for(let i = 0 ; i<this.consultas.length;i++){
-        if(this.consultas[i].medico === medico){
-            var index = searchIndex(this.consultas, 'medico', medico);
-            this.consultas.splice((index), 1);// falta passar o id
+/**
+ * Remover todas as consultas referente ao médico
+ * @method removerConsultasByMedico
+ * @param {string} medico - string medico
+ */
+
+ListaConsulta.prototype.removerConsultasByMedico = function (medico) {
+    for (let i = this.consultas.length - 1; i >= 0; i--) {
+        if (this.consultas[i].medico === medico) {
+            this.consultas.splice(i, 1);
         }
     }
     this.saveConsultas();
+}
+
+/**
+ * Procurar um index de uma array
+ * @method searchIndex
+ * @param {array} array
+ * @param {string} attr
+ * @param {number} value
+ */
+function searchIndex(array, attr, value) {
+    for (var i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 /**
@@ -340,16 +361,19 @@ ListaConsulta.prototype.removerConsultasByMedico = function(medico){
  * @method removerConsulta
  * @param {number} posicao
  */
-ListaConsulta.removerConsulta = function (posicao) {
-    consulta = new ListaConsulta();
-    var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
-    for (let i = 0; i < localStorageObjs.length; i++) {
-        if (localStorageObjs[i].id == posicao)
-            localStorageObjs.splice(i, 1);
+ListaConsulta.prototype.removerConsulta = function (posicao) {
+    for (let i = 0; i < this.consultas.length; i++) {
+        if (this.consultas[i].id === posicao) {
+            var index = searchIndex(this.consultas, 'id', posicao);
+            this.consultas.splice((index), 1);
+            this.saveConsultas();
+            break;
+        }
     }
-    localStorage['ListaConsultas'] = JSON.stringify(localStorageObjs);
-    ListaConsulta.apresentar(consulta);
+    ListaConsulta.apresentar();
 }
+
+
 
 /**
  * Adicionar consultas
@@ -439,28 +463,38 @@ function checkOption(getSelected) {
  * Listar consultas - Tabela
 * @method listarConsultas
  */
-ListaConsulta.prototype.listarConsultas = function () {
+ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para listar os dia de hoje se o parametro passar true
     var today = false;
     if (this.consultas.length === 0) { //quando nao ha dados na localStorage
         return "<h4>Não existem consultas na base de dados!</h4>";
 
     } else {
-        var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+        if (hoje) {
+            var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+            this.consultas.forEach(function (currentValue, index, array) { //percorrer o array para criar a tabela
+                if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas são para o dia atual
+                    var remove = `<td><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
+                    resultado += "<tr><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+                        currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>" +
+                        remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + currentValue.efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
+                    today = true;
+                }
+            });
+            if (today)
+                resultado += "</table>";
+            else
+                resultado = "<h4>Não existem consultas para hoje! :(</h4>"; //Quando nao ha consultas para o dia de hoje na localStorage
 
-        this.consultas.forEach(function (currentValue, index, array) { //percorrer o array para criar a tabela
-            if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas são para o dia atual
-                var remove = `<td><a onclick="ListaConsulta.removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
-                resultado += "<tr><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+        } else {
+            var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Data</th><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+            this.consultas.forEach(function (currentValue, index, array) {
+                var remove = `<td><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
+                resultado += "<tr><td> " + currentValue.diaDaConsulta + "</td><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                     currentValue.tipoDeConsulta + "</td><td>" + currentValue.efetivada + "</td><td>" + currentValue.paga + "</td>" +
                     remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + currentValue.efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
-
-                today = true;
-            }
-        });
-        if (today)
+            });
             resultado += "</table>";
-        else
-            resultado = "<h4>Não existem consultas para hoje! :(</h4>"; //Quando nao ha consultas para o dia de hoje na localStorage
+        }
 
         return resultado;
     }
@@ -476,17 +510,33 @@ ListaConsulta.prototype.getConsultasLocal = function () {
     }
 }
 
+function switchConsultas(obj) {
+    let change = false;
+    if (obj.text.includes("dia")) {
+        obj.innerHTML = '<i class="fa fa-clipboard-list"></i> Mostrar todas as consultas';
+        change = true
+    } else {
+        obj.innerHTML = '<i class="fa fa-clipboard-list"></i> Mostrar consultas do dia';
+        change = false
+    }
+    ListaConsulta.apresentar("", change);
+}
+
 /**
  * Apresentar consulta
  * @method apresentar
  * @param {Consulta} consulta - objeto do tipo consulta
+ * @param {boolean} hoje - true = consultas do dia hoje // false = todas as consultas
  */
-ListaConsulta.apresentar = function (consulta) {
+ListaConsulta.apresentar = function (consulta, hoje) {
+
+    if (hoje == undefined) // por default, se não se passar nada como parametro, so aparece as consultas do dia
+        hoje = true;
+
     consulta = consulta || new ListaConsulta().acrescentarConsultas();
     consulta.getConsultasLocal();
-    document.getElementById("todayConsultation").innerHTML = consulta.listarConsultas();
+    document.getElementById("todayConsultation").innerHTML = consulta.listarConsultas(hoje);
     consulta.saveConsultas();
-
 };
 
 /**
@@ -532,8 +582,8 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
         alert("Hora inválida");
     else if (hora.id <= data.getHoras() && dataInput.value == data.getDataAtual())  //comentar para testes
         alertAndFocus(hora, "Hora indisponível!");
-    else if(hora.id == 14)
-        alertAndFocus(hora,"Não é possivel adicionar consultas na hora de almoço ");
+    else if (hora.id == 14)
+        alertAndFocus(hora, "Não é possivel adicionar consultas na hora de almoço ");
     else if (isNull(nomeAnimal.value))
         alertAndFocus(nomeAnimal, "O campo 'Nome do Animal' é um obrigatório!", "input-error form-control");
     else if (isNull(tipoConsulta.value))

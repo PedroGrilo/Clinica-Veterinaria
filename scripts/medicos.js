@@ -73,9 +73,6 @@ function searchIndex(array, attr, value) {
  * @param {number} posicao
  */
 ListaMedicos.prototype.removerMedico = function (posicao) {
-
-    var removed = false;
-
     for (let i = 0; i < this.medicos.length; i++) {
         if (this.medicos[i].id == posicao) {
             new ListaConsulta().removerConsultasByMedico(this.medicos[i].nome);
@@ -87,6 +84,7 @@ ListaMedicos.prototype.removerMedico = function (posicao) {
     }
     ListaMedicos.apresentar();
 }
+
 ListaMedicos.prototype.saveMedicos = function () { //guardar no localStorage
     localStorage['ListaMedicos'] = JSON.stringify(this.medicos);
 }
@@ -361,7 +359,6 @@ function EditarMed(id) {
     especopt = document.getElementById(especvalor);
     genopt = document.getElementById(generovalor);
     especopt.selected = true; genopt.selected = true;
-
 
     let btn1 = document.createElement("button");
     btn1.setAttribute("id", "btnicp" + id);
