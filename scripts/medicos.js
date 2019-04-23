@@ -42,7 +42,6 @@ function Medico(id, nome, titulo, genero, email, especialidade, foto) {
  * @constructs ListaMedicos
  */
 
-
 function ListaMedicos() {
     if (localStorage['ListaMedicos']) {
         var retrievedObject = JSON.parse(localStorage["ListaMedicos"]);
@@ -52,6 +51,42 @@ function ListaMedicos() {
     }
 }
 
+/**
+ * Procurar um index de uma array
+ * @method searchIndex
+ * @param {array} array
+ * @param {string} attr
+ * @param {number} value
+ */
+function searchIndex(array, attr, value) {
+    for (var i = 0; i < array.length; i += 1) {
+        if (array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
+ * Remove os medicos
+ * @method removerMedico
+ * @param {number} posicao
+ */
+ListaMedicos.prototype.removerMedico = function (posicao) {
+
+    var removed = false;
+
+    for (let i = 0; i < this.medicos.length; i++) {
+        if (this.medicos[i].id == posicao) {
+            new ListaConsulta().removerConsultasByMedico(this.medicos[i].nome);
+            var index = searchIndex(this.medicos, 'id', posicao);
+            this.medicos.splice((index), 1);
+            this.saveMedicos();
+            break;
+        }
+    }
+    ListaMedicos.apresentar();
+}
 ListaMedicos.prototype.saveMedicos = function () { //guardar no localStorage
     localStorage['ListaMedicos'] = JSON.stringify(this.medicos);
 }
@@ -98,7 +133,7 @@ ListaMedicos.prototype.listarMedicos = function () {
                 "<td><div id ='email" + currentValue.id + "'>" + currentValue.email + "</div></td>" +
                 "<td><div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "</div></td>" +
                 "<td><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
-                "<td><div id='ico_s" + currentValue.id + "'><button onclick=ListaMedicos.removerMedicos(" + currentValue.id + ") class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
+                "<td><div id='ico_s" + currentValue.id + "'><button onclick='new ListaMedicos().removerMedico(" + currentValue.id + ")'class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
                 "</tr>";
             today = true;
 
@@ -133,21 +168,7 @@ ListaMedicos.apresentar = function (medico) {
 
 };
 
-/**
- * Remove os medicos
- * @method removerMedicos
- * @param {number} posicao
- */
-ListaMedicos.removerMedicos = function (posicao) {
-    medico = new ListaMedicos();
-    var localStorageObjs = JSON.parse(localStorage["ListaMedicos"]);
-    for (let i = 0; i < localStorageObjs.length; i++) {
-        if (localStorageObjs[i].id == posicao)
-            localStorageObjs.splice(i, 1);
-    }
-    localStorage['ListaMedicos'] = JSON.stringify(localStorageObjs);
-    ListaMedicos.apresentar(medico);
-}
+
 
 
 /**

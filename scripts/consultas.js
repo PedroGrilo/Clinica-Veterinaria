@@ -16,6 +16,9 @@
 function Consulta(id, diaDaConsulta, hora, medico, nomeDoAnimal, tipoDeConsulta, efetivada, paga) {
     this.id = id;
     this.diaDaConsulta = diaDaConsulta;
+    if(hora == 14)
+        throw Error("Não é possivel adicionar consultas na hora de almoco.");
+    else
     this.hora = hora;
     this.medico = medico;
     this.nomeDoAnimal = nomeDoAnimal;
@@ -100,11 +103,14 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
         td.appendChild(text);
         document.getElementById("myTR" + i).appendChild(td);
 
-
+    if(data.getDataAtual()>=10 && data.getDataAtual<=18){
         if (data.getHoras() < 14) // verificar quantos espaços existem conforme a hora atual
             horasRestantes = 18 - data.getHoras() - 1; // o menos 1, é por causa da hora de almoço
         else
             horasRestantes = 18 - data.getHoras();
+        }else{
+            horasRestantes = 18;
+        }
 
         this.consultas.forEach(function (consultasForEach) {
             if ((consultasForEach.medico == medico)) {
@@ -118,7 +124,7 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
         });
 
         /* Verificar se o dia está cheio de consultas OU se o dia de hoje tem a marcação cheia conforme as horas que são */
-        if ((counter >= 8) || (hoje >= horasRestantes))
+        if ((counter >= 8) || (text.textContent == data.getDataAtual() && hoje >= horasRestantes))
             tr.setAttribute("class", "notAvailableDate");
 
     }
@@ -319,6 +325,16 @@ ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
     this.saveConsultas();
 }
 
+ListaConsulta.prototype.removerConsultasByMedico = function(medico){
+    for(let i = 0 ; i<this.consultas.length;i++){
+        if(this.consultas[i].medico === medico){
+            var index = searchIndex(this.consultas, 'medico', medico);
+            this.consultas.splice((index), 1);// falta passar o id
+        }
+    }
+    this.saveConsultas();
+}
+
 /**
  * Remover consultas
  * @method removerConsulta
@@ -489,7 +505,7 @@ function isNull(campo) {
  * @param {} campo
  * @param {} msg
  * @param {} classError
- * @returnss quando o campo é ivalido retorna false
+ * @returns quando o campo é invalido retorna false
  */
 function alertAndFocus(campo, msg, classError) {
     alert(msg);
@@ -516,6 +532,8 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
         alert("Hora inválida");
     else if (hora.id <= data.getHoras() && dataInput.value == data.getDataAtual())  //comentar para testes
         alertAndFocus(hora, "Hora indisponível!");
+    else if(hora.id == 14)
+        alertAndFocus(hora,"Não é possivel adicionar consultas na hora de almoço ");
     else if (isNull(nomeAnimal.value))
         alertAndFocus(nomeAnimal, "O campo 'Nome do Animal' é um obrigatório!", "input-error form-control");
     else if (isNull(tipoConsulta.value))
@@ -537,7 +555,6 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
  */
 ListaConsulta.acrescentar = function (consulta) {
     try {
-
         var table = document.getElementById('marcacoesTable');
         var numberChilds = table.rows.length;
         var hora;
@@ -561,6 +578,6 @@ ListaConsulta.acrescentar = function (consulta) {
             window.location.href = "index.html";
         }
     } catch (e) {
-        console.log("ERRO: " + e);
+        throw Error(e);
     }
 };
