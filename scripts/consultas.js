@@ -70,11 +70,6 @@ function createObjects() {
  */
 ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
-    var getSelectMedicos = document.getElementById("medicos");
-    getSelectMedicos.removeAttribute("onmousemove");
-
-    getSelectMedicos.setAttribute("onclick", "createMarcacoes(this)");
-
     var medico = medicoSelected.value;
 
     var dataInput = document.getElementById("dataInput");
@@ -277,7 +272,8 @@ function listarMedicos(opcao) {
 
     var getSelectMedicos = document.getElementById("medicos");
 
-    getSelectMedicos.setAttribute("onmousemove", " new ListaConsulta().createMarcacoes(this)");
+    getSelectMedicos.setAttribute("onfocus", " new ListaConsulta().createMarcacoes(this)");
+
     var founded = false;
 
     if (localStorage['ListaMedicos']) {
@@ -305,7 +301,9 @@ function listarMedicos(opcao) {
     createInputs(mainForm, "dataInput", "date", "form-control");
     createBrs(mainForm);
     createButtons(mainForm, "submit", "submit", "btn btn-primary", "Submeter", "");
-}
+
+    getSelectMedicos.focus();
+   }
 
 /**
  * Quardar as consultas no localStorage
