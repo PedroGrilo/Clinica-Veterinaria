@@ -19,7 +19,7 @@ function consultas(request, response) {
 function adicionarConsulta(request, response) {
     let diaDaConsulta = request.body.data.diaDaConsulta;
     let hora = request.body.data.hora;
-    let medicoID = request.body.data.medico;
+    let medicoID = request.body.data.medicoID;
     let nomeDoAnimal = request.body.data.nomeDoAnimal;
     let tipoDeConsulta = request.body.data.tipoDeConsulta;
     let efetivada = request.body.data.efetivada;
@@ -51,6 +51,8 @@ function eliminarConsultas(request, response) {
   connection.end();
   response.redirect('/')
 }
+
+
 
 module.exports.eliminarConsultas =eliminarConsultas;
 module.exports.getConsultas = getConsultas;

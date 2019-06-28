@@ -96,6 +96,20 @@ function editarMedico(request, response) {
   response.redirect('/medicos/gerir');
 }
 
+function medicoInfo(request,response){
+ let medicoID = request.params.id;
+  let connection = mysql.createConnection(connectionOptions);
+  connection.connect();
+  connection.query("SELECT * FROM `medicos` WHERE id = " + medicoID,
+      function (err, rows, fields) {
+        if (err) {
+          response.send(500);
+        } else {
+         response.render('info-medicos',rows);
+        }
+      });
+  connection.end();
+}
 module.exports.getMedicoByID = getMedicoByID;
 module.exports.getMedicos = getMedicos;
 module.exports.insertMedico = insertMedico;
@@ -103,5 +117,5 @@ module.exports.gerirMedicos = gerirMedicos;
 module.exports.adicionarMedicos = adicionarMedicos;
 module.exports.eliminarMedico = eliminarMedico;
 module.exports.editarMedico = editarMedico;
-
+module.exports.medicoInfo=medicoInfo;
 

@@ -100,22 +100,25 @@ ListaMedicos.prototype.listarMedicos = function () {
                 <th>Genero</th>
                 <th>Email</th>
                 <th>Especialidade</th>
+                <th>Mais Informações</th>
                 <th>Editar</th>
-                <th>Apagar/Undo</th>
+                <th>Apagar/Voltar</th>
+                
             </tr>
         </thead>`;
 
         this.medicos.forEach(function (currentValue, index, array) {
+            today = true;
             resultado += "<tr>" +
                 "<td><div id ='nome" + currentValue.id + "'>" + currentValue.nome + "</div></td>" +
                 "<td><div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "</div></td>" +
                 "<td><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
                 "<td><div id ='email" + currentValue.id + "'>" + currentValue.email + "</div></td>" +
                 "<td><div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "</div></td>" +
-                "<td><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
-                "<td><div id='ico_s" + currentValue.id + "'><button onclick='new ListaMedicos().removerMedico(" + currentValue.id + ")'class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
+                "<td style='text-align: center'><div id ='info"+currentValue.id+"'><button onclick=info?"+currentValue.id+" class='editmed'><i class='fas fa-user-tag'> </i></button></div></td>" +
+                "<td style='text-align: center'><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
+                "<td style='text-align: center'><div id='ico_s" + currentValue.id + "'><button onclick='new ListaMedicos().removerMedico(" + currentValue.id + ")'class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
                 "</tr>";
-            today = true;
 
         });
         resultado += "</table>";

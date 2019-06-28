@@ -388,8 +388,7 @@ ListaConsulta.prototype.removerConsulta = function (id) {
     if (confirm('Deseja remover? É uma ação inreversível.')) {
         $.get("/consultas/eliminar/" + id, function (data) {
             loadConsultas();
-            this.consulta.listarConsultas();
-          });
+         });
     }
 }
 
@@ -488,14 +487,13 @@ function getNome(medID){
  */
 ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para listar os dia de hoje se o parametro passar true
     var today = false;
-  
 
     if (this.consultas.length === 0) { //quando nao ha dados na bd
         return "<h4>Não existem consultas na base de dados!</h4>";
 
     } else {
         if (hoje) {
-            var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+            var resultado = `<table id = "consultasHoje" class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
             this.consultas.forEach(function (currentValue, index, array) {//percorrer o array para criar a tabela
      
                 if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas são para o dia atual
@@ -518,7 +516,7 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
          
      
         } else {
-            var resultado = `<table class='table'><thead class="thead-dark"><tr><th>Data</th><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
+            var resultado = `<table id="consultas" class='table'><thead class="thead-dark"><tr><th>Data</th><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
             this.consultas.forEach(function (currentValue, index, array) {
                 var paga = (currentValue.paga == 1) ? "Sim" : "Não";
                 var efetivada = (currentValue.efetivada == 1) ? "Sim" : "Não";
@@ -677,7 +675,8 @@ $.ajax({
         for (i in dataR) {
             consultasBD = dataR;
         }
-    
+        $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));
+        $("#consultas").replaceWith(new ListaConsulta().listarConsultas(false));
     }
 })
 }

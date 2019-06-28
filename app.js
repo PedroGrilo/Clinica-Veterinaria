@@ -22,7 +22,6 @@ db.connect(function(err) {
       return console.error('error: ' + err.message);
     }
     console.log('Connected to the MySQL server.');
-
   }); 
 
 
@@ -41,16 +40,17 @@ app.post("/insert-especialidade",requestHandlers.insertEspecialidade);
 app.post("/insert-medico",requestHandlersMedicos.insertMedico);
 app.post("/insert-consulta",requestHandlersConsultas.adicionarConsulta);
 
+
 medicos.all("/gerir", requestHandlersMedicos.gerirMedicos);
 medicos.get("/getMedicos", requestHandlersMedicos.getMedicos);
-medicos.get("/getMedico/:id",requestHandlersMedicos.getMedicoByID)
+medicos.get("/getMedico/:id",requestHandlersMedicos.getMedicoByID);
 medicos.all("/adicionar", requestHandlersMedicos.adicionarMedicos);
-medicos.all("/eliminar/:id",requestHandlersMedicos.eliminarMedico)
+medicos.all("/eliminar/:id",requestHandlersMedicos.eliminarMedico);
 medicos.post("/editar/",requestHandlersMedicos.editarMedico);
 
-consultas.get("/getConsultas",requestHandlersConsultas.getConsultas)
-consultas.all("/eliminar/:id",requestHandlersConsultas.eliminarConsultas)
-
+consultas.get("/getConsultas",requestHandlersConsultas.getConsultas);
+consultas.all("/eliminar/:id",requestHandlersConsultas.eliminarConsultas);
+medicos.all("/info/:id",requestHandlersMedicos.medicoInfo);
 app.listen(81, function () {
     console.log("Server running at http://localhost:81");
 });
