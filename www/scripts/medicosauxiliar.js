@@ -1,7 +1,6 @@
+const arrEspecialidade = [];
 
-const arrEspecialidade=[];
-
-const arrGenero = ["Masculino","Feminino"]
+const arrGenero = ["Masculino", "Feminino"];
 
 
 function listarEspecialidade(idform) {
@@ -13,19 +12,19 @@ function listarEspecialidade(idform) {
 
     var getSelectTipo = document.getElementById("tipoEspecialidade"/*+ numSel*/); // ativar com o codigo debaixo!
 
-     getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
+    getSelectTipo.addEventListener("change", function () { // funcao que adiciona o novo select
 
-         if(arrEspecialidade.length==this.value){
-             id=this.id;
-             if(!document.getElementById("otherespec"))
-             createInputs(this.parentElement,"otherespec","text","form-control");
-             other=document.getElementById("otherespec");
-             other.placeholder="Outro";
-             other.focus=true;
-             other.id=this.id;
-             this.id="filler";
-         }
-         
+        if (arrEspecialidade.length == this.value) {
+            id = this.id;
+            if (!document.getElementById("otherespec"))
+                createInputs(this.parentElement, "otherespec", "text", "form-control");
+            other = document.getElementById("otherespec");
+            other.placeholder = "Outro";
+            other.focus = true;
+            other.id = this.id;
+            this.id = "filler";
+        }
+
     });
     for (let i = -2; i < arrEspecialidade.length + 1; i++) {
 
@@ -44,13 +43,13 @@ function listarEspecialidade(idform) {
             getSelectTipo.add(optionsep);
             continue;
         }
-            if (i != arrEspecialidade.length) {
-                var option = document.createElement("option");
-                option.text = arrEspecialidade[i];
-                option.value = arrEspecialidade[i];
-                option.id = arrEspecialidade[i];
-                getSelectTipo.add(option);
-            }
+        if (i != arrEspecialidade.length) {
+            var option = document.createElement("option");
+            option.text = arrEspecialidade[i];
+            option.value = arrEspecialidade[i];
+            option.id = arrEspecialidade[i];
+            getSelectTipo.add(option);
+        }
         if (i == arrEspecialidade.length) {
             var option = document.createElement("option");
             option.text = "Outro";
@@ -61,6 +60,7 @@ function listarEspecialidade(idform) {
     }
     getSelectTipo.options[0].disabled = true;
 }
+
 function listarGenero(idform) {
 
     var mainForm = document.getElementById(idform);
@@ -107,17 +107,17 @@ function listarGenero(idform) {
 }
 
 $(document).ready(() =>
-        $.ajax({
-            url: '/especialidades',
-            type: 'GET',
-            dataType: 'json',
-            success: (data)=>{
-                console.log("success");
-                for (i in data) {
-                   arrEspecialidade.push(data[i].especialidade);
-                 }
-                 listarEspecialidade("especialiadediv");
-                 listarGenero("generodiv");
-            } 
-        })
+    $.ajax({
+        url: '/especialidades',
+        type: 'GET',
+        dataType: 'json',
+        success: (data) => {
+            console.log("success");
+            for (i in data) {
+                arrEspecialidade.push(data[i].especialidade);
+            }
+            listarEspecialidade("especialiadediv");
+            listarGenero("generodiv");
+        }
+    })
 );

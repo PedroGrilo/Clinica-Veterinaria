@@ -1,9 +1,10 @@
 var consultasBD = [];
+
 /**
  * Classe Consulta
 
  * @constructs Consulta
- * 
+ *
  * @param {number} id - id
  * @param {date} diaDaConsulta - dia da consulta
  * @param {number} hora  - hora da consulta
@@ -30,9 +31,9 @@ function Consulta(id, diaDaConsulta, hora, medicoID, nomeDoAnimal, tipoDeConsult
 
 /**
  * Classe Lista Consultas
- * 
+ *
  * @constructs ListaConsultas
- * 
+ *
  */
 function ListaConsulta() {
     this.consultas = consultasBD;
@@ -121,7 +122,7 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
             tr.setAttribute("class", "notAvailableDate");
 
     }
-}
+};
 
 
 /**
@@ -129,7 +130,7 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
  * @method listHours
  * @param {date} data
  * @param {string} medico - nome do medico
- * @returns horas do mapa da semana 
+ * @returns horas do mapa da semana
  */
 ListaConsulta.prototype.listHours = function (data, medicoID) {
 
@@ -153,7 +154,7 @@ ListaConsulta.prototype.listHours = function (data, medicoID) {
         document.getElementById(i).appendChild(td);
 
         this.consultas.forEach(function (currentValue, index, array) {
-            if ((currentValue.medico == medicoID) && (currentValue.diaDaConsulta == data.value) && (currentValue.hora == i+":00")) { //verificar disponibilidade da consulta
+            if ((currentValue.medico == medicoID) && (currentValue.diaDaConsulta == data.value) && (currentValue.hora == i + ":00")) { //verificar disponibilidade da consulta
                 tr.setAttribute("class", "notAvailable");
                 createSpans(currentValue.hora, td, "notAvailable");
                 text = document.createTextNode(" - Indisponível - " + currentValue.nomeDoAnimal);
@@ -172,13 +173,13 @@ ListaConsulta.prototype.listHours = function (data, medicoID) {
 
         td.appendChild(text);
     }
-}
+};
 
 
 /**
  * Verificar hora selecionada
  * @method checkHour
- * @param {HTMLObjectElement} tr 
+ * @param {HTMLObjectElement} tr
  */
 function checkHour(tr) {
     if (tr.getAttribute("class")) {
@@ -219,7 +220,6 @@ function getSelected(selectObject) {
     var value = selectObject.value;
     listarMedicos(value);
 }
-
 
 
 /**
@@ -301,7 +301,7 @@ function listarMedicos(opcao) {
                 if (opcao == medicosBD[i].especialidade) {
                     var option = document.createElement("option");
                     option.text = medicosBD[i].nome;
-                    option.id = medicosBD[i].id
+                    option.id = medicosBD[i].id;
                     getSelectMedicos.add(option);
                     founded = true;
                 }
@@ -336,7 +336,7 @@ ListaConsulta.prototype.insertConsultaBD = function (consulta) { //guardar na da
             data: consulta
         }
     })
-}
+};
 
 /**
  * Adicionar consulta
@@ -346,7 +346,7 @@ ListaConsulta.prototype.insertConsultaBD = function (consulta) { //guardar na da
 ListaConsulta.prototype.acrescentarConsulta = function (consulta) {
     this.consultas.push(consulta);
     this.insertConsultaBD(consulta);
-}
+};
 
 /**
  * Remover todas as consultas referente ao médico
@@ -361,7 +361,7 @@ ListaConsulta.prototype.removerConsultasByMedico = function (medico) {
         }
     }
     this.saveConsultas();
-}
+};
 
 /**
  * Procurar um index de uma array
@@ -388,9 +388,9 @@ ListaConsulta.prototype.removerConsulta = function (id) {
     if (confirm('Deseja remover? É uma ação inreversível.')) {
         $.get("/consultas/eliminar/" + id, function (data) {
             loadConsultas();
-         });
+        });
     }
-}
+};
 
 /**
  * Adicionar consultas
@@ -476,9 +476,6 @@ function checkOption(getSelected) {
         paymentButton.disabled = true;
 }
 
-function getNome(medID){
-  
-}
 
 
 /**
@@ -495,16 +492,16 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
         if (hoje) {
             var resultado = `<table id = "consultasHoje" class='table'><thead class="thead-dark"><tr><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
             this.consultas.forEach(function (currentValue, index, array) {//percorrer o array para criar a tabela
-     
+
                 if (currentValue.diaDaConsulta === data.getDataAtual()) { // verificar se as consultas são para o dia atual
 
                     var paga = (currentValue.paga == 1) ? "Sim" : "Não";
                     var efetivada = (currentValue.efetivada == 1) ? "Sim" : "Não";
 
-                    var remove = `<td><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
+                    var remove = `<td style='text-align: center'><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle iconRotate'></a></td>`;
                     resultado += "<tr><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                         currentValue.tipoDeConsulta + "</td><td>" + efetivada + "</td><td>" + paga + "</td>" +
-                        remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
+                        remove + "<td style='text-align: center'><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit iconRotate'></i></a></td></tr>";
                     today = true;
                 }
             });
@@ -513,18 +510,18 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
                 resultado += "</table>";
             else
                 resultado = "<h4>Não existem consultas para hoje! :(</h4>"; //Quando nao ha consultas para o dia de hoje na localStorage
-         
-     
+
+
         } else {
             var resultado = `<table id="consultas" class='table'><thead class="thead-dark"><tr><th>Data</th><th>Hora</th><th>Medico</th><th>Nome do Animal</th><th>Tipo de Consulta</th><th>Efetivada</th><th>Paga</th><th>Remover</th><th>Efetivar/Pagar</th></tr></thead>`;
             this.consultas.forEach(function (currentValue, index, array) {
                 var paga = (currentValue.paga == 1) ? "Sim" : "Não";
                 var efetivada = (currentValue.efetivada == 1) ? "Sim" : "Não";
 
-                var remove = `<td><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle'></a></td>`;
+                var remove = `<td style='text-align: center'><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle iconRotate'></a></td>`;
                 resultado += "<tr><td> " + currentValue.diaDaConsulta + "</td><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                     currentValue.tipoDeConsulta + "</td><td>" + efetivada + "</td><td>" + paga + "</td>" +
-                    remove + "<td><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit'></i></a></td></tr>";
+                    remove + "<td style='text-align: center'><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit iconRotate'></i></a></td></tr>";
             });
             resultado += "</table>";
         }
@@ -541,7 +538,7 @@ ListaConsulta.prototype.getConsultasLocal = function () {
     if (localStorage['ListaConsultas']) {
         this.consultas = JSON.parse(localStorage['ListaConsultas']);
     }
-}
+};
 
 function switchConsultas(obj) {
     let change = false;
@@ -666,18 +663,22 @@ ListaConsulta.acrescentar = function (consulta) {
     }
 };
 
-function loadConsultas(){
-$.ajax({
-    url: '/consultas/getConsultas',
-    type: 'GET',
-    dataType: 'json',
-    success: (dataR) => {
-        for (i in dataR) {
-            consultasBD = dataR;
+function loadConsultas() {
+    $.ajax({
+        url: '/consultas/getConsultas',
+        type: 'GET',
+        dataType: 'json',
+        async:false,
+        success: (dataR) => {
+            for (i in dataR) {
+                consultasBD = dataR;
+            }
         }
-        $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));
-        $("#consultas").replaceWith(new ListaConsulta().listarConsultas(false));
-    }
-})
+    });
+    $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));
+    $("#consultas").replaceWith(new ListaConsulta().listarConsultas(false));
+
+
 }
+
 window.onload = loadConsultas();

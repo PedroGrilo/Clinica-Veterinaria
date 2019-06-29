@@ -86,7 +86,7 @@ function createElements(element, where, idName, classes) {
     var elementCreated = document.createElement("" + element + "");
     elementCreated.setAttribute("id", idName);
     elementCreated.className = classes;
-    elementCreated.setAttribute("name",idName);
+    elementCreated.setAttribute("name", idName);
     where.appendChild(elementCreated);
 }
 

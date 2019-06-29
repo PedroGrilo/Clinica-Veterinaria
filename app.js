@@ -1,7 +1,9 @@
 const bodyParser = require("body-parser");
+
 var requestHandlersConsultas = require("./scripts/request-handlers-consultas");
 var requestHandlersMedicos = require("./scripts/request-handlers-medicos");
 var requestHandlers = require("./scripts/request-handlers");
+
 
 const express = require("express");
 const app = express();
@@ -28,7 +30,8 @@ db.connect(function(err) {
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static('www'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '10mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use("/medicos", medicos);
 app.use("/consultas",consultas);
 app.use("/creditos",requestHandlers.creditos);

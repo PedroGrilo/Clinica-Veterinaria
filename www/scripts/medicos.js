@@ -1,6 +1,6 @@
 var medicosBD = [];
 
-const arrayEspecialidade=[];
+const arrayEspecialidade = [];
 
 /**
  * Classe Medico
@@ -27,9 +27,10 @@ function Medico(id, nome, titulo, genero, email, especialidade, foto) {
  * @constructs ListaMedicos
  */
 
-    function ListaMedicos() {
-         this.medicos = medicosBD
-    }
+function ListaMedicos() {
+    this.medicos = medicosBD
+}
+
 /**
  * Procurar um index de uma array
  * @method searchIndex
@@ -52,11 +53,28 @@ function searchIndex(array, attr, value) {
  * @param {number} posicao
  */
 ListaMedicos.prototype.removerMedico = function (id) {
-    if(confirm('Deseja remover o medico? É uma ação inreversível. Irá remover todas as consultas referente ao mesmo'))
-      location.href = "/medicos/eliminar/"+id; 
-}
+    if (confirm('Deseja remover o medico? É uma ação inreversível. Irá remover todas as consultas referente ao mesmo'))
+        $.get("/medicos/eliminar/" + id, function (data) {
+                loadMedicos();
+           });
 
-ListaMedicos.prototype.saveMedicos = function (medico) { 
+};
+
+function loadMedicos() {
+    $.ajax({
+        url: '/medicos/getMedicos',
+        type: 'GET',
+        dataType: 'json',
+        success: (dataR) => {
+            for (i in dataR) {
+                medicosBD = dataR;
+            }
+           if(medicosBD.length == 1){
+               medicosBD = [];
+           }
+            $("#medicosTable").replaceWith(new ListaMedicos().listarMedicos());
+        }
+    })
 }
 
 ListaMedicos.prototype.insertMedicoBD = function (medico) {//guardar na database
@@ -67,14 +85,14 @@ ListaMedicos.prototype.insertMedicoBD = function (medico) {//guardar na database
             data: medico
         }
     })
-}
+};
 
 
 ListaMedicos.prototype.acrescentarMedico = function (medico) {
     this.medicos.push(medico);
     this.insertMedicoBD(medico);
     this.saveMedicos(medico);
-}
+};
 
 ListaMedicos.prototype.acrescentarMedicos = function (medico) {
     medico = Array.prototype.slice.call(arguments); //Transformar o "arguments" num array par poder usar o forEach
@@ -92,7 +110,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 
     } else {
         var resultado = `
-        <table class="table medtab">
+        <table id="medicosTable" class="table medtab">
             <thead class="thead-dark">
             <tr>
                 <th>Medico</th>
@@ -100,10 +118,9 @@ ListaMedicos.prototype.listarMedicos = function () {
                 <th>Genero</th>
                 <th>Email</th>
                 <th>Especialidade</th>
-                <th>Mais Informações</th>
-                <th>Editar</th>
-                <th>Apagar/Voltar</th>
-                
+                <th width="10px">Mais Informações</th>
+                <th width="10px">Editar</th>
+                <th width="10px">Apagar/Voltar</th>  
             </tr>
         </thead>`;
 
@@ -115,9 +132,9 @@ ListaMedicos.prototype.listarMedicos = function () {
                 "<td><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
                 "<td><div id ='email" + currentValue.id + "'>" + currentValue.email + "</div></td>" +
                 "<td><div id ='especialidade" + currentValue.id + "'>" + currentValue.especialidade + "</div></td>" +
-                "<td style='text-align: center'><div id ='info"+currentValue.id+"'><button onclick=info?"+currentValue.id+" class='editmed'><i class='fas fa-user-tag'> </i></button></div></td>" +
-                "<td style='text-align: center'><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit'></i></button></div></td>" +
-                "<td style='text-align: center'><div id='ico_s" + currentValue.id + "'><button onclick='new ListaMedicos().removerMedico(" + currentValue.id + ")'class='editmed'><i class='fas fa-user-times'></i></button></div></td>" +
+                "<td style='text-align: center'><div id ='info" + currentValue.id + "'><button class='editmed' onclick='window.location = `info/" + currentValue.id + "`'><i class='fas fa-user-tag iconRotate'> </i></button></div></td>" +
+                "<td style='text-align: center'><div id='ico" + currentValue.id + "'><button onclick=EditarMed(" + currentValue.id + ") class='editmed'><i' class='fas fa-user-edit iconRotate'></i></button></div></td>" +
+                "<td style='text-align: center'><div id='ico_s" + currentValue.id + "'><button onclick='new ListaMedicos().removerMedico(" + currentValue.id + ")'class='editmed'><i class='fas fa-user-times iconRotate    '></i></button></div></td>" +
                 "</tr>";
 
         });
@@ -128,15 +145,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 
 };
 
-/**
- * Retorna os medico da localStorage
- * @method getMedicosLocal
- */
-ListaMedicos.prototype.getMedicosLocal = function () { //guardar as consultas no array de consultas
-    if (localStorage['ListaMedicos']) {
-        this.medicos = JSON.parse(localStorage['ListaMedicos']);
-    }
-}
+
 
 /**
  * Lista os medicos
@@ -148,7 +157,7 @@ ListaMedicos.apresentar = function (medico) {
     medico = medico || new ListaMedicos().acrescentarMedicos();
     //medico.getMedicosLocal();
     document.getElementById("listaMedicos").innerHTML = medico.listarMedicos();
-   // medico.saveMedicos();
+    // medico.saveMedicos();
 };
 
 
@@ -159,7 +168,7 @@ ListaMedicos.apresentar = function (medico) {
 //  */
 ListaMedicos.getNumberOfMedicos = function (medico) {
     return medico.medicos.length;
- }
+};
 
 function insertEspecialidade(especialidade) {
     $.ajax({
@@ -171,13 +180,35 @@ function insertEspecialidade(especialidade) {
     })
 }
 
+function encodeImageFileAsURL() {
+    var filesSelected = document.getElementById("foto").files;
+    if (filesSelected.length > 0) {
+        var fileToLoad = filesSelected[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function (fileLoadedEvent) {
+            var srcData = fileLoadedEvent.target.result; // <--- data: base64
+            var newImage = document.createElement('img');
+            newImage.width = 64;
+            newImage.height = 64;
+            newImage.className = "rounded-circle";
+            newImage.style.border = "1px solid black";
+            newImage.src = srcData;
+            newImage.id = "newImage";
+            document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+        };
+        fileReader.readAsDataURL(fileToLoad);
+    }
+}
+
+
 
 /**
- * Acrescenta um médico aos médicos 
+ * Acrescenta um médico aos médicos
  * @method acrescentar
  * @param {Object} medico
  */
-ListaMedicos.acrescentar = function (medico) { 
+
+ListaMedicos.acrescentar = function (medico) {
     var nome = document.getElementById("nome");
     var titulo = document.getElementById("titulo");
     var genero = document.getElementById("tipoGenero");
@@ -188,10 +219,14 @@ ListaMedicos.acrescentar = function (medico) {
         arrayEspecialidade.push(especialidade.value);
         insertEspecialidade(especialidade.value);
     }
+
     if (checkMedicos(nome, titulo, email, genero, especialidade, foto)) {
         if (foto.files[0].name.match(/.(jpg|jpeg|png|gif)$/i)) {
+
+            var imageBase64 = document.getElementById("newImage").src;
+
             medico = new ListaMedicos().acrescentarMedicos();
-            medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos(medico) + 1, nome.value, titulo.value, genero.value, email.value, especialidade.value, foto.value));
+            medico.acrescentarMedico(new Medico(ListaMedicos.getNumberOfMedicos(medico) + 1, nome.value, titulo.value, genero.value, email.value, especialidade.value, imageBase64));
             alert("Médico adicionado com sucesso!!");
             location.href = "/";
         } else {
@@ -199,10 +234,10 @@ ListaMedicos.acrescentar = function (medico) {
             return false;
         }
     } else {
-            return false;
+        return false;
     }
 
-}
+};
 /**
  * Edita um médico já existente
  * @method saveEditMedicos
@@ -218,35 +253,38 @@ ListaMedicos.prototype.saveEditMedicos = function (id) {
     let espec = document.getElementById("tipoEspecialidade" + id);
     medico = new ListaMedicos();
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            if (nome.value != "" && titulo.value != "" && email.value != "" && genero.value != "" && espec.value != "") {
-                if (re.test(String(email.value).toLowerCase()) == true) {
-                    insertEspecialidade(espec.value);
-                    $.ajax({
-                        url: '/medicos/editar',
-                        type: 'POST',
-                        data: {
-                            id: id,
-                            nome: nome.value,
-                            titulo: titulo.value,
-                            email: email.value,
-                            especialidade: espec.value,
-                            genero: genero.value,
-                        },
-                        success: function(){
-                            let newdata = JSON.stringify([id, nome.value, titulo.value, email.value, genero.value, espec.value])
-                            undo(newdata);
-                        }
-                        
-                    })
-                    
-                } else {
-                    alert("Campo 'email' não está correto")
-                }
-            } else {
-                alert("Todos os campos têm que estar preenchidos!");
+    if (nome.value != "" && titulo.value != "" && email.value != "" && genero.value != "" && espec.value != "") {
+        if (re.test(String(email.value).toLowerCase()) == true) {
+            if (!arrayEspecialidade.includes(espec.value)) {
+                arrayEspecialidade.push(espec.value);
+                insertEspecialidade(espec.value);
             }
+            $.ajax({
+                url: '/medicos/editar',
+                type: 'POST',
+                data: {
+                    id: id,
+                    nome: nome.value,
+                    titulo: titulo.value,
+                    email: email.value,
+                    especialidade: espec.value,
+                    genero: genero.value,
+                },
+                success: function () {
+                    let newdata = JSON.stringify([id, nome.value, titulo.value, email.value, genero.value, espec.value]);
+                    undo(newdata);
+                }
 
+            })
+
+        } else {
+            alert("Campo 'email' não está correto")
+        }
+    } else {
+        alert("Todos os campos têm que estar preenchidos!");
     }
+
+};
 
 /**
  * Remove os child elements do pai fornecido
@@ -260,7 +298,7 @@ function removeChilds(myNode) {
 }
 
 /**
- * Reverte a form criada da edição de médicos sem alterar qualquer valor 
+ * Reverte a form criada da edição de médicos sem alterar qualquer valor
  * @method undo
  * @param {number} id
  */
@@ -307,6 +345,7 @@ function undo(id) {
     createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-edit");
     createElements("i", document.getElementById("btnics" + id), "", "fas fa-user-times");
 }
+
 /**
  * Cria a form para editar o medico
  * @method EditarMed
@@ -342,14 +381,15 @@ function EditarMed(id) {
 
     let nomeinp = document.getElementById("nomeinp" + id);
     let tituloinp = document.getElementById("tituloinp" + id);
-    let emailinp = document.getElementById("emailinp" + id, "email");
+    let emailinp = document.getElementById("emailinp" + id);
     nomeinp.value = nomevalor;
     tituloinp.value = titulovalor;
     emailinp.value = emailvalor;
 
     especopt = document.getElementById(especvalor);
     genopt = document.getElementById(generovalor);
-    especopt.selected = true; genopt.selected = true;
+    especopt.selected = true;
+    genopt.selected = true;
 
     let btn1 = document.createElement("button");
     btn1.setAttribute("id", "btnicp" + id);
@@ -379,7 +419,7 @@ function EditarMed(id) {
  */
 function listarGenero(idform) {
 
-    const arrGenero = ["Masculino","Feminino"];
+    const arrGenero = ["Masculino", "Feminino"];
 
     var mainForm = document.getElementById(idform);
     let id = idform.split("genero");
@@ -429,7 +469,7 @@ function listarGenero(idform) {
  */
 function listarEspecialidade(idform) {
 
-    
+
     var mainForm = document.getElementById(idform);
     let id = idform.split("especialidade");
     id = id[1];
@@ -565,17 +605,17 @@ function putEspecialidade() {
         url: '/especialidades',
         type: 'GET',
         dataType: 'json',
-        success: (data)=>{0
+        success: (data) => {
             for (i in data) {
-               arrayEspecialidade.push(data[i].especialidade);
-             }
-        } 
+                arrayEspecialidade.push(data[i].especialidade);
+            }
+        }
     })
 }
 
-$.get("/medicos/getMedicos",function(data){
-        medicosBD = data;
-        putEspecialidade();
-        initializeElements();
-        ListaMedicos.apresentar();
-})
+$.get("/medicos/getMedicos", function (data) {
+    medicosBD = data;
+    putEspecialidade();
+    initializeElements();
+    ListaMedicos.apresentar();
+});

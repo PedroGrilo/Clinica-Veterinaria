@@ -32,7 +32,7 @@ function adicionarConsulta(request, response) {
 function getConsultas(request,response){
     let connection = mysql.createConnection(connectionOptions);
     connection.connect();
-    connection.query("SELECT * FROM `consultas`",
+    connection.query("SELECT consultas.id,diaDaConsulta,hora,nomeDoAnimal,tipoDeConsulta,efetivada,paga,nome as medico FROM `consultas`,medicos where medico = medicos.id",
       function (err, rows, fields) {
         if (err) {
           response.send(500);

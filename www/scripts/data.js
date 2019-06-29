@@ -1,4 +1,3 @@
-
 /**
  * Classe Data
  */
@@ -30,22 +29,22 @@ function addDays(days) {
 
 Data.prototype.getHoras = function () {
     return this.hora;
-}
+};
 
 Data.prototype.getDataAtual = function () {
     return this.ano + '-' + this.mes + '-' + this.dia;
-}
+};
 Data.prototype.getAno = function () {
     return this.ano;
-}
+};
 
 Data.prototype.getMes = function () {
     return this.mes;
-}
+};
 
 Data.prototype.getDia = function () {
     return this.dia;
-}
+};
 
 Date.prototype.addDays = function (days) {
     var date = new Date(this.valueOf());
@@ -60,6 +59,6 @@ Date.prototype.addDays = function (days) {
         mm = '0' + mm; //adicionar o 0
 
     return date.getFullYear() + "-" + mm + "-" + dd;
-}
+};
 
 var data = new Data();
