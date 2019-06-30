@@ -54,10 +54,14 @@ function searchIndex(array, attr, value) {
  */
 ListaMedicos.prototype.removerMedico = function (id) {
     if (confirm('Deseja remover o medico? É uma ação inreversível. Irá remover todas as consultas referente ao mesmo'))
-        $.get("/medicos/eliminar/" + id, function (data) {
+        $.ajax({
+            type: "get",
+            url: "/medicos/eliminar/" + id,
+            success: function () {
+                $("#"+id).remove();
                 loadMedicos();
-           });
-
+            }
+        });
 };
 
 function loadMedicos() {
@@ -65,13 +69,9 @@ function loadMedicos() {
         url: '/medicos/getMedicos',
         type: 'GET',
         dataType: 'json',
+        async: false,
         success: (dataR) => {
-            for (i in dataR) {
                 medicosBD = dataR;
-            }
-           if(medicosBD.length == 1){
-               medicosBD = [];
-           }
             $("#medicosTable").replaceWith(new ListaMedicos().listarMedicos());
         }
     })
@@ -91,7 +91,6 @@ ListaMedicos.prototype.insertMedicoBD = function (medico) {//guardar na database
 ListaMedicos.prototype.acrescentarMedico = function (medico) {
     this.medicos.push(medico);
     this.insertMedicoBD(medico);
-    this.saveMedicos(medico);
 };
 
 ListaMedicos.prototype.acrescentarMedicos = function (medico) {
@@ -126,7 +125,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 
         this.medicos.forEach(function (currentValue, index, array) {
             today = true;
-            resultado += "<tr>" +
+            resultado += "<tr id='"+currentValue.id+"'>" +
                 "<td><div id ='nome" + currentValue.id + "'>" + currentValue.nome + "</div></td>" +
                 "<td><div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "</div></td>" +
                 "<td><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
@@ -485,11 +484,6 @@ function listarEspecialidade(idform) {
             other.focus = true;
             other.id = this.id;
             this.id = "filler";
-        } else {
-            if (other = document.getElementById(id)) {
-                this.id = other.id;
-                other.parentElement.removeChild(other);
-            }
         }
 
     });

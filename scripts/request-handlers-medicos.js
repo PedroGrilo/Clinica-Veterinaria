@@ -17,6 +17,7 @@ function adicionarMedicos(request, response) {
 
 
 function insertMedico(request, response) {
+
   let connection = mysql.createConnection(connectionOptions);
   let id = request.body.data.id;
   let nome = request.body.data.nome;
@@ -29,7 +30,8 @@ function insertMedico(request, response) {
  connection.connect();
   connection.query("INSERT INTO `medicos`(`id`, `nome`, `titulo`, `genero`, `email`, `especialidade`, `foto`) VALUES (NULL,'" + nome + "','" + titulo + "','" + genero + "','" + email + "','" + especialidade + "','" + foto + "')");
   connection.end();
-}
+
+    }
 
 function getMedicoByID(request, response) {
   var medicoID = request.params.id;

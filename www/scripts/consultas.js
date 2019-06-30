@@ -64,13 +64,18 @@ function createObjects() {
  * @param {HTMLObjectElement} medicoSelected
  * @returns mapa da semana por medico
  */
+function changeTime(i){
+    let date = new Date();
+    document.getElementById("dataInput").value = date.addDays(i);
+    new ListaConsulta().listHours(date.addDays(i),'6')
+}
 ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
     var medico = medicoSelected.value;
     var medicoID = $("#medicos").children(":selected").attr("id");
 
     var dataInput = document.getElementById("dataInput");
-    dataInput.setAttribute("onChange", "new ListaConsulta().listHours(this,'" + medicoID + "')");
+    dataInput.setAttribute("onChange", "new ListaConsulta().listHours(this.value,'" + medicoID + "')");
 
     document.getElementById("theadMarc").hidden = false;
 
@@ -85,6 +90,7 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
     for (let i = 0; i < 7; i++) {
         let tr = document.createElement("TR");
+
         let date = new Date();
         let td = document.createElement("TD");
         let text = document.createTextNode(date.addDays(i));
@@ -92,7 +98,10 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
             hoje = 0,
             horasRestantes = 0;
 
-        tr.setAttribute("id", "myTR" + i);
+
+           tr.setAttribute("onclick", "changeTime("+i+")");
+                tr.setAttribute("id", "myTR" + i);
+
         tBody.appendChild(tr);
         td.appendChild(text);
         document.getElementById("myTR" + i).appendChild(td);
@@ -142,7 +151,7 @@ ListaConsulta.prototype.listHours = function (data, medicoID) {
 
     var idHeader = document.getElementById("idHeader");
 
-    idHeader.textContent = "Hora | Marcações para o dia: " + data.value;
+    idHeader.textContent = "Hora | Marcações para o dia: " + data;
 
     for (var i = 10; i <= 18; i++) {
         var tr = document.createElement("TR");
@@ -363,21 +372,6 @@ ListaConsulta.prototype.removerConsultasByMedico = function (medico) {
     this.saveConsultas();
 };
 
-/**
- * Procurar um index de uma array
- * @method searchIndex
- * @param {array} array
- * @param {string} attr
- * @param {number} value
- */
-function searchIndex(array, attr, value) {
-    for (var i = 0; i < array.length; i += 1) {
-        if (array[i][attr] === value) {
-            return i;
-        }
-    }
-    return -1;
-}
 
 /**
  * Remover consultas
@@ -386,9 +380,16 @@ function searchIndex(array, attr, value) {
  */
 ListaConsulta.prototype.removerConsulta = function (id) {
     if (confirm('Deseja remover? É uma ação inreversível.')) {
-        $.get("/consultas/eliminar/" + id, function (data) {
-            loadConsultas();
+        $.ajax({
+            type: "get",
+            url: "/consultas/eliminar/" + id,
+            success: function () {
+                $("#"+id).remove();
+                loadConsultas();
+            }
         });
+
+
     }
 };
 
@@ -499,7 +500,8 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
                     var efetivada = (currentValue.efetivada == 1) ? "Sim" : "Não";
 
                     var remove = `<td style='text-align: center'><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle iconRotate'></a></td>`;
-                    resultado += "<tr><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+
+                    resultado += "<tr id='"+currentValue.id +"'><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                         currentValue.tipoDeConsulta + "</td><td>" + efetivada + "</td><td>" + paga + "</td>" +
                         remove + "<td style='text-align: center'><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit iconRotate'></i></a></td></tr>";
                     today = true;
@@ -519,7 +521,7 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
                 var efetivada = (currentValue.efetivada == 1) ? "Sim" : "Não";
 
                 var remove = `<td style='text-align: center'><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle iconRotate'></a></td>`;
-                resultado += "<tr><td> " + currentValue.diaDaConsulta + "</td><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+                resultado += "<tr id='"+currentValue.id +"'><td> " + currentValue.diaDaConsulta + "</td><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                     currentValue.tipoDeConsulta + "</td><td>" + efetivada + "</td><td>" + paga + "</td>" +
                     remove + "<td style='text-align: center'><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit iconRotate'></i></a></td></tr>";
             });
@@ -668,11 +670,9 @@ function loadConsultas() {
         url: '/consultas/getConsultas',
         type: 'GET',
         dataType: 'json',
-        async:false,
+        async: false,
         success: (dataR) => {
-            for (i in dataR) {
                 consultasBD = dataR;
-            }
         }
     });
     $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));
