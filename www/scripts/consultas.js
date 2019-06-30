@@ -64,11 +64,12 @@ function createObjects() {
  * @param {HTMLObjectElement} medicoSelected
  * @returns mapa da semana por medico
  */
-function changeTime(i){
+function changeTime(i) {
     let date = new Date();
     document.getElementById("dataInput").value = date.addDays(i);
-    new ListaConsulta().listHours(date.addDays(i),'6')
+    new ListaConsulta().listHours(date.addDays(i), '6')
 }
+
 ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
     var medico = medicoSelected.value;
@@ -98,9 +99,8 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
             hoje = 0,
             horasRestantes = 0;
 
-
-           tr.setAttribute("onclick", "changeTime("+i+")");
-                tr.setAttribute("id", "myTR" + i);
+        tr.setAttribute("onclick", "changeTime(" + i + ")");
+        tr.setAttribute("id", "myTR" + i);
 
         tBody.appendChild(tr);
         td.appendChild(text);
@@ -369,7 +369,6 @@ ListaConsulta.prototype.removerConsultasByMedico = function (medico) {
             this.consultas.splice(i, 1);
         }
     }
-    this.saveConsultas();
 };
 
 
@@ -384,7 +383,7 @@ ListaConsulta.prototype.removerConsulta = function (id) {
             type: "get",
             url: "/consultas/eliminar/" + id,
             success: function () {
-                $("#"+id).remove();
+                $("#" + id).remove();
                 loadConsultas();
             }
         });
@@ -413,16 +412,87 @@ ListaConsulta.prototype.acrescentarConsultas = function () {
  * @param {number} id
  */
 function saveModal(id) {
-    var localStorageObjs = JSON.parse(localStorage['ListaConsultas']);
     var selectModal = document.getElementById("idSelect");
+    let bool = (selectModal.options[selectModal.selectedIndex].text == "Sim") ? 1 : 0;
 
-    for (let i = 0; i < localStorageObjs.length; i++) {
-        if (localStorageObjs[i].id == id) {
-            localStorageObjs[i].efetivada = selectModal.options[selectModal.selectedIndex].text;
+    for (let i = 0; i <= consultasBD.length; i++) {
+        if (consultasBD[i].id == id) {
+            consultasBD[i].efetivada = bool;
+            saveConsulta(consultasBD[i]);
+            $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));
+            $("#consultas").replaceWith(new ListaConsulta().listarConsultas(false));
+            break;
         }
     }
-    localStorage['ListaConsultas'] = JSON.stringify(localStorageObjs);
-    ListaConsulta.apresentar();
+}
+
+function pagamentoConsulta(idConsulta, idPagamento) {
+
+    pagamentoCartao = function () {
+        $("#pagamentosDiv").empty();
+        createLabels("Introduza o cartão...", document.getElementById("pagamentosDiv"));
+    };
+
+    pin = function () {
+        $("#pagamentosDiv").empty();
+        createLabels("Introduza o PIN!", document.getElementById("pagamentosDiv"));
+    };
+
+    processamento = function () {
+        $("#pagamentosDiv").empty();
+        createLabels("A processar pagamento...", document.getElementById("pagamentosDiv"));
+    };
+
+    concluido = function (text) {
+        $("#pagamentosDiv").empty();
+        createLabels(text, document.getElementById("pagamentosDiv"));
+        createElements("IMG", document.getElementById("pagamentosDiv"), "imgsuccess", "", "");
+        var imgs = document.getElementById("imgsuccess");
+        imgs.width = 256;
+        imgs.src = "https://cdn.dribbble.com/users/39201/screenshots/3694057/nutmeg.gif";
+
+    };
+
+    voltar = function () {
+        for (let i = 0; i < consultasBD.length; i++) {
+            console.log(consultasBD[i]);
+            if (consultasBD[i].id == idConsulta) {
+                consultasBD[i].paga = 1;
+                consultasBD[i].efetivada = 1;
+                saveConsulta(consultasBD[i]);
+                window.location = "/";
+                break;
+            }
+        }
+    };
+
+    posProcessamento = function (textConcluido) {
+        setTimeout(function () {
+            processamento()
+        }, 2500);
+        setTimeout(function () {
+            concluido(textConcluido)
+        }, 3500);
+        setTimeout(function () {
+            voltar()
+        }, 4500);
+    };
+
+    switch (idPagamento) {
+
+        case 1:
+            pagamentoCartao();
+            setTimeout(function () {
+                pin()
+            }, 1200);
+            posProcessamento("Retire o cartão!");
+            break;
+        case 2:
+            posProcessamento("Compra concluida com sucesso!");
+            break;
+
+    }
+
 }
 
 /**
@@ -440,28 +510,48 @@ function openModal(id, option) {
 
     saveButton.setAttribute("onclick", "saveModal(" + id + ")");
 
-    createLabels("Efetivada: ", modal);
+    var paga = true;
 
-    createElements("SELECT", modal, "idSelect", "custom-select");
+    for (var i = 0; i < consultasBD.length; i++) {
+        if (consultasBD[i].id === id) {
+            if (consultasBD[i].paga === 0) {
+                paga = false;
+                break;
+            }
+        }
+    }
+    if (paga) {
+        $(".modal-footer").empty();
+        createLabels("Consulta já foi paga e efetivada!", modal);
+    } else {
+        paymentButton.textContent = "Pagamento";
+        paymentButton.setAttribute("onclick", "window.location = 'pagamento/" + id + "'");
 
-    var selectModal = document.getElementById("idSelect");
+        createLabels("Efetivada: ", modal);
 
-    selectModal.setAttribute("onchange", "checkOption(this.value)");
+        createElements("SELECT", modal, "idSelect", "custom-select");
 
-    createOptions(selectModal, "Escolher Opção");
-    createOptions(selectModal, "Sim");
-    createOptions(selectModal, "Não");
+        var selectModal = document.getElementById("idSelect");
 
-    selectModal.options[0].disabled = true;
+        selectModal.setAttribute("onchange", "checkOption(this.value)");
 
-    if (option == "Sim")
-        paymentButton.disabled = false;
-    else
-        paymentButton.disabled = true;
+        createOptions(selectModal, "Escolher Opção");
+        createOptions(selectModal, "Sim");
+        createOptions(selectModal, "Não");
 
-    checkOption(option);
+        selectModal.options[0].disabled = true;
 
-    selectModal.value = option;
+        if (option == "Sim")
+            paymentButton.disabled = false;
+        else
+            paymentButton.disabled = true;
+
+        checkOption(option);
+
+        selectModal.value = option;
+    }
+
+
 }
 
 
@@ -476,7 +566,6 @@ function checkOption(getSelected) {
     else
         paymentButton.disabled = true;
 }
-
 
 
 /**
@@ -501,7 +590,7 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
 
                     var remove = `<td style='text-align: center'><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle iconRotate'></a></td>`;
 
-                    resultado += "<tr id='"+currentValue.id +"'><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+                    resultado += "<tr id='" + currentValue.id + "'><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                         currentValue.tipoDeConsulta + "</td><td>" + efetivada + "</td><td>" + paga + "</td>" +
                         remove + "<td style='text-align: center'><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit iconRotate'></i></a></td></tr>";
                     today = true;
@@ -521,7 +610,7 @@ ListaConsulta.prototype.listarConsultas = function (hoje) { //boolean para lista
                 var efetivada = (currentValue.efetivada == 1) ? "Sim" : "Não";
 
                 var remove = `<td style='text-align: center'><a onclick="new ListaConsulta().removerConsulta(` + currentValue.id + `)" class='far fa-times-circle iconRotate'></a></td>`;
-                resultado += "<tr id='"+currentValue.id +"'><td> " + currentValue.diaDaConsulta + "</td><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
+                resultado += "<tr id='" + currentValue.id + "'><td> " + currentValue.diaDaConsulta + "</td><td> " + currentValue.hora + ":00</td><td> " + currentValue.medico + "</td><td> " + currentValue.nomeDoAnimal + "</td><td>" +
                     currentValue.tipoDeConsulta + "</td><td>" + efetivada + "</td><td>" + paga + "</td>" +
                     remove + "<td style='text-align: center'><a onclick='openModal(" + currentValue.id + ",`" + efetivada + "`)' data-toggle='modal' data-target='#exampleModal'><i class='far fa-edit iconRotate'></i></a></td></tr>";
             });
@@ -627,6 +716,25 @@ function checkConsulta(medico, nomeAnimal, tipoConsulta, dataInput, hora) {
 
 }
 
+saveConsulta = function (consulta) {
+    $.ajax({
+        url: '/consultas/saveConsulta',
+        type: 'POST',
+        data: {
+            id: consulta.id,
+            diaDaConsulta: consulta.diaDaConsulta,
+            hora: consulta.hora,
+            medicoID: consulta.medicoID,
+            nomeDoAnimal: consulta.nomeDoAnimal,
+            tipoDeConsulta: consulta.tipoDeConsulta,
+            efetivada: consulta.efetivada,
+            paga: consulta.paga,
+        }
+
+    })
+};
+
+
 /**
  * Acrescentar Consulta
  * @method acrescentar
@@ -665,6 +773,7 @@ ListaConsulta.acrescentar = function (consulta) {
     }
 };
 
+
 function loadConsultas() {
     $.ajax({
         url: '/consultas/getConsultas',
@@ -672,7 +781,7 @@ function loadConsultas() {
         dataType: 'json',
         async: false,
         success: (dataR) => {
-                consultasBD = dataR;
+            consultasBD = dataR;
         }
     });
     $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));

@@ -11,16 +11,17 @@ html
     script(src='/scripts/data.js')
     script(src='/scripts/createObj.js')
     script(src='/scripts/consultas.js')
+    script(src='/scripts/backoffice.js')
   body
     #wrapper.d-flex
       #sidebar-wrapper.hMenu.border-right
         .sidebar-heading.hMenu(style='text-align:center')
           img(src='images/logo.png', width='95rem')
         .list-group.list-group-flush.vMenu
-          a.list-group-item.list-group-item-action.bg-light.active(href='/')
+          a.list-group-item.list-group-item-action.bg-light(href='/')
             i.fas.fa-home
-            |                     Home
-          a.list-group-item.list-group-item-action.bg-light(href='/consultas')
+            |  Home
+          a.list-group-item.list-group-item-action.bg-light.active(href='/gerirConsultas')
             i.fas.fa-address-book
             |  Marcação de consultas
           a.list-group-item.list-group-item-action.bg-light(href='/medicos/gerir')
@@ -55,9 +56,12 @@ html
                   button#saveButton.btn.btn-info(type='button', data-dismiss='modal') Guardar
                   button#paymentButton.btn.btn-danger(type='button', disabled='true') Pagamento
           h3(style='padding:5px') Consultas do dia:
+          a.btn.btn-outline-dark(style='margin-left:5px', href='/consultas')
+            i.fas.fa-notes-medical
+            |   Adicionar Consultas
           a.btn.btn-outline-dark(style='margin-left:5px', href='#', onclick='switchConsultas(this)')
             i.fa.fa-clipboard-list
-            |                     Mostrar todas as consultas
+            |   Mostrar todas as consultas
           hr
           #todayConsultation.col-11(style='overflow-x:auto;')
     script.

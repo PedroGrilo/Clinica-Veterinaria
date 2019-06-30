@@ -18,11 +18,11 @@ head
     .list-group.list-group-flush.vMenu
       a.list-group-item.list-group-item-action.bg-light(href='/')
         i.fas.fa-home
-        |                 Home
+        | Home
       a.list-group-item.list-group-item-action.bg-light(href='/gerirConsultas')
         i.fas.fa-address-book
         |  Marca&ccedil;&atilde;o de consultas
-      a.list-group-item.list-group-item-action.bg-light.active(href='/medicos/gerir')
+      a.list-group-item.list-group-item-action.bg-light(href='/medicos/gerir')
         i.fas.fa-users
         |  Gerir M&eacute;dicos
       a.list-group-item.list-group-item-action.bg-light(href='/creditos')
@@ -40,33 +40,20 @@ head
           li.nav-item
             #nowTime
     .container-fluid
-      h3(style='padding:5px') Informações do médico:
-        h6 (Médico: #{medicos.nome})
-        hr
-      .row(style="text-align:center")
-        .col-12
-            img.rounded-circle(src=""+medicos.foto width=150)
-        .col-12(style="padding-top:2%")
-          h5 Mais Informações:
-          b(style='padding-right:5px') Titulo:
-          label #{medicos.titulo}
-          br
-          b(style='padding-right:5px') Email:
-          label #{medicos.email}
-          br
-          b(style='padding-right:5px') Especialidade:
-          label #{medicos.especialidade}
-          br
-          b(style='padding-right:5px') Género:
-          label #{medicos.genero}
-          br
-          a.btn.btn-outline-dark(style='margin-left:5px', href='/medicos/gerir')
+      h3(style='padding:5px;') Pagamento da Consulta:
+      hr
+      .row(style='text-align:center;')
+        .col-12(id='pagamentosDiv' style='padding-top:2%;')
+          h5 Selecione um m&eacute;todo de pagamento:
+          #metodos
+            ul
+              each val in paymentMethods
+                i(class=val.logo style='padding:7px')
+                a(onclick='pagamentoConsulta('+consultaID+','+val.id+')')= val.metodo
+                br
+          a.btn.btn-outline-dark(style='margin-left:5px;', href='/medicos/gerir')
             i.fas.fa-arrow-left
-            |                 Voltar
-
-
-          hr
-
+            |  Voltar
 // Menu Toggle Script
 script.
   $("#menu-toggle").click(function(e) {

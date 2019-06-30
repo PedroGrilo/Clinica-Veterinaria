@@ -120,5 +120,13 @@ button.editmed:hover{
   transition: transform 0.3s;
 }
 .iconRotate:hover{
-  transform: rotate(360deg);
+  transform: rotate(-360deg);
+}
+
+#appadd {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 10px;
+  height: 10px;
+  text-overflow: ellipsis;
 }

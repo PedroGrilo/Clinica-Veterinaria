@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Jun-2019 às 14:47
+-- Generation Time: 30-Jun-2019 às 21:41
 -- Versão do servidor: 10.1.40-MariaDB
--- versão do PHP: 7.3.5
+-- versão do PHP: 7.1.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -38,14 +38,6 @@ CREATE TABLE `consultas` (
   `efetivada` tinyint(1) NOT NULL,
   `paga` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `consultas`
---
-
-INSERT INTO `consultas` (`id`, `diaDaConsulta`, `hora`, `medico`, `nomeDoAnimal`, `tipoDeConsulta`, `efetivada`, `paga`) VALUES
-(1, '2019-12-31', '12:00', '1', 'xcx', 'Rastreio', 0, 0),
-(2, '2019-06-10', '16:00', '1', 'xcx', 'Rastreio', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -84,12 +76,37 @@ CREATE TABLE `medicos` (
   `foto` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Extraindo dados da tabela `medicos`
+-- Estrutura da tabela `metodos_pagamento`
 --
 
-INSERT INTO `medicos` (`id`, `nome`, `titulo`, `genero`, `email`, `especialidade`, `foto`) VALUES
-(1, 'Pedro', 'Grilo', 'Masculino', 'marciab.matias2000@gmail.com', 'Rastreio', 0x433a66616b657061746832303137313132335f3138303435382e6a7067);
+CREATE TABLE `metodos_pagamento` (
+  `id` int(11) NOT NULL,
+  `metodo` varchar(100) NOT NULL,
+  `logo` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `metodos_pagamento`
+--
+
+INSERT INTO `metodos_pagamento` (`id`, `metodo`, `logo`) VALUES
+(1, 'Cartão Crédito / Débito', 'far fa-credit-card'),
+(2, 'Dinheiro', 'far fa-money-bill-alt');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `noticias`
+--
+
+CREATE TABLE `noticias` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(1000) NOT NULL,
+  `noticia` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -114,6 +131,18 @@ ALTER TABLE `medicos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `metodos_pagamento`
+--
+ALTER TABLE `metodos_pagamento`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `noticias`
+--
+ALTER TABLE `noticias`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -121,19 +150,31 @@ ALTER TABLE `medicos`
 -- AUTO_INCREMENT for table `consultas`
 --
 ALTER TABLE `consultas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `especialidades`
 --
 ALTER TABLE `especialidades`
-  MODIFY `id_especialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_especialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `medicos`
 --
 ALTER TABLE `medicos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `metodos_pagamento`
+--
+ALTER TABLE `metodos_pagamento`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `noticias`
+--
+ALTER TABLE `noticias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

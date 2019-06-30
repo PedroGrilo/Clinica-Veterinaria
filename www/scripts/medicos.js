@@ -58,7 +58,7 @@ ListaMedicos.prototype.removerMedico = function (id) {
             type: "get",
             url: "/medicos/eliminar/" + id,
             success: function () {
-                $("#"+id).remove();
+                $("#" + id).remove();
                 loadMedicos();
             }
         });
@@ -71,7 +71,7 @@ function loadMedicos() {
         dataType: 'json',
         async: false,
         success: (dataR) => {
-                medicosBD = dataR;
+            medicosBD = dataR;
             $("#medicosTable").replaceWith(new ListaMedicos().listarMedicos());
         }
     })
@@ -125,7 +125,7 @@ ListaMedicos.prototype.listarMedicos = function () {
 
         this.medicos.forEach(function (currentValue, index, array) {
             today = true;
-            resultado += "<tr id='"+currentValue.id+"'>" +
+            resultado += "<tr id='" + currentValue.id + "'>" +
                 "<td><div id ='nome" + currentValue.id + "'>" + currentValue.nome + "</div></td>" +
                 "<td><div id ='titulo" + currentValue.id + "'>" + currentValue.titulo + "</div></td>" +
                 "<td><div id ='genero" + currentValue.id + "'>" + currentValue.genero + "</div></td>" +
@@ -143,7 +143,6 @@ ListaMedicos.prototype.listarMedicos = function () {
     }
 
 };
-
 
 
 /**
@@ -198,7 +197,6 @@ function encodeImageFileAsURL() {
         fileReader.readAsDataURL(fileToLoad);
     }
 }
-
 
 
 /**
@@ -406,8 +404,8 @@ function EditarMed(id) {
     btn2.setAttribute("onclick", "undo(this.value)");
     icon2.appendChild(btn2);
 
-    createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-check");
-    createElements("i", document.getElementById("btnics" + id), "", "fas fa-undo");
+    createElements("i", document.getElementById("btnicp" + id), "", "fas fa-user-check iconRotate");
+    createElements("i", document.getElementById("btnics" + id), "", "fas fa-undo iconRotate");
 }
 
 

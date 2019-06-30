@@ -1,63 +1,72 @@
-doctype html
 html
   head
     meta(charset='utf-8')
-    title Clinica Veterinária - Creditos
+    title Clinica Veterinária - BackOffice
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
     link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin='anonymous')
     link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
     link(rel='stylesheet', type='text/css', media='screen', href='/styles/main.css')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
     script(src='/scripts/data.js')
     script(src='/scripts/createObj.js')
     script(src='/scripts/consultas.js')
+    script(src='/scripts/backoffice.js')
   body
     #wrapper.d-flex
       #sidebar-wrapper.hMenu.border-right
         .sidebar-heading.hMenu(style='text-align:center')
           img(src='/images/logo.png', width='95rem')
         .list-group.list-group-flush.vMenu
-          a.list-group-item.list-group-item-action.bg-light(href='/')
+          a.list-group-item.list-group-item-action.bg-light(href='')
             i.fas.fa-home
-            |                     Home
-          a.list-group-item.list-group-item-action.bg-light(href='/gerirConsultas')
-            i.fas.fa-address-book
-            |  Marcação de consultas
-          a.list-group-item.list-group-item-action.bg-light(href='/medicos/gerir')
-            i.fas.fa-users
-            |  Gerir Médicos
-          a.list-group-item.list-group-item-action.bg-light.active(href='/creditos')
-            i.fas.fa-info-circle
-            |  Créditos
+            |  Home
+          a.list-group-item.list-group-item-action.bg-light(href='noticias/')
+            i.fas.fa-newspaper
+            |  Gerir Notícias
       // /#sidebar-wrapper
       // Page Content
       #page-content-wrapper
         nav.navbar.navbar-expand-lg.navbar-light.bg-light.border-bottom
           button#menu-toggle.btn.btn-light
             i.navbar-toggler-icon
-          h4.navbar.navbar-expand Clinica Veterinária - Créditos
+          h4.navbar.navbar-expand Clinica Veterinária - BackOffice
+          a(href='/') Voltar
           #navbarSupportedContent.collapse.navbar-collapse
             ul.navbar-nav.ml-auto.mt-3.mt-lg-0
               li.nav-item
                 #nowTime
         .container-fluid
-          div(style='text-align:center')
-            img.rounded.mx-auto.d-block(src='/images/animais.jpg', width='200rem')
+          h3(style='padding:5px;') Dashboard:
+          hr
+          .container
+            .row(style='text-align:center')
+              .col-4
+                b N&uacute;mero de consultas hoje pagas e realizadas:
+                br
+                | #{querys.nConsultasPagasHoje}
+              .col-4
+                b N&uacute;mero de consultas restantes hoje:
+                br
+                | #{querys.nConsultasRestantesHoje}
+              .col-4
+                b N&uacute;mero total de consultas:
+                br
+                |  #{querys.nConsultasTotais}
             hr
-            h4 Website desenvolvido por:
-            br
-            .row
-              .col-6(style='text-align: right') Pedro Grilo
-              .col-1 -
-              .col-5(style='text-align:left') 180269022
-            hr
-            h4 Colaboração com:
-            br
-            label Humberto Bento
-            br
-            hr
-    // Menu Toggle Script
+            .row(style='text-align:center')
+              .col-6
+                b N&uacute;mero de consultas pagas:
+                br
+                | #{querys.nConsultasPagas}
+              .col-6
+                b N&uacute;mero total de medicos:
+                br
+                | #{querys.nMedicos}
+          hr
     script.
+
+
       $("#menu-toggle").click(function (e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");

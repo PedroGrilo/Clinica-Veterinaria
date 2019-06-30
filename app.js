@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 
 var requestHandlersConsultas = require("./scripts/request-handlers-consultas");
 var requestHandlersMedicos = require("./scripts/request-handlers-medicos");
+var requestHandlersAdmin = require("./scripts/request-handlers-admin");
 var requestHandlers = require("./scripts/request-handlers");
 
 
@@ -9,6 +10,7 @@ const express = require("express");
 const app = express();
 const medicos = express.Router();
 const consultas = express.Router();
+const admin = express.Router();
 
 const mysql = require("mysql");
 
@@ -34,14 +36,23 @@ app.use(bodyParser.json({limit: '10mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use("/medicos", medicos);
 app.use("/consultas",consultas);
+app.use("/admin/",admin);
 app.use("/creditos",requestHandlers.creditos);
+admin.get("/:pw", requestHandlersAdmin.login);
+admin.get("/:pw/noticias", requestHandlersAdmin.apresentarNoticias);
+admin.get("/:pw/noticias/adicionar",requestHandlersAdmin.adicionarForm);
+admin.post("/:pw/noticias/adicionar",requestHandlersAdmin.saveNoticia);
+admin.get("/:pw/noticias/remover/:idNoticia",requestHandlersAdmin.removerNoticia);
 
-app.all("/", requestHandlersConsultas.gerirConsultas);
+
+app.all("/gerirConsultas", requestHandlersConsultas.gerirConsultas);
 app.all("/consultas",requestHandlersConsultas.consultas);
 app.get("/especialidades",requestHandlers.especialidades);
 app.post("/insert-especialidade",requestHandlers.insertEspecialidade);
 app.post("/insert-medico",requestHandlersMedicos.insertMedico);
 app.post("/insert-consulta",requestHandlersConsultas.adicionarConsulta);
+app.all("/pagamento/:id",requestHandlers.pagamento);
+app.all("/",requestHandlers.home);
 
 
 medicos.all("/gerir", requestHandlersMedicos.gerirMedicos);
@@ -51,8 +62,10 @@ medicos.all("/adicionar", requestHandlersMedicos.adicionarMedicos);
 medicos.all("/eliminar/:id",requestHandlersMedicos.eliminarMedico);
 medicos.post("/editar/",requestHandlersMedicos.editarMedico);
 
+
 consultas.get("/getConsultas",requestHandlersConsultas.getConsultas);
 consultas.all("/eliminar/:id",requestHandlersConsultas.eliminarConsultas);
+consultas.all("/saveConsulta/",requestHandlersConsultas.saveConsulta);
 medicos.all("/info/:id",requestHandlersMedicos.medicoInfo);
 app.listen(81, function () {
     console.log("Server running at http://localhost:81");
