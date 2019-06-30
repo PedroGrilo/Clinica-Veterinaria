@@ -356,12 +356,12 @@
       <workItem from="1561738851496" duration="3864000" />
       <workItem from="1561742757487" duration="867000" />
       <workItem from="1561803079732" duration="21549000" />
-      <workItem from="1561852707298" duration="7322000" />
+      <workItem from="1561852707298" duration="7372000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45159000" />
+    <option name="totallyTimeSpent" value="45209000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -391,7 +391,7 @@
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32936507" />
-      <window_info anchor="bottom" id="Run" order="7" visible="true" weight="0.24752475" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.24752475" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.39933994" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
