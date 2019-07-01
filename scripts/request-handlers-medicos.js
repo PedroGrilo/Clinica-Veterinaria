@@ -16,9 +16,8 @@ function adicionarMedicos(request, response) {
     response.render("adicionar-medicos");
 }
 
-
+//Inserir médico na base de dados dado um objeto medico passado no request do AJAX
 function insertMedico(request, response) {
-
     let connection = mysql.createConnection(connectionOptions);
     let id = request.body.data.id;
     let nome = request.body.data.nome;
@@ -34,6 +33,7 @@ function insertMedico(request, response) {
 
 }
 
+//obter um médico dado um parametro passado no URL
 function getMedicoByID(request, response) {
     var medicoID = request.params.id;
     let connection = mysql.createConnection(connectionOptions);
@@ -49,6 +49,7 @@ function getMedicoByID(request, response) {
     connection.end();
 }
 
+//obter todos os médicos da base de dados e retornar para mais tarde serem apresentados numa tabela
 function getMedicos(request, response) {
     let connection = mysql.createConnection(connectionOptions);
     connection.connect();
@@ -64,7 +65,6 @@ function getMedicos(request, response) {
 }
 
 function eliminarConsultas(idMedico) {
-
     let connection = mysql.createConnection(connectionOptions);
     connection.connect();
     connection.query("DELETE FROM `consultas` WHERE medico = " + idMedico + ";");
@@ -84,8 +84,8 @@ function eliminarMedico(request, response) {
     response.redirect('/')
 }
 
+//editar um médico na base de dados dado um objeto médico como parametro do request do AJAX
 function editarMedico(request, response) {
-
     let id = request.body.id;
     let nome = request.body.nome;
     let titulo = request.body.titulo;
@@ -99,6 +99,7 @@ function editarMedico(request, response) {
     response.redirect('/medicos/gerir');
 }
 
+//ir buscar as informaçoes todas de um médico para serem apresentadas numa página
 function medicoInfo(request, response) {
     let medicoID = request.params.id;
     let connection = mysql.createConnection(connectionOptions);

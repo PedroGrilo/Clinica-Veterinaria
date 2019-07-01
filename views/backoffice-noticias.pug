@@ -11,8 +11,8 @@ html
     script(src='/scripts/data.js')
     script(src='/scripts/createObj.js')
     script(src='/scripts/medicos.js')
-    script(src='/scripts/consultas.js')
-  body
+    script(src='/scripts/backoffice.js')
+  body(onload="checkAdmin()")
     #wrapper.d-flex
       #sidebar-wrapper.hMenu.border-right
         .sidebar-heading.hMenu(style='text-align:center')
@@ -54,13 +54,13 @@ html
                         td
                           | #{noticia.titulo}
                         td(id="appadd")
-                          a(href='',title=""+noticia.noticia+"") #{noticia.noticia}
+                          a(href='',title=""+noticia.noticia+"",ontouch) #{noticia.noticia}
                         td
                           a(href='remover/'+noticia.id)
                             i.far.fa-times-circle.iconRotate
             else
               h5
-                |Não existem consultas
+                | Não existem notícias.
 
 
 

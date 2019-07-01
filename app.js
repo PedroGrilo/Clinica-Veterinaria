@@ -6,6 +6,7 @@ var requestHandlersAdmin = require("./scripts/request-handlers-admin");
 var requestHandlers = require("./scripts/request-handlers");
 
 
+var favicon = require('serve-favicon');
 const express = require("express");
 const app = express();
 const medicos = express.Router();
@@ -26,9 +27,9 @@ db.connect(function(err) {
       return console.error('error: ' + err.message);
     }
     console.log('Connected to the MySQL server.');
-  }); 
+  });
 
-
+app.use(favicon(__dirname + '/www/images/site.ico'));
 app.set("view engine", "pug");
 app.set("views", "./views");
 app.use(express.static('www'));
@@ -38,12 +39,11 @@ app.use("/medicos", medicos);
 app.use("/consultas",consultas);
 app.use("/admin/",admin);
 app.use("/creditos",requestHandlers.creditos);
-admin.get("/:pw", requestHandlersAdmin.login);
-admin.get("/:pw/noticias", requestHandlersAdmin.apresentarNoticias);
-admin.get("/:pw/noticias/adicionar",requestHandlersAdmin.adicionarForm);
-admin.post("/:pw/noticias/adicionar",requestHandlersAdmin.saveNoticia);
-admin.get("/:pw/noticias/remover/:idNoticia",requestHandlersAdmin.removerNoticia);
-
+admin.get("/",requestHandlersAdmin.home)
+admin.get("/noticias", requestHandlersAdmin.apresentarNoticias);
+admin.get("/noticias/adicionar",requestHandlersAdmin.adicionarForm);
+admin.post("/noticias/adicionar",requestHandlersAdmin.saveNoticia);
+admin.get("/noticias/remover/:idNoticia",requestHandlersAdmin.removerNoticia);
 
 app.all("/gerirConsultas", requestHandlersConsultas.gerirConsultas);
 app.all("/consultas",requestHandlersConsultas.consultas);
@@ -54,14 +54,12 @@ app.post("/insert-consulta",requestHandlersConsultas.adicionarConsulta);
 app.all("/pagamento/:id",requestHandlers.pagamento);
 app.all("/",requestHandlers.home);
 
-
 medicos.all("/gerir", requestHandlersMedicos.gerirMedicos);
 medicos.get("/getMedicos", requestHandlersMedicos.getMedicos);
 medicos.get("/getMedico/:id",requestHandlersMedicos.getMedicoByID);
 medicos.all("/adicionar", requestHandlersMedicos.adicionarMedicos);
 medicos.all("/eliminar/:id",requestHandlersMedicos.eliminarMedico);
 medicos.post("/editar/",requestHandlersMedicos.editarMedico);
-
 
 consultas.get("/getConsultas",requestHandlersConsultas.getConsultas);
 consultas.all("/eliminar/:id",requestHandlersConsultas.eliminarConsultas);

@@ -11,7 +11,8 @@ html
     script(src='/scripts/data.js')
     script(src='/scripts/createObj.js')
     script(src='/scripts/medicos.js')
-  body
+    script(src='/scripts/backoffice.js')
+  body(onload="checkAdmin()")
     #wrapper.d-flex
       #sidebar-wrapper.hMenu.border-right
         .sidebar-heading.hMenu(style='text-align:center')
@@ -20,7 +21,7 @@ html
           a.list-group-item.list-group-item-action.bg-light(href='../../')
             i.fas.fa-home
             |  Home
-          a.list-group-item.list-group-item-action.bg-light.active(href='../noticias/')
+          a.list-group-item.list-group-item-action.bg-light.active(href='../../noticias/')
             i.fas.fa-newspaper
             |  Gerir Notícias
       // /#sidebar-wrapper
@@ -46,7 +47,7 @@ html
               .form-group.float-label-control
                 i.form-group
                   label(for='corpo') Corpo
-                  textarea#corpo.form-control(rows='3', name="corpo")
+                  textarea#corpo.form-control(rows='3', name="corpo",placeholder='Corpo')
                 br
                 button.btn.btn-primary(type='submit') Submeter
 

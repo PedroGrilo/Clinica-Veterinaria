@@ -12,7 +12,7 @@ html
     script(src='/scripts/createObj.js')
     script(src='/scripts/consultas.js')
     script(src='/scripts/backoffice.js')
-  body
+  body(onload="checkAdmin()")
     #wrapper.d-flex
       #sidebar-wrapper.hMenu.border-right
         .sidebar-heading.hMenu(style='text-align:center')
@@ -40,27 +40,30 @@ html
           h3(style='padding:5px;') Dashboard:
           hr
           .container
-            .row(style='text-align:center')
-              .col-4
-                b N&uacute;mero de consultas hoje pagas e realizadas:
+            .row(style='text-align:center;')
+              .col-3(style='background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);border-radius:100px;')
+                b N&uacute;mero de consultas de hoje, pagas e realizadas:
                 br
                 | #{querys.nConsultasPagasHoje}
-              .col-4
+              .col-1
+              .col-3(style='background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);border-radius:100px;')
                 b N&uacute;mero de consultas restantes hoje:
                 br
                 | #{querys.nConsultasRestantesHoje}
-              .col-4
+              .col-1
+              .col-3(style='background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);;border-radius:100px;')
                 b N&uacute;mero total de consultas:
                 br
                 |  #{querys.nConsultasTotais}
             hr
-            .row(style='text-align:center')
-              .col-6
+            .row(style='text-align:center;padding:10px')
+              .col-5(style='background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);border-radius:100px')
                 b N&uacute;mero de consultas pagas:
                 br
                 | #{querys.nConsultasPagas}
-              .col-6
-                b N&uacute;mero total de medicos:
+              .col-1
+              .col-5(style='background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%);border-radius:100px')
+                b N&uacute;mero total de médicos:
                 br
                 | #{querys.nMedicos}
           hr

@@ -42,24 +42,24 @@ html
             ul.navbar-nav.ml-auto.mt-3.mt-lg-0
               li.nav-item
                 #nowTime
-        .container-fluid(style='text-align:center')
+        .container(style='text-align:center')
           img(src='/images/bem-vindo.jpg' width="30%")
           br
           h3(style='padding:5px;') Notícias Recentes:
           hr
-          .container
+          .container-fluid(style='text-align:center;padding-left:12%')
             if rows.length > 0
-              .row(style='text-align:center')
+              .row(style='text-align:center;')
                 each noticias in rows
-                 .col-4(style='padding:25px')
+                 .col-3(style='',onclick="alert('"+noticias.noticia+"')", class="noticia")
                   b #{noticias.titulo}
                   br
-                  | #{noticias.noticia}
+                  label #{noticias.noticia}
+                  h6 <i>Clique para ver mais...</i>
             else
                 h5(style='padding:5px;') Não existem notícias de momento.
           hr
     script.
-
 
       $("#menu-toggle").click(function (e) {
       e.preventDefault();

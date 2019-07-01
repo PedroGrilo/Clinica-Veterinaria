@@ -130,3 +130,21 @@ button.editmed:hover{
   height: 10px;
   text-overflow: ellipsis;
 }
+
+#noticiaWrap{
+  overflow: hidden;
+  width: 185px;
+  height: 20px;
+  margin: 20px;
+  text-overflow: ellipsis;
+}
+.noticia {background-color: #8ab7e4;
+  background-image: linear-gradient(62deg, #8ab7e4 18%, #e2957f 100%);
+  padding:20px;
+  overflow: hidden;
+  width: 150px;
+  height: 150px;
+  margin: 20px;
+  text-overflow: ellipsis;
+  border-radius: 20px;
+}

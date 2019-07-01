@@ -49,7 +49,7 @@ head
             ul
               each val in paymentMethods
                 i(class=val.logo style='padding:7px')
-                a(onclick='pagamentoConsulta('+consultaID+','+val.id+')')= val.metodo
+                a(href="#" onclick='pagamentoConsulta('+consultaID+','+val.id+')')= val.metodo
                 br
           a.btn.btn-outline-dark(style='margin-left:5px;', href='/medicos/gerir')
             i.fas.fa-arrow-left

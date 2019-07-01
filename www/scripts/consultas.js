@@ -60,9 +60,8 @@ function createObjects() {
 
 /**
  * Criar o mapa da semana com as marcações
- * @method createMarcacoes
- * @param {HTMLObjectElement} medicoSelected
- * @returns mapa da semana por medico
+ * @method changeTime
+ * @param {Integer} i
  */
 function changeTime(i) {
     let date = new Date();
@@ -70,10 +69,16 @@ function changeTime(i) {
     new ListaConsulta().listHours(date.addDays(i), '6')
 }
 
+/**
+ * Criar o mapa da semana com as marcações
+ * @method createMarcacoes
+ * @param {HTMLObjectElement} medicoSelected
+ * @returns mapa da semana por medico
+ */
 ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
     var medico = medicoSelected.value;
-    var medicoID = $("#medicos").children(":selected").attr("id");
+    var medicoID = $("#medicos").children(":selected").attr("id"); //ir buscar o id do médico selecionado
 
     var dataInput = document.getElementById("dataInput");
     dataInput.setAttribute("onChange", "new ListaConsulta().listHours(this.value,'" + medicoID + "')");
@@ -91,7 +96,6 @@ ListaConsulta.prototype.createMarcacoes = function (medicoSelected) {
 
     for (let i = 0; i < 7; i++) {
         let tr = document.createElement("TR");
-
         let date = new Date();
         let td = document.createElement("TD");
         let text = document.createTextNode(date.addDays(i));
@@ -479,7 +483,6 @@ function pagamentoConsulta(idConsulta, idPagamento) {
     };
 
     switch (idPagamento) {
-
         case 1:
             pagamentoCartao();
             setTimeout(function () {
@@ -490,6 +493,8 @@ function pagamentoConsulta(idConsulta, idPagamento) {
         case 2:
             posProcessamento("Compra concluida com sucesso!");
             break;
+        default:
+            console.log("Função não programada")
 
     }
 
@@ -786,7 +791,6 @@ function loadConsultas() {
     });
     $("#consultasHoje").replaceWith(new ListaConsulta().listarConsultas(true));
     $("#consultas").replaceWith(new ListaConsulta().listarConsultas(false));
-
 
 }
 

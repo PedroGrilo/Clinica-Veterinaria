@@ -7,15 +7,15 @@ const connectionOptions = {
     database: "clinica_veterenaria"
 };
 
-
+// página de créditos
 function creditos(request, response) {
     response.render("creditos");
 }
 
+//página de pagamento
 function pagamento(request, response) {
 
-    var consultaID = request.params.id;
-
+    var consultaID = request.params.id; //id que é passado no url por GET
 
     //Tipos de pagamento - load
     let connection = mysql.createConnection(connectionOptions);
@@ -29,9 +29,9 @@ function pagamento(request, response) {
             }
         });
     connection.end();
-
 }
 
+//seleciona todas as especialidades na base de dados, para mais tarde ser retornadas num ajax
 function especialidades(request, response) {
     let connection = mysql.createConnection(connectionOptions);
     connection.connect();
@@ -46,6 +46,7 @@ function especialidades(request, response) {
     connection.end();
 }
 
+//inserir especialidade na base de dados através do request do ajax
 function insertEspecialidade(request, response) {
     var especialidade = request.body.data;
     let connection = mysql.createConnection(connectionOptions);
@@ -55,9 +56,9 @@ function insertEspecialidade(request, response) {
     response.send(request.body);
 }
 
-function home(request,response){
+//página home. Vai buscar as ultimas 6 noticias e retorna no PUG
+function home(request, response) {
     let sqlQuery = "SELECT * FROM `noticias` order by id desc LIMIT 6";
-
     let connection = mysql.createConnection(connectionOptions);
     connection.connect();
     connection.query(sqlQuery,
@@ -65,13 +66,12 @@ function home(request,response){
             if (err) {
                 response.send(500);
             } else {
-                response.render("home",{rows:rows});
+                response.render("home", {rows: rows});
             }
         });
     connection.end();
-
-
 }
+
 module.exports.home = home;
 module.exports.pagamento = pagamento;
 module.exports.insertEspecialidade = insertEspecialidade;

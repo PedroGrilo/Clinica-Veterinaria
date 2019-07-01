@@ -7,7 +7,6 @@ const connectionOptions = {
     database: "clinica_veterenaria"
 };
 
-
 function gerirConsultas(request, response) {
     response.render("gerir-consultas");
 }
@@ -16,6 +15,7 @@ function consultas(request, response) {
     response.render("consultas");
 }
 
+//adicionar consultas na base de dados através de um request feito por ajax que passa a consulta como parametro.
 function adicionarConsulta(request, response) {
     let diaDaConsulta = request.body.data.diaDaConsulta;
     let hora = request.body.data.hora;
@@ -30,10 +30,17 @@ function adicionarConsulta(request, response) {
     connection.end();
 }
 
+//obter todas as consultas da base de dados
 function getConsultas(request, response) {
     let connection = mysql.createConnection(connectionOptions);
     connection.connect();
-    connection.query("SELECT consultas.id,diaDaConsulta,hora,nomeDoAnimal,tipoDeConsulta,efetivada,paga,nome as medico FROM `consultas`,medicos where medico = medicos.id and (efetivada = 0 or paga = 0)",
+    // -> query só para mostrar as consultas restantes, ou seja, as que nao foram efetivadas e nao pagas
+    // let sqlQuery = "SELECT consultas.id,diaDaConsulta,hora,nomeDoAnimal,tipoDeConsulta,efetivada,paga,nome as medico FROM `consultas`,medicos where medico = medicos.id and (efetivada = 0 or paga = 0)";
+
+    // -> query para mostrar todas as consultas
+    let sqlQuery = "SELECT consultas.id,diaDaConsulta,hora,nomeDoAnimal,tipoDeConsulta,efetivada,paga,nome as medico FROM `consultas`,medicos where medico = medicos.id";
+
+    connection.query(sqlQuery,
         function (err, rows, fields) {
             if (err) {
                 response.send(500);
@@ -44,6 +51,7 @@ function getConsultas(request, response) {
     connection.end();
 }
 
+//eliminar consulta dado um id como parametro no URL
 function eliminarConsultas(request, response) {
     var consultaID = request.params.id;
     let connection = mysql.createConnection(connectionOptions);
@@ -53,6 +61,7 @@ function eliminarConsultas(request, response) {
     response.redirect('/')
 }
 
+//salvar consulta na base de dados, dado um request de AJAX que passa uma consulta como parametro
 function saveConsulta(request, response) {
     let id = request.body.id;
     let diaDaConsulta = request.body.diaDaConsulta;
@@ -68,7 +77,6 @@ function saveConsulta(request, response) {
     connection.query("UPDATE `consultas` SET `efetivada` = " + efetivada + ", `paga` = " + paga + " WHERE `consultas`.`id` = " + id + " ;");
     connection.end();
     //response.redirect('/medicos/gerir');
-
 }
 
 module.exports.saveConsulta = saveConsulta;
