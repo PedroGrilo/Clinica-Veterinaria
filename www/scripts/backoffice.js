@@ -1,7 +1,9 @@
 function login() {
     var login = prompt("Introduza a password");
-    localStorage.setItem("password", "" + window.btoa(login)); // colocar a password em base64
-    window.location = "/admin/";
+    if(login){
+        localStorage.setItem("password", "" + window.btoa(login)); // colocar a password em base64
+        window.location = "/admin/";
+    }
 }
 
 function checkAdmin() {
