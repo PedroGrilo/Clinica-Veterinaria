@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c3f19d2-f29c-4bf0-9d87-af6dd0cffafd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/views/adicionar-medicos.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/adicionar-medicos.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/consultas.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/consultas.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/creditos.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/creditos.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gerir-consultas.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/gerir-consultas.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/gerir-medicos.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/gerir-medicos.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/home.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/home.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/info-medicos.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/info-medicos.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/pagamentos.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/pagamentos.pug" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/scripts/backoffice.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/scripts/backoffice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consultas.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/creditos.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gestao.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -373,12 +369,12 @@
       <workItem from="1561852707298" duration="7372000" />
       <workItem from="1561883867273" duration="28317000" />
       <workItem from="1561981107430" duration="9150000" />
-      <workItem from="1561991866782" duration="2376000" />
+      <workItem from="1561991866782" duration="3048000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85052000" />
+    <option name="totallyTimeSpent" value="85724000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -394,7 +390,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49707603" visible="true" weight="0.30063966" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49707603" visible="true" weight="0.30063966" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info id="npm" order="3" sideWeight="0.50292397" side_tool="true" weight="0.28464818" />
       <window_info id="Image Layers" order="4" />
@@ -408,7 +404,7 @@
       <window_info anchor="bottom" id="Docker" order="4" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.32936507" />
-      <window_info anchor="bottom" id="Run" order="7" visible="true" weight="0.2761276" />
+      <window_info anchor="bottom" id="Run" order="7" weight="0.2761276" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.39933994" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
