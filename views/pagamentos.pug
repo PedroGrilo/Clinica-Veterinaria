@@ -1,0 +1,62 @@
+doctype html
+head
+  meta(charset='utf-8')
+  title Clinica Veterin&aacute;ria - Gerir M&eacute;dicos
+  meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+  link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin='anonymous')
+  link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+  link(rel='stylesheet', type='text/css', media='screen', href='/styles/main.css')
+  script(src='/scripts/data.js')
+  script(src='/scripts/createObj.js')
+  script(src='/scripts/medicos.js')
+  script(src='/scripts/consultas.js')
+#wrapper.d-flex
+  #sidebar-wrapper.hMenu.border-right
+    .sidebar-heading.hMenu(style='text-align:center;')
+      img(src='/images/logo.png', width='95rem')
+    .list-group.list-group-flush.vMenu
+      a.list-group-item.list-group-item-action.bg-light(href='/')
+        i.fas.fa-home
+        | Home
+      a.list-group-item.list-group-item-action.bg-light(href='/gerirConsultas')
+        i.fas.fa-address-book
+        |  Gerir consultas
+      a.list-group-item.list-group-item-action.bg-light(href='/medicos/gerir')
+        i.fas.fa-users
+        |  Gerir M&eacute;dicos
+      a.list-group-item.list-group-item-action.bg-light(href='/creditos')
+        i.fas.fa-info-circle
+        |  Cr&eacute;ditos
+  // /#sidebar-wrapper
+  // Page Content
+  #page-content-wrapper
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light.border-bottom
+      button#menu-toggle.btn.btn-light
+        i.navbar-toggler-icon
+      h4.navbar.navbar-expand Clinica Veterin&aacute;ria - Gerir M&eacute;dicos
+      #navbarSupportedContent.collapse.navbar-collapse
+        ul.navbar-nav.ml-auto.mt-3.mt-lg-0
+          li.nav-item
+            #nowTime
+    .container-fluid
+      h3(style='padding:5px;') Pagamento da Consulta:
+      hr
+      .row(style='text-align:center;')
+        .col-12(id='pagamentosDiv' style='padding-top:2%;')
+          h5 Selecione um m&eacute;todo de pagamento:
+          #metodos
+            ul
+              each val in paymentMethods
+                i(class=val.logo style='padding:7px')
+                a(href="#" onclick='pagamentoConsulta('+consultaID+','+val.id+')')= val.metodo
+                br
+          a.btn.btn-outline-dark(style='margin-left:5px;', href='/medicos/gerir')
+            i.fas.fa-arrow-left
+            |  Voltar
+// Menu Toggle Script
+script.
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });

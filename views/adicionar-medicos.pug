@@ -1,0 +1,73 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Clinica Veterinária - Adicionar Médicos
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin='anonymous')
+    link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(rel='stylesheet', type='text/css', media='screen', href='/styles/main.css')
+    script(src='/scripts/data.js')
+    script(src='/scripts/createObj.js')
+    script(src='/scripts/medicos.js')
+  body
+    #wrapper.d-flex
+      #sidebar-wrapper.hMenu.border-right
+        .sidebar-heading.hMenu(style='text-align:center')
+          img(src='/images/logo.png', width='95rem')
+        .list-group.list-group-flush.vMenu
+          a.list-group-item.list-group-item-action.bg-light(href='/')
+            i.fas.fa-home
+            | Home
+          a.list-group-item.list-group-item-action.bg-light(href='/consultas')
+            i.fas.fa-address-book
+            |  Gerir consultas
+          a.list-group-item.list-group-item-action.bg-light.active(href='/medicos/gerir')
+            i.fas.fa-users
+            |  Gerir Médicos
+          a.list-group-item.list-group-item-action.bg-light(href='/creditos')
+            i.fas.fa-info-circle
+            |  Créditos
+      #page-content-wrapper
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light.border-bottom
+          button#menu-toggle.btn.btn-light
+            i.navbar-toggler-icon
+          h4.navbar.navbar-expand Clinica Veterinária - Médicos
+          #navbarSupportedContent.collapse.navbar-collapse
+            ul.navbar-nav.ml-auto.mt-3.mt-lg-0
+              li.nav-item
+                #nowTime
+        .container-fluid
+          h3(style='padding:5px') Adicionar Médicos:
+          hr
+          .col-sm-8
+            form(method="POST",onsubmit='ListaMedicos.acrescentar();return false;')
+              .form-group.float-label-control
+                label(for='nome') Nome:
+                input#nome.form-control(required='', type='text', name='nome' placeholder='Nome')
+              .form-group.float-label-control
+                label(for='titulo') Titulo:
+                input#titulo.form-control(required='' type='text', name='titulo'  placeholder='Titulo')
+              #generodiv.form-group.float-label-control
+              .form-group.float-label-control
+                label(for='email') Email:
+                input#email.form-control(type='email', required='',name='email'  placeholder='Email')
+              #especialiadediv.form-group.float-label-control
+              #photo.form-group.float-label-control
+                label(for='foto') Fotografia:
+                input#foto.form-control-file.btn.btn-primary(type='file', name='foto' alt='Submit' onchange='encodeImageFileAsURL();')
+              #sub.form-group.float-label-control
+                #imgTest(style='padding:5px')
+                br
+                button.btn.btn-primary(type='submit') Submeter
+
+
+
+
+    script.
+      $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      });
+    script(src='/scripts/medicosauxiliar.js')

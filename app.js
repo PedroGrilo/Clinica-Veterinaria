@@ -1,82 +1,70 @@
-/* global __dirname, process */
-var http = require("http");
-var
-    url = require("url");
+const bodyParser = require("body-parser");
 
-var querystring = require("querystring");
-var path = require("path");
-var fs = require("fs");
-var options = {
-    "default": {
-        "folder": "",
-        "document": "index.html",
-        "port": 80,
-        "favicon": ""
-    },
-    "extensions": {
-        "txt": "text/plain; charset=utf-8",
-        "htm": "text/html; charset=utf-8",
-        "html": "text/html; charset=utf-8",
-        "js": "application/javascript; charset=utf-8",
-        "json": "application/json; charset=utf-8",
-        "css": "text/css; charset=utf-8",
-        "gif": "image/gif",
-        "jpg": "image/jpg",
-        "png": "image/png",
-        "ico": "image/x-icon",
-        "svg": "image/svg+xml",
-    }
-};
+var requestHandlersConsultas = require("./scripts/request-handlers-consultas");
+var requestHandlersMedicos = require("./scripts/request-handlers-medicos");
+var requestHandlersAdmin = require("./scripts/request-handlers-admin");
+var requestHandlers = require("./scripts/request-handlers");
 
-function logOnDev(message) {
-    if (process.env.NODE_ENV === "development") {
-        console.log(message);
-    }
-}
 
-function router(request) {
-    var pathname = querystring.unescape(url.parse(request.url).pathname);
-    switch (pathname) {
-        case "/":
-            pathname += options.default.document;
-            break;
-        case "/favicon.ico":
-            pathname = options.default.favicon;
-            break;
-        default:
-            break;
-    }
-    return pathname ?
-        path.join(__dirname, options.default.folder, pathname) : null;
-}
+var favicon = require('serve-favicon');
+const express = require("express");
+const app = express();
+const medicos = express.Router();
+const consultas = express.Router();
+const admin = express.Router();
 
-function mimeType(filename) {
-    var extension = path.extname(filename);
-    if (extension.charAt(0) === ".") {
-        extension = extension.substr(1);
+const mysql = require("mysql");
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "clinica_veterenaria"
+});
+
+db.connect(function(err) {
+    if (err) {
+      return console.error('error: ' + err.message);
     }
-    return options.extensions[extension];
-}
-http.createServer(function (request, response) {
-    logOnDev(`Request for ${request.url}
-received.`);
-    var filename = router(request);
-    if (filename) {
-        fs.readFile(filename, function (err, data) {
-            if (err) {
-                logOnDev(err);
-                response.writeHead(404, {
-                    "Content-Type": "text/plain; charset=utf-8"
-                });
-                response.write("HTTP Status: 404 : NOT FOUND");
-            } else {
-                response.writeHead(200, {
-                    "Content-Type": mimeType(filename)
-                });
-                response.write(data);
-            }
-            response.end();
-        });
-    }
-}).listen(options.default.port);
-logOnDev(`Server running at http://localhost:${options.default.port}/`);
+    console.log('Connected to the MySQL server.');
+  });
+
+app.use(favicon(__dirname + '/www/images/site.ico'));
+app.set("view engine", "pug");
+app.set("views", "./views");
+app.use(express.static('www'));
+app.use(bodyParser.json({limit: '10mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use("/medicos", medicos);
+app.use("/consultas",consultas);
+app.use("/admin/",admin);
+app.use("/creditos",requestHandlers.creditos);
+admin.get("/",requestHandlersAdmin.home)
+admin.get("/noticias", requestHandlersAdmin.apresentarNoticias);
+admin.get("/noticias/adicionar",requestHandlersAdmin.adicionarForm);
+admin.post("/noticias/adicionar",requestHandlersAdmin.saveNoticia);
+admin.get("/noticias/remover/:idNoticia",requestHandlersAdmin.removerNoticia);
+
+app.all("/gerirConsultas", requestHandlersConsultas.gerirConsultas);
+app.all("/consultas",requestHandlersConsultas.consultas);
+app.get("/especialidades",requestHandlers.especialidades);
+app.post("/insert-especialidade",requestHandlers.insertEspecialidade);
+app.post("/insert-medico",requestHandlersMedicos.insertMedico);
+app.post("/insert-consulta",requestHandlersConsultas.adicionarConsulta);
+app.all("/pagamento/:id",requestHandlers.pagamento);
+app.all("/",requestHandlers.home);
+
+medicos.all("/gerir", requestHandlersMedicos.gerirMedicos);
+medicos.get("/getMedicos", requestHandlersMedicos.getMedicos);
+medicos.get("/getMedico/:id",requestHandlersMedicos.getMedicoByID);
+medicos.all("/adicionar", requestHandlersMedicos.adicionarMedicos);
+medicos.all("/eliminar/:id",requestHandlersMedicos.eliminarMedico);
+medicos.post("/editar/",requestHandlersMedicos.editarMedico);
+
+consultas.get("/getConsultas",requestHandlersConsultas.getConsultas);
+consultas.all("/eliminar/:id",requestHandlersConsultas.eliminarConsultas);
+consultas.all("/saveConsulta/",requestHandlersConsultas.saveConsulta);
+medicos.all("/info/:id",requestHandlersMedicos.medicoInfo);
+app.listen(81, function () {
+    console.log("Server running at http://localhost:81");
+});
